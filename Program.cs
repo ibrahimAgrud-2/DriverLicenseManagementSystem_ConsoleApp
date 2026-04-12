@@ -7,9 +7,17 @@ namespace DVLDConsoleAPP
 {
     internal class Program
     {
-        static void printPeople()
+        static void printAllPeopleRecords()
         {
-  
+            DataTable dt = new DataTable();
+
+            dt = clsPeople.getAllPersonRecords();
+
+            foreach (DataRow row in dt.Rows)
+            { 
+                Console.WriteLine($"{row["PersonID"]}, {row["NationalNo"]}, {row["FirstName"]}, {row["SecondName"]}, {row["ThirdName"]}, {row["LastName"]},  {row["DateOfBirth"]}, {row["Gender"]}, {row["Address"]}, {row["Phone"]}, {row["Email"]}, {row["NationalityCountryID"]}, :{row["ImagePath"]}");
+            }
+        
         }
 
         static clsPeople readPersonData()
@@ -58,12 +66,15 @@ namespace DVLDConsoleAPP
 
         static void Main(string[] args)
         {
-           //Mode konusu
-           //hangi durumlarda mode add hang durumlarda update
-           //parametereli const'ta mode var mı daha dogrusu parametereli const olmalı mi, dışrdan erişilebili mi? 
-          
+            //Mode konusu
+            //hangi durumlarda mode add hang durumlarda update
+            //parametereli const'ta mode var mı daha dogrusu parametereli const olmalı mi, dışrdan erişilebili mi? 
+
 
             //Adım adım implemente ederek gidelim.
+
+
+            printAllPeopleRecords();
         }
     }
 }

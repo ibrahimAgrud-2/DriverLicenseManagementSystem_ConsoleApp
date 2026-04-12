@@ -27,7 +27,12 @@ namespace DVLD_BusinessLayer
         public enMode mode;
 
 
+        //static olmalı çünkü obje oluşturulmadan erişebilmeliyiz.
+        public static DataTable getAllPersonRecords()
+        {
+            return clsPeopleDataAccess.getAllPersonRecords();
+        }
 
-    
+
     }
 }

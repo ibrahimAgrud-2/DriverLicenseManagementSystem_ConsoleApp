@@ -10,7 +10,7 @@ namespace DVLD_DataAccessLayer
 
         public static DataTable getAllPersonRecords()
         {
-            DataTable dtRecodrs = new DataTable();
+            DataTable dt = new DataTable();
 
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
             string sqlQuery = "select * from people";
@@ -24,7 +24,7 @@ namespace DVLD_DataAccessLayer
 
                     if (read.HasRows)
                     {
-                        dtRecodrs.Load(read);
+                        dt.Load(read);
                     }
                
                 read.Close();
@@ -41,7 +41,7 @@ namespace DVLD_DataAccessLayer
            
 
 
-            return dtRecodrs;
+            return dt;
         }
 
         public static int addPerson(string nationalNo, string firstName, string secondName,
