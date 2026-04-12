@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Net;
+using System.Security.Policy;
 
 
 namespace DVLD_DataAccessLayer
@@ -147,6 +149,42 @@ namespace DVLD_DataAccessLayer
         }
 
 
+        public static bool isPersonExist(int personID)
+        {
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+
+            //bu sorgunun soncu: eğer kayıt varsa bir sütun oluşur adı found ve sütun tek satırlı olur (çünkü her ID bir adet olduğu için) satırda 1 yazar. Bu demek oluyor ki bu ID var.
+             
+            string query = "select found =1 from people where PersonID=@PersonID";
+            SqlCommand cmd = new SqlCommand(query, connection);
+            cmd.Parameters.AddWithValue("@personID", personID);
+        
+
+            try
+            {
+                connection.Open();
+          
+                //Sorgu sonucu bir sayı geldiyse (ID tek olduğu için sadece bir adet sayı gelir eğer ID varsa) bu demektir ki o ID sistemde var. sayı dışında bir şey gelirse bu demek oluyor ki o kişi sistemde yok.
+
+                object result = cmd.ExecuteScalar();
+                if (int.TryParse(result.ToString(), out int value))
+                {
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+
+                return false; ;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return false;
+        }
+
         public static int addPerson(string nationalNo, string firstName, string secondName,
                    string thirdName, string lastName, DateTime dateOfBirth,
                    int gender, string address, string email, string phone,
@@ -212,7 +250,98 @@ namespace DVLD_DataAccessLayer
         }
 
 
+        public static bool updatePersonInfo(int personID ,string nationalNo, string firstName, string secondName,
+          string thirdName, string lastName, DateTime dateOfBirth,
+          int gender, string address, string email, string phone,
+          int countryID, string imagePath)
+        {
 
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+
+            string query = "update people set nationalNo=@nationalNo,firstName=@firstName,secondName=@secondName,thirdName= @thirdName,lastName=@lastName,dateOfBirth=@dateOfBirth,gender=@gender,address=@address,email=@email,phone = @phone,nationalityCountryID=@nationalityCountryID,imagePath=@imagePath where personID =@personID";
+
+            SqlCommand cmd = new SqlCommand(query, connection);
+            cmd.Parameters.AddWithValue("@personID", personID);
+            cmd.Parameters.AddWithValue("@firstName", firstName);
+            cmd.Parameters.AddWithValue("@secondName", secondName);
+            cmd.Parameters.AddWithValue("@thirdName", thirdName);
+            cmd.Parameters.AddWithValue("@lastName", lastName);
+            cmd.Parameters.AddWithValue("@dateOfBirth", dateOfBirth);
+            cmd.Parameters.AddWithValue("@gender", gender);
+            cmd.Parameters.AddWithValue("@address", address);
+            cmd.Parameters.AddWithValue("@email", email);
+            cmd.Parameters.AddWithValue("@phone", phone);
+            cmd.Parameters.AddWithValue("@nationalityCountryID", countryID);
+            cmd.Parameters.AddWithValue("@nationalNo", nationalNo);
+            if (imagePath == string.Empty)
+            {
+                cmd.Parameters.AddWithValue("@imagePath", System.DBNull.Value);
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@imagePath", imagePath);
+
+            }
+
+
+            try
+            {
+                connection.Open();
+                //affectedRowsNumber==1 çünkü her seferinde sadece 1 satır günnceleyebiliriz onun dışındaki tüm durumlar beklenmedik durum.
+                int affectedRowsNumber = cmd.ExecuteNonQuery();
+                if (affectedRowsNumber == 1)
+                {
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+
+                return false; ;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return false;
+        }
+
+
+        public static bool deletePerson(int personID)
+        {
+            
+            
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            string query = "delete people where PersonID=@personID";
+            SqlCommand cmd = new SqlCommand(query, connection);
+            cmd.Parameters.AddWithValue("@personID", personID);
+
+
+            try
+            {
+                connection.Open();
+
+                //Sorgu sonucu bir sayı geldiyse (ID tek olduğu için sadece bir adet sayı gelir eğer ID varsa) bu demektir ki o ID sistemde var. sayı dışında bir şey gelirse bu demek oluyor ki o kişi sistemde yok.
+
+                int affectedRows = cmd.ExecuteNonQuery();
+                if (affectedRows==1)
+                {
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+
+                return false; ;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return false;
+        }
 
     }
 }

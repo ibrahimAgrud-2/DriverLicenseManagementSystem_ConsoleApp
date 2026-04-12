@@ -2,6 +2,7 @@
 using System;
 using System.Data;
 using System.Net;
+using System.Security.Cryptography;
 
 
 namespace DVLDConsoleAPP
@@ -31,35 +32,68 @@ namespace DVLDConsoleAPP
             }
         }
 
-  
-        static void Main(string[] args)
+        static void updatePersonInfo(int personID)
         {
-            //Mode konusu
-            //hangi durumlarda mode add hang durumlarda update
-            //parametereli const'ta mode var mı daha dogrusu parametereli const olmalı mi, dışrdan erişilebili mi? 
+            
+            if (!clsPeople.isPersonExist(personID))
+            {
+                Console.WriteLine("Person Does not exist");
+                return;
+            }
+            clsPeople p1 = clsPeople.findPersonByID(personID);
+            Console.WriteLine("enter birthdate");
+            p1.dateOfBirth =Convert.ToDateTime(Console.ReadLine());
+
+            if (p1.save())
+            {
+                Console.WriteLine("Updated successfully");
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong");
+            }
+        }
+      
+        static void deletePerson(int personID)
+        {
+            if (!clsPeople.isPersonExist(personID))
+            {
+                Console.WriteLine("person does not exist");
+                return;
+            }
+
+            if (clsPeople.deletePerson(personID))
+            {
+                Console.WriteLine("Deleted successfully");
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong");
+            }
+        
+        }
+        static void Main(string[] args)
+        {//Adım adım impletemte ederek gidelim ligo gibi
 
 
-            //Adım adım implemente ederek gidelim.
-
-
+            //başvuruyu silemden kişi sillinmez. Bu yüt FK kısıtlamalrı sistemde olmalı. yani kişinin başvurus varsa o kişi silenemez ilk önce başvuru silinmeli sonra kişi.
 
 
             //addPerson(
-            //    "n34",      
-            //    "Ahmet",                  
-            //    "Mehmet",                 
-            //    "Can",                 
-            //    "Yılmaz",                 
+            //    "n34",
+            //    "Ahmet",
+            //    "Mehmet",
+            //    "Can",
+            //    "Yılmaz",
             //    new DateTime(1990, 5, 15),
-            //    0,                   
-            //    "İstanbul, Kadıköy", 
-            //    "05321234567",            
-            //    "ahmet.yilmaz@email.com", 
-            //    1,                      
+            //    0,
+            //    "İstanbul, Kadıköy",
+            //    "05321234567",
+            //    "ahmet.yilmaz@email.com",
+            //    1,
             //    "C:\\Users\\Pictures\\ahmet.jpg"
             //);
 
-          
 
 
             //Gelişim Sorularu

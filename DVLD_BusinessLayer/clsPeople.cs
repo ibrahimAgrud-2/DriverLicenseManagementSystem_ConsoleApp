@@ -1,6 +1,7 @@
 ﻿using DVLD_DataAccessLayer;
 using System;
 using System.Data;
+using System.Runtime.InteropServices;
 
 
 
@@ -69,7 +70,7 @@ namespace DVLD_BusinessLayer
         //find'da eğer jayıt yoksa boş obje döndermek için kullanmak için işe yarayabilir diye oluşturdum.
         //Find parametreli cons kullanamam çünkü parametereli const sadece sıfırdan veri eklemek için kullanılıyıor.
         
-        //Bence burada mode olmamalı. Çünkü update, add yapabilceğimizi düzgün obje yok ki. Bunula boş obje oluşturabiliriz ve boş obje add veya updete olamaz.
+        //Bence burada mode hiç olmamalı. Çünkü update, add yapabilceğimizi düzgün obje yok ki. Bunula boş obje oluşturabiliriz ve boş obje add veya updete olamaz.
         private clsPeople()
         {
 
@@ -153,7 +154,31 @@ namespace DVLD_BusinessLayer
 
         }
 
+        private bool _updatePersonInfo()
+        {
+            return clsPeopleDataAccess.updatePersonInfo(this.personID, this.nationalNo, this.firstName, this.secondName, this.thirdName, this.lastName, this.dateOfBirth, this.gender, this.address, this.email, this.phone, this.countryID, this.imagePath);
+        }
 
+        //ID vermelisin çünkü bu fonk obje olmadan çağıralacak.
+        public static bool isPersonExist(int personID)
+        {
+            return clsPeopleDataAccess.isPersonExist(personID);
+        }
+     
+        //bir objeyi silmek için onu ayrıyeten DB'den programam yüklemem gerek yok bu yüzden static yapıp sadece ID alarak silmek istedim. static olmayadabilirdi. Bu durumda fonk public olur ve obje.delete diyeceğimiz için ID'İ parametre olarak bu fonksyion'a vermemiz gerekmezdi, this kullanarak ID alırdık (çünkü program o anki obje üzerin olurdu)
+
+        //Buraya şöyle bir durum eklenmeli eğer bu kişi sistemde bir işleme başvuru yapmışsa bu kişiyi direk silemezsin. İlk önce o başvuruyu silmelisin sonra kişiyi silebilirsin. Çünkü başvurular tablosun'dan bu tabloya FK var sonuç olarak eğer kişiyi silersen bu sefer başvuru bilgisi eksik olur yani başvuruyu kimin yaptıığ bilinmez.
+        public static bool deletePerson(int personID)
+        {
+            if (isPersonExist(personID))
+            {
+                return clsPeopleDataAccess.deletePerson(personID);
+
+            }
+            return false;
+          
+        }
+        
         public bool save()
         {
             switch (this.mode)
@@ -162,7 +187,7 @@ namespace DVLD_BusinessLayer
                     return _addNewRecord();
                    
                 case enMode.enUpdate:
-                    return false;
+                    return _updatePersonInfo();
                 default:
                     return false;
             }
