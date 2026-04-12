@@ -79,26 +79,29 @@ namespace DVLDConsoleAPP
             //başvuruyu silemden kişi sillinmez. Bu yüt FK kısıtlamalrı sistemde olmalı. yani kişinin başvurus varsa o kişi silenemez ilk önce başvuru silinmeli sonra kişi.
 
 
-            //addPerson(
-            //    "n34",
-            //    "Ahmet",
-            //    "Mehmet",
-            //    "Can",
-            //    "Yılmaz",
-            //    new DateTime(1990, 5, 15),
-            //    0,
-            //    "İstanbul, Kadıköy",
-            //    "05321234567",
-            //    "ahmet.yilmaz@email.com",
-            //    1,
-            //    "C:\\Users\\Pictures\\ahmet.jpg"
-            //);
+            addPerson(
+                "n34",
+                "oko",
+                "Mehmet",
+                "Can",
+                "Yılmaz",
+                new DateTime(1990, 5, 15),
+                0,
+                "İstanbul, Kadıköy",
+                "05321234567",
+                "ahmet.yilmaz@email.com",
+                1,
+                "C:\\Users\\Pictures\\ahmet.jpg"
+            );
 
 
 
             //Gelişim Sorularu
             /*
              - mesela database'de firstName null değer kabul etmesin. veriyi database'e gönderirken null kontolu dataAccess layer'da yapmalımıyız yoksa sadece Form Üzreinde kontrollerde mi yapacağız. **Eğer dataAccess layer'da yapmazsak bu dll'i başka yerde kullandığımızda aynı kontrolleri o arayüzde de yapmamız gerekir yani bu kısım arayüzde bağımlı olur** Meselae bunu önüne şu şelilde geçebiliriz. sadece parametereli const'u public yaparız. BU sayede kullanıc obje oluştutmak için verileri girmek zorunda. Zaten save fonskyionu objeye bağlı olduğu için anca obje ile çağırılabili. Yani save yapacapımız zaman o objenin tüm verileri düzenli bir şekilde parametreli const tarafından alınmış olur.
+
+
+            - People sınıfın için Constracter yapısında bir değişiklik var mı? ben birini private birini public yaptım hoca nasıl yapmış?
              */
         }
     }

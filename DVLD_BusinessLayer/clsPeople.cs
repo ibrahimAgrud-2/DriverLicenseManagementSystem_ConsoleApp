@@ -71,7 +71,7 @@ namespace DVLD_BusinessLayer
         //Find parametreli cons kullanamam çünkü parametereli const sadece sıfırdan veri eklemek için kullanılıyıor.
         
         //Bence burada mode hiç olmamalı. Çünkü update, add yapabilceğimizi düzgün obje yok ki. Bunula boş obje oluşturabiliriz ve boş obje add veya updete olamaz.
-        private clsPeople()
+        private  clsPeople()
         {
 
             this.nationalNo = "";
@@ -86,6 +86,7 @@ namespace DVLD_BusinessLayer
             this.phone =  "";
             this.countryID = -1;
             this.imagePath = ""; ;
+            this.mode = enMode.enAddNew;
             
         }
 
@@ -130,7 +131,7 @@ namespace DVLD_BusinessLayer
             int personID=-1, gender = -1, countryID = -1;
 
 
-            bool findResult = clsPeopleDataAccess.findPersonByNationalityNo( ref personID, nationalNo, ref firstName, ref secondName, ref thirdName, ref lastName, ref dateOfBirth, ref gender, ref address, ref email, ref phone, ref countryID, ref imagePath);
+            bool findResult = clsPeopleDataAccess.findPersonByNationalNo( ref personID, nationalNo, ref firstName, ref secondName, ref thirdName, ref lastName, ref dateOfBirth, ref gender, ref address, ref email, ref phone, ref countryID, ref imagePath);
 
             clsPeople p1 = new clsPeople();
             if (findResult)

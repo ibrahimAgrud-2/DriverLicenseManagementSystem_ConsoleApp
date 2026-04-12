@@ -96,7 +96,7 @@ namespace DVLD_DataAccessLayer
             return false;
         }
 
-        public static bool findPersonByNationalityNo(ref int personID, string nationalNo, ref string firstName, ref string secondName, ref
+        public static bool findPersonByNationalNo(ref int personID, string nationalNo, ref string firstName, ref string secondName, ref
        string thirdName, ref string lastName, ref DateTime dateOfBirth, ref
        int gender, ref string address, ref string email, ref string phone, ref
        int countryID, ref string imagePath)
