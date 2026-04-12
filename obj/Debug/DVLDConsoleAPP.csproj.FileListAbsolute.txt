@@ -1,0 +1,13 @@
+C:\Users\ibrah\source\repos\DVLDConsoleAPP\bin\Debug\DVLDConsoleAPP.exe.config
+C:\Users\ibrah\source\repos\DVLDConsoleAPP\bin\Debug\DVLDConsoleAPP.exe
+C:\Users\ibrah\source\repos\DVLDConsoleAPP\bin\Debug\DVLDConsoleAPP.pdb
+C:\Users\ibrah\source\repos\DVLDConsoleAPP\bin\Debug\DVLD_BusinessLayer.dll
+C:\Users\ibrah\source\repos\DVLDConsoleAPP\bin\Debug\DVLD_DataAccessLayer.dll
+C:\Users\ibrah\source\repos\DVLDConsoleAPP\bin\Debug\DVLD_BusinessLayer.pdb
+C:\Users\ibrah\source\repos\DVLDConsoleAPP\bin\Debug\DVLD_DataAccessLayer.pdb
+C:\Users\ibrah\source\repos\DVLDConsoleAPP\obj\Debug\DVLDConsoleAPP.csproj.AssemblyReference.cache
+C:\Users\ibrah\source\repos\DVLDConsoleAPP\obj\Debug\DVLDConsoleAPP.csproj.CoreCompileInputs.cache
+C:\Users\ibrah\source\repos\DVLDConsoleAPP\obj\Debug\DVLDCons.98EDC53F.Up2Date
+C:\Users\ibrah\source\repos\DVLDConsoleAPP\obj\Debug\DVLDConsoleAPP.exe
+C:\Users\ibrah\source\repos\DVLDConsoleAPP\obj\Debug\DVLDConsoleAPP.pdb
+C:\Users\ibrah\source\repos\DVLDConsoleAPP\obj\Debug\DVLDConsoleAPP.exe.config
