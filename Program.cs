@@ -1,6 +1,7 @@
 ﻿using DVLD_BusinessLayer;
 using System;
 using System.Data;
+using System.Net;
 
 
 namespace DVLDConsoleAPP
@@ -20,50 +21,17 @@ namespace DVLDConsoleAPP
         
         }
 
-        static clsPeople readPersonData()
+        static void addPerson(string nationalityID,string firstName,string secondName,string thirdName,string lastName,DateTime dateOfBirth,int gender,string address,string phone,string email,int countryID,string imagePath)
         {
-            clsPeople p1 = new clsPeople();
 
-
-            Console.WriteLine("NationalityNo:");
-            p1.nationalNo = Console.ReadLine();
-
-            Console.WriteLine("First Name:");
-            p1.firstName = Console.ReadLine();
-
-            Console.WriteLine("Second Name:");
-            p1.secondName = Console.ReadLine();
-
-            Console.WriteLine("Third Name:");
-            p1.thirdName = Console.ReadLine();
-
-            Console.WriteLine("Last Name:");
-            p1.lastName = Console.ReadLine();
-
-            Console.WriteLine("Date of Birth (yyyy-MM-dd):");
-            p1.dateOfBirth = Convert.ToDateTime(Console.ReadLine());
-
-            Console.WriteLine("Gender (M(0)/F(1)):");
-            p1.gender = Console.ReadLine();
-
-            Console.WriteLine("Address:");
-            p1.address = Console.ReadLine();
-
-            Console.WriteLine("Email:");
-            p1.email = Console.ReadLine();
-
-            Console.WriteLine("Phone:");
-            p1.phone = Console.ReadLine();
-
-            Console.WriteLine("Country ID:");
-            p1.countryID = Convert.ToInt32(Console.ReadLine());
-
-            Console.WriteLine("Image Path:");
-            p1.imagePath = Console.ReadLine();
-
-            return p1;
+            clsPeople p1 = new clsPeople(nationalityID, firstName, secondName, thirdName, lastName, dateOfBirth, gender, address, phone, email, countryID, imagePath);
+            if (p1.save())
+            {
+                Console.WriteLine("\n\nOK");
+            }
         }
 
+  
         static void Main(string[] args)
         {
             //Mode konusu
@@ -74,7 +42,32 @@ namespace DVLDConsoleAPP
             //Adım adım implemente ederek gidelim.
 
 
-            printAllPeopleRecords();
+
+
+            //addPerson(
+            //    "n34",      
+            //    "Ahmet",                  
+            //    "Mehmet",                 
+            //    "Can",                 
+            //    "Yılmaz",                 
+            //    new DateTime(1990, 5, 15),
+            //    0,                   
+            //    "İstanbul, Kadıköy", 
+            //    "05321234567",            
+            //    "ahmet.yilmaz@email.com", 
+            //    1,                      
+            //    "C:\\Users\\Pictures\\ahmet.jpg"
+            //);
+
+          
+
+
+            //Gelişim Sorularu
+            /*
+             - mesela database'de firstName null değer kabul etmesin. veriyi database'e gönderirken null kontolu dataAccess layer'da yapmalımıyız yoksa sadece Form Üzreinde kontrollerde mi yapacağız. **Eğer dataAccess layer'da yapmazsak bu dll'i başka yerde kullandığımızda aynı kontrolleri o arayüzde de yapmamız gerekir yani bu kısım arayüzde bağımlı olur** Meselae bunu önüne şu şelilde geçebiliriz. sadece parametereli const'u public yaparız. BU sayede kullanıc obje oluştutmak için verileri girmek zorunda. Zaten save fonskyionu objeye bağlı olduğu için anca obje ile çağırılabili. Yani save yapacapımız zaman o objenin tüm verileri düzenli bir şekilde parametreli const tarafından alınmış olur.
+             */
         }
     }
 }
+
+

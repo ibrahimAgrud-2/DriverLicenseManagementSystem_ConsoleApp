@@ -8,7 +8,7 @@ namespace DVLD_DataAccessLayer
     public class clsPeopleDataAccess
     {
 
-        public static DataTable getAllPersonRecords()
+        public static DataTable getPeople()
         {
             DataTable dt = new DataTable();
 
@@ -43,10 +43,113 @@ namespace DVLD_DataAccessLayer
 
             return dt;
         }
+        public static  bool findPersonByID(int personID, ref string nationalNo, ref string firstName, ref string secondName, ref
+           string thirdName, ref string lastName, ref DateTime dateOfBirth, ref
+           int gender, ref string address, ref string email, ref string phone, ref
+           int countryID, ref string imagePath)
+        {
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+
+            string query = "select * from People where PersonID=@personID";
+
+            SqlCommand cmd = new SqlCommand(query, connection);
+
+            cmd.Parameters.AddWithValue("@PersonID", personID);
+
+            try
+            {
+                connection.Open();
+                SqlDataReader read = cmd.ExecuteReader();
+
+                if (read.Read())
+                {
+                     personID = Convert.ToInt32(read["PersonID"]);
+                     nationalNo = read["nationalNo"].ToString();
+                     firstName = read["firstName"].ToString();
+                     secondName = read["secondName"].ToString();
+                     thirdName = read["thirdName"].ToString();
+                     lastName = read["lastName"].ToString();
+                     dateOfBirth = Convert.ToDateTime(read["dateOfBirth"]);
+                     gender = Convert.ToInt32(read["gender"]);
+                     address = read["address"].ToString();
+                     email = read["email"].ToString();
+                     phone = read["phone"].ToString();
+                     countryID = Convert.ToInt32(read["nationalityCountryID"]);
+                     imagePath = read["imagePath"].ToString();
+                    return true;
+                }
+
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+
+            }
+
+            return false;
+        }
+
+        public static bool findPersonByNationalityNo(ref int personID, string nationalNo, ref string firstName, ref string secondName, ref
+       string thirdName, ref string lastName, ref DateTime dateOfBirth, ref
+       int gender, ref string address, ref string email, ref string phone, ref
+       int countryID, ref string imagePath)
+        {
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+
+            string query = "select * from People where NationalNo=@nationalNo";
+
+            SqlCommand cmd = new SqlCommand(query, connection);
+
+            cmd.Parameters.AddWithValue("@nationalNo", nationalNo);
+
+            try
+            {
+                connection.Open();
+                SqlDataReader read = cmd.ExecuteReader();
+
+                if (read.Read())
+                {
+
+                    personID = Convert.ToInt32(read["PersonID"]);
+                    nationalNo = read["nationalNo"].ToString();
+                    firstName = read["firstName"].ToString();
+                    secondName = read["secondName"].ToString();
+                    thirdName = read["thirdName"].ToString();
+                    lastName = read["lastName"].ToString();
+                    dateOfBirth = Convert.ToDateTime(read["dateOfBirth"]);
+                    gender = Convert.ToInt32(read["gender"]);
+                    address = read["address"].ToString();
+                    email = read["email"].ToString();
+                    phone = read["phone"].ToString();
+                    countryID = Convert.ToInt32(read["nationalityCountryID"]);
+                    imagePath = read["imagePath"].ToString();
+                    return true;
+                }
+
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+
+            }
+
+            return false;
+        }
+
 
         public static int addPerson(string nationalNo, string firstName, string secondName,
                    string thirdName, string lastName, DateTime dateOfBirth,
-                   string gender, string address, string email, string phone,
+                   int gender, string address, string email, string phone,
                    int countryID, string imagePath)
         {
           
@@ -107,5 +210,9 @@ namespace DVLD_DataAccessLayer
             }
 
         }
+
+
+
+
     }
 }
