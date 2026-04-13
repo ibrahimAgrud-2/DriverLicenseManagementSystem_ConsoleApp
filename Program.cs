@@ -26,10 +26,11 @@ namespace DVLDConsoleAPP
         {
 
             clsPeople p1 = new clsPeople();
-            //while (clsPeople.isPersonExistByNationalNo(nationalNo))
-            //{
-            //    Console.WriteLine(nationalNo +" is already exist.");
-            //}
+            if (clsPeople.isPersonExistByNationalNo(nationalNo))
+            {
+                Console.WriteLine("person with "+nationalNo + "national number is already exist.");
+                return;
+            }
             p1.nationalNo = nationalNo;
             p1.firstName = firstName;
             p1.secondName = secondName;
@@ -95,9 +96,14 @@ namespace DVLDConsoleAPP
         }
         static void Main(string[] args)
         {//Adım adım impletemte ederek gidelim ligo gibi
-
-
+            
             //başvuruyu silemden kişi sillinmez. Bu yüt FK kısıtlamalrı sistemde olmalı. yani kişinin başvurus varsa o kişi silenemez ilk önce başvuru silinmeli sonra kişi.
+
+           
+            
+            
+            //****Her adımı commit yap.****
+
 
 
             addPerson(
