@@ -138,6 +138,7 @@ namespace DVLD_BusinessLayer
         {
             return clsPeopleDataAccess.isPersonExistByID(personID);
         }
+        //TC sistemde var mı yoku kontrol edeceğiz bu sayede aynı TC ile sisteme kayıt olunmasın. Şu anlık DB'de bunu nasıl kontrol ederiz bilemiyorum. Veya bu yöntem daha hızlı olduğu için bunu tercih ederim.
         public static bool isPersonExistByNationalNo(string NationalNo)
         {
             return clsPeopleDataAccess.isPersonExistByNationalNo(NationalNo);
@@ -147,7 +148,7 @@ namespace DVLD_BusinessLayer
         //Buraya şöyle bir durum eklenmeli eğer bu kişi sistemde bir işleme başvuru yapmışsa bu kişiyi direk silemezsin. İlk önce o başvuruyu silmelisin sonra kişiyi silebilirsin. Çünkü başvurular tablosun'dan bu tabloya FK var sonuç olarak eğer kişiyi silersen bu sefer başvuru bilgisi eksik olur yani başvuruyu kimin yaptıığ bilinmez.
         public static bool deletePerson(int personID)
         {
-            if (isPersonExist(personID))
+            if (isPersonExistByID(personID))
             {
                 return clsPeopleDataAccess.deletePerson(personID);
             }
