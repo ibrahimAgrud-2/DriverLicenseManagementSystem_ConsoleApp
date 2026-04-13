@@ -58,8 +58,11 @@ namespace DVLD_BusinessLayer
             this.mode = enMode.enUpdate;
         }
 
+
+        //
         private bool _addNewRecord()
         {
+     
             this.personID = clsPeopleDataAccess.addPerson(this.nationalNo, this.firstName, this.secondName, this.thirdName, this.lastName, this.dateOfBirth, this.gender, this.address, this.email, this.phone, this.countryID, this.imagePath);
 
             return (this.personID != -1);
@@ -131,11 +134,14 @@ namespace DVLD_BusinessLayer
         }
 
         //ID vermelisin çünkü bu fonk obje olmadan çağıralacak.
-        public static bool isPersonExist(int personID)
+        public static bool isPersonExistByID(int personID)
         {
-            return clsPeopleDataAccess.isPersonExist(personID);
+            return clsPeopleDataAccess.isPersonExistByID(personID);
         }
-     
+        public static bool isPersonExistByNationalNo(string NationalNo)
+        {
+            return clsPeopleDataAccess.isPersonExistByNationalNo(NationalNo);
+        }
         //bir objeyi silmek için onu ayrıyeten DB'den programam yüklemem gerek yok bu yüzden static yapıp sadece ID alarak silmek istedim. static olmayadabilirdi. Bu durumda fonk public olur ve obje.delete diyeceğimiz için ID'İ parametre olarak bu fonksyion'a vermemiz gerekmezdi, this kullanarak ID alırdık (çünkü program o anki obje üzerin olurdu)
 
         //Buraya şöyle bir durum eklenmeli eğer bu kişi sistemde bir işleme başvuru yapmışsa bu kişiyi direk silemezsin. İlk önce o başvuruyu silmelisin sonra kişiyi silebilirsin. Çünkü başvurular tablosun'dan bu tabloya FK var sonuç olarak eğer kişiyi silersen bu sefer başvuru bilgisi eksik olur yani başvuruyu kimin yaptıığ bilinmez.

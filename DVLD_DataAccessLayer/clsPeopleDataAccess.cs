@@ -149,7 +149,7 @@ namespace DVLD_DataAccessLayer
         }
 
 
-        public static bool isPersonExist(int personID)
+        public static bool isPersonExistByID(int personID)
         {
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
 
@@ -166,6 +166,41 @@ namespace DVLD_DataAccessLayer
           
                 //Sorgu sonucu bir sayı geldiyse (ID tek olduğu için sadece bir adet sayı gelir eğer ID varsa) bu demektir ki o ID sistemde var. sayı dışında bir şey gelirse bu demek oluyor ki o kişi sistemde yok.
 
+                object result = cmd.ExecuteScalar();
+                if (int.TryParse(result.ToString(), out int value))
+                {
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+
+                return false; ;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return false;
+        }
+        //nationalNo yani TC eşsiz olacağı için yeni kişi eklemden önce sistemde o TC katıtlımı diye kontrol edebilmek için bu fonk kullanıyoruz.
+        public static bool isPersonExistByNationalNo(string NationalNo)
+        {
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+
+            //bu sorgunun soncu: eğer kayıt varsa bir sütun oluşur adı found ve sütun tek satırlı olur (çünkü her ID bir adet olduğu için) satırda 1 yazar. Bu demek oluyor ki bu ID var.
+
+            string query = "select found =1 from people where NationalNo=@nationalNo";
+            SqlCommand cmd = new SqlCommand(query, connection);
+            cmd.Parameters.AddWithValue("@nationalNo", NationalNo);
+
+
+            try
+            {
+                connection.Open();
+
+         
                 object result = cmd.ExecuteScalar();
                 if (int.TryParse(result.ToString(), out int value))
                 {

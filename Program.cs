@@ -40,7 +40,11 @@ namespace DVLDConsoleAPP
 
             if (p1.save())
             {
-                Console.WriteLine("\n\nOK");
+                Console.WriteLine("\n\nSaved with ID ",p1.personID);
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong");
             }
         }
 
