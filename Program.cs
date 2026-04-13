@@ -28,7 +28,7 @@ namespace DVLDConsoleAPP
             clsPeople p1 = new clsPeople();
             if (clsPeople.isPersonExistByNationalNo(nationalNo))
             {
-                Console.WriteLine("person with "+nationalNo + "national number is already exist.");
+                Console.WriteLine("person with "+ nationalNo + " national number is already exist.");
                 return;
             }
             p1.nationalNo = nationalNo;

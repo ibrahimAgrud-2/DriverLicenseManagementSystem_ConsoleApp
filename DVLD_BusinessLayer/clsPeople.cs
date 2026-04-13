@@ -60,7 +60,6 @@ namespace DVLD_BusinessLayer
 
 
 
-        
         private bool _addNewRecord()
         {
             this.personID = clsPeopleDataAccess.addPerson(this.nationalNo, this.firstName, this.secondName, this.thirdName, this.lastName, this.dateOfBirth, this.gender, this.address, this.email, this.phone, this.countryID, this.imagePath);
@@ -169,6 +168,16 @@ namespace DVLD_BusinessLayer
                 default:
                     return false;
             }
+        }
+
+
+        public bool sendEmail(string from ,string to,string body)
+        {
+            return false;
+        }
+        public void call(string phoneNumber)
+        {
+            return;
         }
 
     }
