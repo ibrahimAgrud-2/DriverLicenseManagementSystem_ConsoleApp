@@ -22,10 +22,22 @@ namespace DVLDConsoleAPP
         
         }
 
-        static void addPerson(string nationalityID,string firstName,string secondName,string thirdName,string lastName,DateTime dateOfBirth,int gender,string address,string phone,string email,int countryID,string imagePath)
+        static void addPerson(string nationalNo,string firstName,string secondName,string thirdName,string lastName,DateTime dateOfBirth,int gender,string address,string phone,string email,int countryID,string imagePath)
         {
 
-            clsPeople p1 = new clsPeople(nationalityID, firstName, secondName, thirdName, lastName, dateOfBirth, gender, address, phone, email, countryID, imagePath);
+            clsPeople p1 = new clsPeople();
+            p1.nationalNo = nationalNo;
+            p1.firstName = firstName;
+            p1.secondName = secondName;
+            p1.thirdName = thirdName;
+            p1.dateOfBirth = dateOfBirth;
+            p1.email = email;
+            p1.phone = phone;
+            p1.address = address;
+            p1.gender = gender;
+            p1.countryID = countryID;
+            p1.imagePath = imagePath;
+
             if (p1.save())
             {
                 Console.WriteLine("\n\nOK");

@@ -34,13 +34,15 @@ namespace DVLD_BusinessLayer
             return clsPeopleDataAccess.getPeople();
         }
 
-        //veriyi yani bilgileri ben elle girdiğimi için bu kişi DB'de yoktur anlamına geltir yani bu yüzden parametreli const mode add olmalı ve bence sadece bu const dışardan erişilebilmeli ki dışardan boş bir obje oluşturup DB'ye kayıt edemesinler.
-        public clsPeople(string nationalNo, string firstName, string secondName,
+        //1.Yöntem const'u public yaparız ve ID paramtersi eklemeyiz. Bu saydede kullanıcı dışardan obje oluşturacağı zaman illa uygun verileri girmek zorunda kalır. mode add olur çünkü dışardan oluşturulan o obje DB'de yok ilk defa oluşturuluyor, zaten ID auto number.
+        //2.Bir yöntem bunu private yaparız ve ID parametresi de ekleriz. Bu sayede DB'den aldığımız satırları program içinde direk bu const ile temsil etmiş oluruz. 2.Yöntem'den gidelim.
+        private clsPeople(int personID,string nationalNo, string firstName, string secondName,
            string thirdName, string lastName, DateTime dateOfBirth,
            int gender, string address, string email, string phone,
            int countryID, string imagePath)
         {
 
+            this.personID = personID;
             this.nationalNo = nationalNo;
             this.firstName = firstName;
             this.secondName = secondName;
@@ -53,7 +55,7 @@ namespace DVLD_BusinessLayer
             this.phone = phone;
             this.countryID = countryID;
             this.imagePath = imagePath;
-            this.mode = enMode.enAddNew;
+            this.mode = enMode.enUpdate;
         }
 
         private bool _addNewRecord()
@@ -63,15 +65,12 @@ namespace DVLD_BusinessLayer
             return (this.personID != -1);
         }
 
-        //bu fonkisyonun parameter almasında gerek yok çünkü ben bir objeyi istediğimi kısımları güncellerim sonra save ile update yaparım.
-  
 
 
-        //find'da eğer jayıt yoksa boş obje döndermek için kullanmak için işe yarayabilir diye oluşturdum.
-        //Find parametreli cons kullanamam çünkü parametereli const sadece sıfırdan veri eklemek için kullanılıyıor.
+
         
-        //Bence burada mode hiç olmamalı. Çünkü update, add yapabilceğimizi düzgün obje yok ki. Bunula boş obje oluşturabiliriz ve boş obje add veya updete olamaz.
-        private  clsPeople()
+        //Mode add çünkü sıfırdan obje bu const ile oluşturuluyor.
+        public  clsPeople()
         {
 
             this.nationalNo = "";
@@ -90,7 +89,7 @@ namespace DVLD_BusinessLayer
             
         }
 
-        //Find ile bulunan mode update olsun çünkü artık obje var ve add'lik bir durum kalmamış. Artık yaparsak update yaparız
+        //Find ile bulunan obje parametreli const ile oluşturulduğu için modu update olsun çünkü artık obje var ve add'lik bir durum kalmamış. Artık yaparsak update yaparız
         public static clsPeople findPersonByID(int personID)
         {
             
@@ -98,29 +97,13 @@ namespace DVLD_BusinessLayer
             DateTime dateOfBirth=DateTime.Now;
             int gender=-1,countryID=-1;
             
-
-            bool findResult = clsPeopleDataAccess.findPersonByID( personID, ref nationalNo, ref  firstName, ref  secondName, ref  thirdName, ref  lastName, ref  dateOfBirth, ref  gender, ref  address, ref  email, ref  phone, ref  countryID, ref  imagePath);
-
-            clsPeople p1 = new clsPeople();
-            if (findResult)
+           
+            if (clsPeopleDataAccess.findPersonByID(personID, ref nationalNo, ref firstName, ref secondName, ref thirdName, ref lastName, ref dateOfBirth, ref gender, ref address, ref email, ref phone, ref countryID, ref imagePath))
             {
-                p1.personID = personID;
-                p1.nationalNo = nationalNo;
-                p1.firstName = firstName;
-                p1.secondName = secondName;
-                p1.thirdName = thirdName;
-                p1.dateOfBirth = dateOfBirth;
-                p1.email = email;
-                p1.phone = phone;
-                p1.address = address;
-                p1.gender = gender;
-                p1.countryID = countryID;
-                p1.imagePath = imagePath;
-                p1.mode = enMode.enUpdate;
+                return new clsPeople(personID, nationalNo, firstName, secondName, thirdName, lastName, dateOfBirth, gender, address, email, phone, countryID, imagePath);
               
             }
-            return  p1;
-
+            return null;
         }
 
         public static clsPeople findPersonByNationalNo(string nationalNo)
@@ -131,30 +114,17 @@ namespace DVLD_BusinessLayer
             int personID=-1, gender = -1, countryID = -1;
 
 
-            bool findResult = clsPeopleDataAccess.findPersonByNationalNo( ref personID, nationalNo, ref firstName, ref secondName, ref thirdName, ref lastName, ref dateOfBirth, ref gender, ref address, ref email, ref phone, ref countryID, ref imagePath);
+    
 
-            clsPeople p1 = new clsPeople();
-            if (findResult)
+            if (clsPeopleDataAccess.findPersonByNationalNo(ref personID, nationalNo, ref firstName, ref secondName, ref thirdName, ref lastName, ref dateOfBirth, ref gender, ref address, ref email, ref phone, ref countryID, ref imagePath))
             {
-                p1.personID = personID;
-                p1.nationalNo = nationalNo;
-                p1.firstName = firstName;
-                p1.secondName = secondName;
-                p1.thirdName = thirdName;
-                p1.dateOfBirth = dateOfBirth;
-                p1.email = email;
-                p1.phone = phone;
-                p1.address = address;
-                p1.gender = gender;
-                p1.countryID = countryID;
-                p1.imagePath = imagePath;
-                p1.mode = enMode.enUpdate;
-
+                return new clsPeople(personID, nationalNo, firstName, secondName, thirdName, lastName, dateOfBirth, gender, address, email, phone, countryID, imagePath);
             }
-            return p1;
-
+            return null;
         }
 
+
+        //bu fonkisyonun parameter almasında gerek yok çünkü ben bir objeyinin istediğimi kısımlarını güncellerim sonra save ile update yaparım.
         private bool _updatePersonInfo()
         {
             return clsPeopleDataAccess.updatePersonInfo(this.personID, this.nationalNo, this.firstName, this.secondName, this.thirdName, this.lastName, this.dateOfBirth, this.gender, this.address, this.email, this.phone, this.countryID, this.imagePath);
@@ -174,7 +144,6 @@ namespace DVLD_BusinessLayer
             if (isPersonExist(personID))
             {
                 return clsPeopleDataAccess.deletePerson(personID);
-
             }
             return false;
           
