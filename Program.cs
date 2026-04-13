@@ -26,10 +26,15 @@ namespace DVLDConsoleAPP
         {
 
             clsPeople p1 = new clsPeople();
+            //while (clsPeople.isPersonExistByNationalNo(nationalNo))
+            //{
+            //    Console.WriteLine(nationalNo +" is already exist.");
+            //}
             p1.nationalNo = nationalNo;
             p1.firstName = firstName;
             p1.secondName = secondName;
             p1.thirdName = thirdName;
+            p1.lastName = lastName;
             p1.dateOfBirth = dateOfBirth;
             p1.email = email;
             p1.phone = phone;
@@ -51,7 +56,7 @@ namespace DVLDConsoleAPP
         static void updatePersonInfo(int personID)
         {
             
-            if (!clsPeople.isPersonExist(personID))
+            if (!clsPeople.isPersonExistByID(personID))
             {
                 Console.WriteLine("Person Does not exist");
                 return;
@@ -72,7 +77,7 @@ namespace DVLDConsoleAPP
       
         static void deletePerson(int personID)
         {
-            if (!clsPeople.isPersonExist(personID))
+            if (!clsPeople.isPersonExistByID(personID))
             {
                 Console.WriteLine("person does not exist");
                 return;
@@ -96,16 +101,16 @@ namespace DVLDConsoleAPP
 
 
             addPerson(
-                "n34",
-                "oko",
+                "n36",
+                "Ali",
                 "Mehmet",
                 "Can",
-                "Yılmaz",
+                "kara",
                 new DateTime(1990, 5, 15),
                 0,
                 "İstanbul, Kadıköy",
                 "05321234567",
-                "ahmet.yilmaz@email.com",
+                "yilmaz@email.com",
                 1,
                 "C:\\Users\\Pictures\\ahmet.jpg"
             );

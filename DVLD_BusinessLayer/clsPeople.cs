@@ -59,10 +59,10 @@ namespace DVLD_BusinessLayer
         }
 
 
-        //
+
+        
         private bool _addNewRecord()
         {
-     
             this.personID = clsPeopleDataAccess.addPerson(this.nationalNo, this.firstName, this.secondName, this.thirdName, this.lastName, this.dateOfBirth, this.gender, this.address, this.email, this.phone, this.countryID, this.imagePath);
 
             return (this.personID != -1);
@@ -130,6 +130,7 @@ namespace DVLD_BusinessLayer
         //bu fonkisyonun parameter almasında gerek yok çünkü ben bir objeyinin istediğimi kısımlarını güncellerim sonra save ile update yaparım.
         private bool _updatePersonInfo()
         {
+          
             return clsPeopleDataAccess.updatePersonInfo(this.personID, this.nationalNo, this.firstName, this.secondName, this.thirdName, this.lastName, this.dateOfBirth, this.gender, this.address, this.email, this.phone, this.countryID, this.imagePath);
         }
 

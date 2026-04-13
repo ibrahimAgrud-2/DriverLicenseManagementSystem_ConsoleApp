@@ -167,7 +167,7 @@ namespace DVLD_DataAccessLayer
                 //Sorgu sonucu bir sayı geldiyse (ID tek olduğu için sadece bir adet sayı gelir eğer ID varsa) bu demektir ki o ID sistemde var. sayı dışında bir şey gelirse bu demek oluyor ki o kişi sistemde yok.
 
                 object result = cmd.ExecuteScalar();
-                if (int.TryParse(result.ToString(), out int value))
+                if (result!=null&&int.TryParse(result.ToString(), out int value))
                 {
                     return true;
                 }
@@ -185,6 +185,7 @@ namespace DVLD_DataAccessLayer
             return false;
         }
         //nationalNo yani TC eşsiz olacağı için yeni kişi eklemden önce sistemde o TC katıtlımı diye kontrol edebilmek için bu fonk kullanıyoruz.
+  
         public static bool isPersonExistByNationalNo(string NationalNo)
         {
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
@@ -200,9 +201,9 @@ namespace DVLD_DataAccessLayer
             {
                 connection.Open();
 
-         
+
                 object result = cmd.ExecuteScalar();
-                if (int.TryParse(result.ToString(), out int value))
+                if (result != null&&int.TryParse(result.ToString(), out int value))
                 {
                     return true;
                 }
@@ -228,7 +229,7 @@ namespace DVLD_DataAccessLayer
           
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
 
-            string query = "insert into people values (@nationalNo,@firstName,@secondName,@thirdName,@lastName,@dateOfBirth,@gender,@address,@email,@phone,@nationalityCountryID,@imagePath);Select Scope_Identity();";
+            string query = "IF not exists (select personID from people where NationalNo=@nationalNo) begin insert into people values (@nationalNo,@firstName,@secondName,@thirdName,@lastName,@dateOfBirth,@gender,@address,@email,@phone,@nationalityCountryID,@imagePath) Select Scope_Identity() end;";
 
             SqlCommand cmd = new SqlCommand(query, connection);
 
