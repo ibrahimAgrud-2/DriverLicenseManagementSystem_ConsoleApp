@@ -46,7 +46,7 @@ namespace DVLDConsoleAPP
 
             if (p1.save())
             {
-                Console.WriteLine("\n\nSaved with ID ",p1.personID);
+                Console.WriteLine("\n\nSaved with ID "+p1.personID);
             }
             else
             {
@@ -107,7 +107,7 @@ namespace DVLDConsoleAPP
 
 
             addPerson(
-                "n36",
+                "n39",
                 "Ali",
                 "Mehmet",
                 "Can",
