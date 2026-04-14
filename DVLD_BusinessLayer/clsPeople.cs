@@ -126,7 +126,7 @@ namespace DVLD_BusinessLayer
 
 
         //bu fonkisyonun parameter almasında gerek yok çünkü ben bir objeyinin istediğimi kısımlarını güncellerim sonra save ile update yaparım.
-        private bool _updatePersonInfo()
+        private bool _updateInfo()
         {
           
             return clsPeopleDataAccess.updatePersonInfo(this.personID, this.nationalNo, this.firstName, this.secondName, this.thirdName, this.lastName, this.dateOfBirth, this.gender, this.address, this.email, this.phone, this.countryID, this.imagePath);
@@ -145,10 +145,10 @@ namespace DVLD_BusinessLayer
         //bir objeyi silmek için onu ayrıyeten DB'den programam yüklemem gerek yok bu yüzden static yapıp sadece ID alarak silmek istedim. static olmayadabilirdi. Bu durumda fonk public olur ve obje.delete diyeceğimiz için ID'İ parametre olarak bu fonksyion'a vermemiz gerekmezdi, this kullanarak ID alırdık (çünkü program o anki obje üzerin olurdu)
 
         //Buraya şöyle bir durum eklenmeli eğer bu kişi sistemde bir işleme başvuru yapmışsa bu kişiyi direk silemezsin. İlk önce o başvuruyu silmelisin sonra kişiyi silebilirsin. Çünkü başvurular tablosun'dan bu tabloya FK var sonuç olarak eğer kişiyi silersen bu sefer başvuru bilgisi eksik olur yani başvuruyu kimin yaptıığ bilinmez.
-        public static bool deletePerson(int personID)
+        public static bool delete(int personID)
         {
             if (isPersonExistByID(personID))
-            {
+            { 
                 return clsPeopleDataAccess.deletePerson(personID);
             }
             return false;
@@ -163,7 +163,7 @@ namespace DVLD_BusinessLayer
                     return _addNewRecord();
                    
                 case enMode.enUpdate:
-                    return _updatePersonInfo();
+                    return _updateInfo();
                 default:
                     return false;
             }
