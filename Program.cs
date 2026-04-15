@@ -3,6 +3,7 @@ using System;
 using System.Data;
 using System.Net;
 using System.Security.Cryptography;
+using System.Security.Policy;
 
 
 namespace DVLDConsoleAPP
@@ -94,44 +95,125 @@ namespace DVLDConsoleAPP
             }
         
         }
+     
+        //========================User================================
+
+        static void printUsers()
+        {
+            DataTable dt = new DataTable();
+
+            dt = clsUser.getUserRecords();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                Console.WriteLine($"{row["userID"]},{row["PersonID"]}, {row["userName"]}, {row["password"]}, {row["isActive"]}");
+            }
+        }
+        
+        static void addUser(int personID,string userName,string password,bool isActive)
+        {
+
+            clsUser u1 = new clsUser();
+            if (!clsPeople.isPersonExistByID(personID))
+            {
+                Console.WriteLine("Person with ID {0} could not found!", personID);
+                return;
+            }
+            u1.personID = personID;
+            u1.userName = userName;
+            u1.password = password;
+            u1.isActive = isActive;
+           
+            if (u1.save())
+            {
+                Console.WriteLine("\n\nSaved with ID " + u1.userID);
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong");
+            }
+        }
+      
+        static void deleteUser(int userID)
+        {
+            if (!clsUser.isUserExist(userID))
+            {
+                Console.WriteLine("user does not exist");
+                return;
+            }
+
+            if (clsUser.deleteUser(userID))
+            {
+                Console.WriteLine("Deleted successfully");
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong");
+            }
+
+        }
+   
+        static void updateUser(int userID)
+        {
+
+            if (!clsUser.isUserExist(userID))
+            {
+                Console.WriteLine("userID Does not exist");
+                return;
+            }
+            clsUser u1 = clsUser.findUser(userID);
+            Console.WriteLine("enter user name");
+            u1.userName = Console.ReadLine();
+
+
+            if (u1.save())
+            {
+                Console.WriteLine("Updated successfully");
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong");
+            }
+        }
         static void Main(string[] args)
         {//Adım adım impletemte ederek gidelim ligo gibi
-            
+
             //başvuruyu silemden kişi sillinmez. Bu yüt FK kısıtlamalrı sistemde olmalı. yani kişinin başvurus varsa o kişi silenemez ilk önce başvuru silinmeli sonra kişi.
 
-           
-            
-            
-            //****Her adımı commit yap.****
+
+            /*addPerson(
+            //    "n39",
+            //    "Ali",
+            //    "Mehmet",
+            //    "Can",
+            //    "kara",
+            //    new DateTime(1990, 5, 15),
+            //    0,
+            //    "İstanbul, Kadıköy",
+            //    "05321234567",
+            //    "yilmaz@email.com",
+            //    1,
+            //    "C:\\Users\\Pictures\\ahmet.jpg");
+            */
 
 
 
-            addPerson(
-                "n39",
-                "Ali",
-                "Mehmet",
-                "Can",
-                "kara",
-                new DateTime(1990, 5, 15),
-                0,
-                "İstanbul, Kadıköy",
-                "05321234567",
-                "yilmaz@email.com",
-                1,
-                "C:\\Users\\Pictures\\ahmet.jpg"
-            );
+            /* addUser(1, "halil", "1234", true);
+            printUsers();
+             deleteUser(21);*/
 
 
 
-            //Gelişim Sorularu
-            /*
-             - mesela database'de firstName null değer kabul etmesin. veriyi database'e gönderirken null kontolu dataAccess layer'da yapmalımıyız yoksa sadece Form Üzreinde kontrollerde mi yapacağız. **Eğer dataAccess layer'da yapmazsak bu dll'i başka yerde kullandığımızda aynı kontrolleri o arayüzde de yapmamız gerekir yani bu kısım arayüzde bağımlı olur** Meselae bunu önüne şu şelilde geçebiliriz. sadece parametereli const'u public yaparız. BU sayede kullanıc obje oluştutmak için verileri girmek zorunda. Zaten save fonskyionu objeye bağlı olduğu için anca obje ile çağırılabili. Yani save yapacapımız zaman o objenin tüm verileri düzenli bir şekilde parametreli const tarafından alınmış olur.
 
 
-            - People sınıfın için Constracter yapısında bir değişiklik var mı? ben birini private birini public yaptım hoca nasıl yapmış?
-             */
         }
     }
 }
+//Gelişim Sorularu
+/*
+ - mesela database'de firstName null değer kabul etmesin. veriyi database'e gönderirken null kontolu dataAccess layer'da yapmalımıyız yoksa sadece Form Üzreinde kontrollerde mi yapacağız. **Eğer dataAccess layer'da yapmazsak bu dll'i başka yerde kullandığımızda aynı kontrolleri o arayüzde de yapmamız gerekir yani bu kısım arayüzde bağımlı olur** Meselae bunu önüne şu şelilde geçebiliriz. sadece parametereli const'u public yaparız. BU sayede kullanıc obje oluştutmak için verileri girmek zorunda. Zaten save fonskyionu objeye bağlı olduğu için anca obje ile çağırılabili. Yani save yapacapımız zaman o objenin tüm verileri düzenli bir şekilde parametreli const tarafından alınmış olur.
 
+
+- People sınıfın için Constracter yapısında bir değişiklik var mı? ben birini private birini public yaptım hoca nasıl yapmış?
+ */
 

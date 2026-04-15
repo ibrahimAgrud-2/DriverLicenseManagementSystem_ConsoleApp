@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 
 namespace DVLD_DataAccessLayer
 {
-    internal class clsUserDataAccessLayer
+    public class clsUserDataAccessLayer
     {
         public static DataTable getUserRecords()
         {
@@ -124,7 +124,7 @@ namespace DVLD_DataAccessLayer
 
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
 
-            string query = "insert into people values(@personID,@userName,@password,@isActive) Select Scope_Identity();";
+            string query = "insert into users values(@personID,@userName,@password,@isActive) Select Scope_Identity();";
 
             SqlCommand cmd = new SqlCommand(query, connection);
 
