@@ -178,6 +178,8 @@ namespace DVLDConsoleAPP
 
         //========================Countries================================
 
+
+
         static void Main(string[] args)
         {//Adım adım impletemte ederek gidelim ligo gibi
 
@@ -203,7 +205,7 @@ namespace DVLDConsoleAPP
             printUsers();
              deleteUser(21);*/
 
-
+            
 
 
 
