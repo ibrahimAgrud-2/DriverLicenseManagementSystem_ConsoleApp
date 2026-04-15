@@ -178,7 +178,17 @@ namespace DVLDConsoleAPP
 
         //========================Countries================================
 
+        static void printCountries()
+        {
+            DataTable dt = new DataTable();
 
+            dt = clsCountry.getCountryRecord();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                Console.WriteLine($"{row["countryID"]},{row["countryName"]}");
+            }
+        }
 
         static void Main(string[] args)
         {//Adım adım impletemte ederek gidelim ligo gibi
@@ -203,9 +213,10 @@ namespace DVLDConsoleAPP
             */
             /* addUser(1, "halil", "1234", true);
             printUsers();
-             deleteUser(21);*/
+             deleteUser(21);
+             Console.WriteLine(clsCountry.isCountryExist(1));
 
-            
+*/
 
 
 

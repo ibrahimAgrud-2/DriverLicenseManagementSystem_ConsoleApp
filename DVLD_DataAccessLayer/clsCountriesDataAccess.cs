@@ -42,7 +42,7 @@ namespace DVLD_DataAccessLayer
 
             return dt;
         }
-        public static bool findCountry(int countryID, string countryName)
+        public static bool findCountry(int countryID,ref string countryName)
         {
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
 
