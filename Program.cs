@@ -85,7 +85,7 @@ namespace DVLDConsoleAPP
                 return;
             }
 
-            if (clsPeople.deletePerson(personID))
+            if (clsPeople.delete(personID))
             {
                 Console.WriteLine("Deleted successfully");
             }
