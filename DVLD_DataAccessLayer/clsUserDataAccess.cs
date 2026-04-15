@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 
 namespace DVLD_DataAccessLayer
 {
-    public class clsUserDataAccessLayer
+    public class clsUserDataAccess
     {
         public static DataTable getUserRecords()
         {
