@@ -42,7 +42,7 @@ namespace DVLD_BusinessLayer
         {
             DataTable dt = new DataTable();
 
-            dt = clsUserDataAccessLayer.getUserRecords();
+            dt = clsUserDataAccess.getUserRecords();
             return dt;
         }
 
@@ -56,7 +56,7 @@ namespace DVLD_BusinessLayer
             bool isActive=false;
 
 
-            if (clsUserDataAccessLayer.findUserByID(userID, ref personID, ref userName, ref password, ref isActive))
+            if (clsUserDataAccess.findUserByID(userID, ref personID, ref userName, ref password, ref isActive))
             {
                 return new clsUser(userID,  personID,  userName,  password,  isActive);
 
@@ -67,27 +67,27 @@ namespace DVLD_BusinessLayer
 
         private bool _addNewUser()
         {
-            this.userID = clsUserDataAccessLayer.addUser(this.personID, this.userName, this.password, this.isActive);
+            this.userID = clsUserDataAccess.addUser(this.personID, this.userName, this.password, this.isActive);
             return (this.userID != -1);
 
         }
         private bool _updateUserInfo()
         {
 
-            return clsUserDataAccessLayer.updateUserInfo(this.userID, this.personID, this.userName, this.password, this.isActive);
+            return clsUserDataAccess.updateUserInfo(this.userID, this.personID, this.userName, this.password, this.isActive);
         }
 
 
         public static bool isUserExist(int userID)
         {
-            return clsUserDataAccessLayer.isUserExist(userID);
+            return clsUserDataAccess.isUserExist(userID);
         }
        
         public static bool deleteUser(int userID)
         {
             if (isUserExist(userID))
             {
-                return clsUserDataAccessLayer.deleteUser(userID);
+                return clsUserDataAccess.deleteUser(userID);
             }
             return false;
 

@@ -175,11 +175,15 @@ namespace DVLDConsoleAPP
                 Console.WriteLine("Something went wrong");
             }
         }
+
+        //========================Countries================================
+
         static void Main(string[] args)
         {//Adım adım impletemte ederek gidelim ligo gibi
 
             //başvuruyu silemden kişi sillinmez. Bu yüt FK kısıtlamalrı sistemde olmalı. yani kişinin başvurus varsa o kişi silenemez ilk önce başvuru silinmeli sonra kişi.
 
+            //class isimleri aynı formatta olmalı clsCountriesDataAccess
 
             /*addPerson(
             //    "n39",
@@ -195,9 +199,6 @@ namespace DVLDConsoleAPP
             //    1,
             //    "C:\\Users\\Pictures\\ahmet.jpg");
             */
-
-
-
             /* addUser(1, "halil", "1234", true);
             printUsers();
              deleteUser(21);*/
