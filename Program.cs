@@ -189,6 +189,19 @@ namespace DVLDConsoleAPP
                 Console.WriteLine($"{row["countryID"]},{row["countryName"]}");
             }
         }
+        //=======================Applications=======================
+        static void printApplications()
+        {
+            DataTable dt = new DataTable();
+
+            dt = clsApplications.getApplicationsRecord();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                Console.WriteLine($"{row["applicationID"]},{row["PersonID"]}, {row["userName"]}, {row["password"]}, {row["isActive"]}");
+            }
+        }
+
 
         static void Main(string[] args)
         {//Adım adım impletemte ederek gidelim ligo gibi
@@ -218,7 +231,8 @@ namespace DVLDConsoleAPP
 
 */
 
-
+            
+            
 
         }
     }

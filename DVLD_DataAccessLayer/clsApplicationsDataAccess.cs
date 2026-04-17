@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 
 namespace DVLD_DataAccessLayer
 {
-    internal class clsApplicationsDataAccess
+    public class clsApplicationsDataAccess
     {
 
         public static DataTable getApplicationsRecord()
