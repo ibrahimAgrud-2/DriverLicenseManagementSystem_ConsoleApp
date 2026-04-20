@@ -13,12 +13,14 @@ namespace DVLD_BusinessLayer
         public int createdByUserID { set; get; }
         public DateTime applicationDate { set; get; }
         public int applicationTypeID { set; get; }
-        public byte applicationStatus { set; get; }
         public DateTime lastStatusDate{ set; get; }
         public double paidFee { set; get; }
 
 
         public enum enMode { enAddNew = 1, enUpdate = 2 };
+        public enum enApplicationStatus {New=1, Cancelled=2 ,Completed =3};
+       public enApplicationStatus applicationStatus;
+
         public enMode mode;
 
 
@@ -29,14 +31,14 @@ namespace DVLD_BusinessLayer
             this.createdByUserID = -1;
             this.applicationDate=DateTime.Now;
             this.applicationTypeID = -1;
-            this.applicationStatus = 0;
+            this.applicationStatus = enApplicationStatus.New;
             this.lastStatusDate = DateTime.Now;
             this.paidFee = 0.0;
             this.mode=enMode.enAddNew;
         }
 
         private clsApplications(int applicationID, int applicantPersonID, DateTime ApplicationDate, int applicationTypeID,
-           byte applicationStatus, DateTime LastStatusDate, double paidFee, int createdByUserID)
+           enApplicationStatus applicationStatus, DateTime LastStatusDate, double paidFee, int createdByUserID)
         {
 
             this.applicationID = applicationID;
@@ -73,7 +75,7 @@ namespace DVLD_BusinessLayer
             applicationStatus, ref lastStatusDate, ref  paidFee, ref  createdByUserID))
             {
                 return new clsApplications(applicationID,  applicantPersonID,  applicationDate,  applicationTypeID, 
-            applicationStatus,  lastStatusDate,  paidFee,  createdByUserID);
+            (enApplicationStatus)applicationStatus,  lastStatusDate,  paidFee,  createdByUserID);
 
             }
             return null;
@@ -82,14 +84,14 @@ namespace DVLD_BusinessLayer
 
         private bool _addNewApplication()
         {
-            this.applicationID = clsApplicationsDataAccess.addApplication(this.applicantPersonID, this.applicationDate, this.applicationTypeID, this.applicationStatus, this.lastStatusDate, this.paidFee, this.createdByUserID);
+            this.applicationID = clsApplicationsDataAccess.addApplication(this.applicantPersonID, this.applicationDate, this.applicationTypeID, Convert.ToByte(this.applicationStatus), this.lastStatusDate, this.paidFee, this.createdByUserID);
             return (this.applicationID != -1);
 
         }
         private bool _updateApplicatİonInfo()
         {
 
-            return clsApplicationsDataAccess.updateApplicationInfo(this.applicationID,this.applicantPersonID, this.applicationDate, this.applicationTypeID, this.applicationStatus, this.lastStatusDate, this.paidFee, this.createdByUserID);
+            return clsApplicationsDataAccess.updateApplicationInfo(this.applicationID,this.applicantPersonID, this.applicationDate, this.applicationTypeID, Convert.ToByte(this.applicationStatus), this.lastStatusDate, this.paidFee, this.createdByUserID);
         }
 
 

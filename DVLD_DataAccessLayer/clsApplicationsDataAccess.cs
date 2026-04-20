@@ -67,7 +67,7 @@ namespace DVLD_DataAccessLayer
                     applicationTypeID = Convert.ToInt32(read["applicationTypeID"]);
                     applicationStatus = Convert.ToByte(read["applicationStatus"]);
                     LastStatusDate = Convert.ToDateTime(read["LastStatusDate"]);
-                    paidFee = Convert.ToDouble(read["paidFee"]);
+                    paidFee = Convert.ToDouble(read["paidFees"]);
                     createdByUserID = Convert.ToInt32(read["createdByUserID"]);
 
                     return true;

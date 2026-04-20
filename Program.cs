@@ -113,20 +113,20 @@ namespace DVLDConsoleAPP
         static void addUser(int personID,string userName,string password,bool isActive)
         {
 
-            clsUser u1 = new clsUser();
+            clsUser App1 = new clsUser();
             if (!clsPeople.isPersonExistByID(personID))
             {
                 Console.WriteLine("Person with ID {0} could not found!", personID);
                 return;
             }
-            u1.personID = personID;
-            u1.userName = userName;
-            u1.password = password;
-            u1.isActive = isActive;
+            App1.personID = personID;
+            App1.userName = userName;
+            App1.password = password;
+            App1.isActive = isActive;
            
-            if (u1.save())
+            if (App1.save())
             {
-                Console.WriteLine("\n\nSaved with ID " + u1.userID);
+                Console.WriteLine("\n\nSaved with ID " + App1.userID);
             }
             else
             {
@@ -161,12 +161,12 @@ namespace DVLDConsoleAPP
                 Console.WriteLine("userID Does not exist");
                 return;
             }
-            clsUser u1 = clsUser.findUser(userID);
+            clsUser App1 = clsUser.findUser(userID);
             Console.WriteLine("enter user name");
-            u1.userName = Console.ReadLine();
+            App1.userName = Console.ReadLine();
 
 
-            if (u1.save())
+            if (App1.save())
             {
                 Console.WriteLine("Updated successfully");
             }
@@ -198,14 +198,13 @@ namespace DVLDConsoleAPP
 
             foreach (DataRow row in dt.Rows)
             {
-                Console.WriteLine($"{row["applicationID"]},{row["PersonID"]}, {row["userName"]}, {row["password"]}, {row["isActive"]}");
+                Console.WriteLine($"{row["applicationID"]},{row["applicantPersonID"]}, {row["applicationDate"]}, {row["applicationTypeID"]}, {row["applicationStatus"]}, {row["lastStatusDate"]}, {row["paidFees"]}, {row["createdByUserID"]}");
             }
         }
 
-
+       
         static void Main(string[] args)
-        {//Adım adım impletemte ederek gidelim ligo gibi
-
+        {
             //başvuruyu silemden kişi sillinmez. Bu yüt FK kısıtlamalrı sistemde olmalı. yani kişinin başvurus varsa o kişi silenemez ilk önce başvuru silinmeli sonra kişi.
 
             //class isimleri aynı formatta olmalı clsCountriesDataAccess
@@ -230,9 +229,15 @@ namespace DVLDConsoleAPP
              Console.WriteLine(clsCountry.isCountryExist(1));
 
 */
+            //oluşturduğumuz tablolarda FK'ler artıkça kontrol artmalı. yani applicaton eklerken hem person
+            //hem de user var mı diye kontrol etmeliyiz.
+            //Bundan dolayı applicaton eklerken applicatonTypeID kontrol etmeliyiz ama maalesef o tablo yok bu yüzden applicaton ekleyemeyiz. Bu nedenle class'ları da DB'ki tablo oluşturma sırasınra göre yapalım.
 
-            
-            
+
+            //classları DB'de tablo oluşturma sırasına göre oluşturalım.
+
+            printApplications();
+
 
         }
     }
