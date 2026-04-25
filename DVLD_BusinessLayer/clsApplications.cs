@@ -84,6 +84,14 @@ namespace DVLD_BusinessLayer
 
         private bool _addNewApplication()
         {
+
+            clsApplicationTypes type1 = clsApplicationTypes.findApplicationType(this.applicationTypeID);
+            if (type1==null)
+            {
+                return false;
+            }
+            this.paidFee = type1.applicationFee;
+
             this.applicationID = clsApplicationsDataAccess.addApplication(this.applicantPersonID, this.applicationDate, this.applicationTypeID, Convert.ToByte(this.applicationStatus), this.lastStatusDate, this.paidFee, this.createdByUserID);
             return (this.applicationID != -1);
 
