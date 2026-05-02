@@ -202,7 +202,35 @@ namespace DVLDConsoleAPP
                 Console.WriteLine($"{row["applicationID"]},{row["applicantPersonID"]}, {row["applicationDate"]}, {row["applicationTypeID"]}, {row["applicationStatus"]}, {row["lastStatusDate"]}, {row["PaidFees"]}, {row["createdByUserID"]}");
             }
         }
-     
+
+        static void addApplication(int applicantPersonID, int applicationTypeID, byte appStatus)
+        {
+           
+            if (!clsPeople.isPersonExistByID(applicantPersonID))
+            {
+                Console.WriteLine("Person with ID {0} could not found!", applicantPersonID);
+                return;
+            }
+            else if (!clsApplicationTypes.isApplicationTypeExist(applicationTypeID))
+            {
+                Console.WriteLine("AppType with ID {0} could not found!", applicationTypeID);
+                return;
+            }
+            clsApplications App1 = new clsApplications();
+            App1.applicantPersonID = applicantPersonID;
+            App1.applicationTypeID = applicationTypeID;
+            App1.applicationStatus = (clsApplications.enApplicationStatus)appStatus;
+
+            if (App1.save())
+            {
+                Console.WriteLine("\n\nSaved with ID " + App1.applicationID);
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong");
+            }
+        }
+
 
         static void Main(string[] args)
         {
@@ -220,7 +248,7 @@ namespace DVLDConsoleAPP
 
             //laststatus update olduğunda güncelleniypormu test et
 
-            printApplications();
+      
 
 
         }
