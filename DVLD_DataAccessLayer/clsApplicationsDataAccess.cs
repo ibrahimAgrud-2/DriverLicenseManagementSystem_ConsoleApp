@@ -181,12 +181,12 @@ namespace DVLD_DataAccessLayer
 
 
         public static bool updateApplicationInfo(int applicationID,int applicantPersonID, DateTime ApplicationDate, int applicationTypeID,
-           byte applicationStatus, DateTime LastStatusDate, double paidFee, int createdByUserID)
+           byte applicationStatus, DateTime LastStatusDate, double paidFees, int createdByUserID)
         {
 
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
 
-            string query = "update applications set applicantPersonID=@applicantPersonID,ApplicationDate=@ApplicationDate,applicationTypeID=@applicationTypeID,applicationStatus= @applicationStatus,LastStatusDate=@LastStatusDate,paidFee=@paidFee,createdByUserID=@createdByUserID where applicationID=@applicationID";
+            string query = "update applications set applicantPersonID=@applicantPersonID,ApplicationDate=@ApplicationDate,applicationTypeID=@applicationTypeID,applicationStatus= @applicationStatus,LastStatusDate=@LastStatusDate,paidFees=@paidFees,createdByUserID=@createdByUserID where applicationID=@applicationID";
 
             SqlCommand cmd = new SqlCommand(query, connection);
             cmd.Parameters.AddWithValue("@applicationID", applicationID);
@@ -196,7 +196,7 @@ namespace DVLD_DataAccessLayer
             cmd.Parameters.AddWithValue("@applicationTypeID", applicationTypeID);
             cmd.Parameters.AddWithValue("@applicationStatus", applicationStatus);
             cmd.Parameters.AddWithValue("@LastStatusDate", LastStatusDate);
-            cmd.Parameters.AddWithValue("@paidFee", paidFee);
+            cmd.Parameters.AddWithValue("@paidFees", paidFees);
             cmd.Parameters.AddWithValue("@createdByUserID", createdByUserID);
 
 

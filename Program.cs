@@ -231,6 +231,37 @@ namespace DVLDConsoleAPP
             }
         }
 
+        static void updateApplication(int applicationID)
+        {
+
+          
+           if (!clsApplications.isApplicationExist(applicationID))
+            {
+                Console.WriteLine("App with ID {0} could not found!", applicationID);
+                return;
+            }
+
+            clsApplications App1 = clsApplications.findApplication(applicationID);
+            Console.WriteLine("Enter new person ID ");
+            App1.applicantPersonID = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter App Type");
+            App1.applicationTypeID = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter App status");
+            App1.applicationStatus = (clsApplications.enApplicationStatus)(Convert.ToByte(Console.ReadLine()));
+
+
+
+
+            if (App1.save())
+            {
+                Console.WriteLine("\nupdated ");
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong");
+            }
+        }
+
 
         static void Main(string[] args)
         {
@@ -248,7 +279,7 @@ namespace DVLDConsoleAPP
 
             //laststatus update olduğunda güncelleniypormu test et
 
-      
+            updateApplication(141);
 
 
         }
