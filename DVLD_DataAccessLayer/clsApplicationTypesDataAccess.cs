@@ -11,7 +11,7 @@ namespace DVLD_DataAccessLayer
     public class clsApplicationTypesDataAccess
     {
 
-        public static DataTable getApplicationTypesRecord()
+        public static DataTable getApplicationTypesRecords()
         {
             DataTable dt = new DataTable();
 

@@ -10,11 +10,15 @@ namespace DVLD_BusinessLayer
     {
         public int applicationID { set; get; }
         public int applicantPersonID { set; get; }
-        public int createdByUserID { set; get; }
-        public DateTime applicationDate { set; get; }
         public int applicationTypeID { set; get; }
-        public DateTime lastStatusDate{ set; get; }
-        public double paidFee { set; get; }
+        //İkiside private yaptım çünkü; son güncelleme tarihi sistem tarafından kara verilebilir. SOnradan değiştirilebilen veya
+        //kullanıcı tarafından yanlış girilebilen bir şey olmamalı
+        private DateTime lastStatusDate{ set; get; }
+        public DateTime applicationDate { set; get; }
+        //private yaptım çünkü ödenen değer elle girilmemeli. Sistem başvuru türüne göre o başvuru için gerekli olan ücreti yazmalı
+        private double paidFee { set; get; }
+        //Yukaridaki benzer sebeplerden ötürü private olmalı.
+        private int createdByUserID { set; get; }
 
 
         public enum enMode { enAddNew = 1, enUpdate = 2 };
@@ -49,6 +53,7 @@ namespace DVLD_BusinessLayer
             this.lastStatusDate = LastStatusDate;
             this.paidFee = paidFee;
             this.createdByUserID = createdByUserID;
+            this.mode = enMode.enUpdate;
 
         }
         public static DataTable getApplicationsRecord()
@@ -85,20 +90,27 @@ namespace DVLD_BusinessLayer
         private bool _addNewApplication()
         {
 
+            //Başvuru ücretini elle girmemek için bu kodu ekledirk.
             clsApplicationTypes type1 = clsApplicationTypes.findApplicationType(this.applicationTypeID);
-            if (type1==null)
+            if (type1 == null)
             {
                 return false;
             }
             this.paidFee = type1.applicationFee;
 
-            this.applicationID = clsApplicationsDataAccess.addApplication(this.applicantPersonID, this.applicationDate, this.applicationTypeID, Convert.ToByte(this.applicationStatus), this.lastStatusDate, this.paidFee, this.createdByUserID);
+            //Normalde bu bilgi o anki giriş yapan kullanıcı bilgilerinde çekilir ama şu anda giriş ekranı daha yok. 
+            //Giriş ekranı olduğunda kullanıcı aktif kullanıcı bilgilerinden çekilir.
+            this.createdByUserID = 1;
+            this.applicationID = clsApplicationsDataAccess.addApplication(this.applicantPersonID, this.applicationTypeID, 
+                Convert.ToByte(this.applicationStatus), this.lastStatusDate, this.paidFee, this.createdByUserID);
             return (this.applicationID != -1);
 
         }
-        private bool _updateApplicatİonInfo()
-        {
 
+        //Update yaparken lastStatus güncellenmeli.
+        private bool _updateApplication()
+        {
+            this.lastStatusDate = DateTime.Now;
             return clsApplicationsDataAccess.updateApplicationInfo(this.applicationID,this.applicantPersonID, this.applicationDate, this.applicationTypeID, Convert.ToByte(this.applicationStatus), this.lastStatusDate, this.paidFee, this.createdByUserID);
         }
 
@@ -112,7 +124,7 @@ namespace DVLD_BusinessLayer
         {
             if (isApplicationExist(applicationID))
             {
-                return clsApplicationsDataAccess.deletePerson(applicationID);
+                return clsApplicationsDataAccess.deleteApplication(applicationID);
             }
             return false;
 
@@ -126,7 +138,7 @@ namespace DVLD_BusinessLayer
                     return _addNewApplication();
 
                 case enMode.enUpdate:
-                    return _updateApplicatİonInfo();
+                    return _updateApplication();
                 default:
                     return false;
             }

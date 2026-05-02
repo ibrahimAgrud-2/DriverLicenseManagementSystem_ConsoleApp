@@ -7,6 +7,7 @@ namespace DVLD_DataAccessLayer
     public class clsApplicationsDataAccess
     {
 
+   
         public static DataTable getApplicationsRecord()
         {
             DataTable dt = new DataTable();
@@ -42,7 +43,8 @@ namespace DVLD_DataAccessLayer
 
             return dt;
         }
-      
+
+    
         public static bool findApplication(int applicationID, ref int applicantPersonID, ref DateTime ApplicationDate, ref int applicationTypeID, ref
            byte applicationStatus, ref DateTime LastStatusDate,ref double paidFee,ref int createdByUserID)
         {
@@ -87,7 +89,7 @@ namespace DVLD_DataAccessLayer
 
             return false;
         }
-
+    
         public static bool isApplicationExistByID(int applicationID)
         {
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
@@ -124,7 +126,11 @@ namespace DVLD_DataAccessLayer
             return false;
         }
 
-        public static int addApplication( int applicantPersonID,  DateTime ApplicationDate,  int applicationTypeID, 
+
+        //Yeni bir app eklediğimde ben ona tüm bilgieleri paramtere olarak vermem daha doğru olur gibi. Yani UserID'i sistemde
+        //aktif kullanıcıdan almasını bu aşamada değil de business layer'da yapmayı uygun gördüm.
+        //Zaten userID elle girilen bir şey olmayacağı için o anki kullanıcı IDsi sistemde otomatik çekilir
+        public static int addApplication( int applicantPersonID,   int applicationTypeID, 
            byte applicationStatus,  DateTime LastStatusDate,  double paidFee,  int createdByUserID)
         {
 
@@ -133,8 +139,9 @@ namespace DVLD_DataAccessLayer
             string query = "insert into applications values (@applicantPersonID,@ApplicationDate,@applicationTypeID,@applicationStatus,@LastStatusDate,@paidFee,@createdByUserID) Select Scope_Identity()";
 
             SqlCommand cmd = new SqlCommand(query, connection);
+            DateTime ApplicationDate = DateTime.Now;
 
-            cmd.Parameters.AddWithValue("@applicantPersonID", applicantPersonID);
+           cmd.Parameters.AddWithValue("@applicantPersonID", applicantPersonID);
             cmd.Parameters.AddWithValue("@ApplicationDate", ApplicationDate);
             cmd.Parameters.AddWithValue("@applicationTypeID", applicationTypeID);
             cmd.Parameters.AddWithValue("@applicationStatus", applicationStatus);
@@ -170,6 +177,7 @@ namespace DVLD_DataAccessLayer
             }
 
         }
+        //====Above is checked they are crystal clear===
 
 
         public static bool updateApplicationInfo(int applicationID,int applicantPersonID, DateTime ApplicationDate, int applicationTypeID,
@@ -217,7 +225,7 @@ namespace DVLD_DataAccessLayer
         }
 
 
-        public static bool deletePerson(int applicationID)
+        public static bool deleteApplication(int applicationID)
         {
 
 

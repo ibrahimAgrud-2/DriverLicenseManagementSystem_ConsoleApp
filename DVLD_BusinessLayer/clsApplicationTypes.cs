@@ -34,11 +34,11 @@ namespace DVLD_BusinessLayer
           
 
         }
-        public static DataTable getApplicationTypeRecord()
+        public static DataTable getApplicationTypeRecords()
         {
             DataTable dt = new DataTable();
 
-            dt = clsApplicationTypesDataAccess.getApplicationTypesRecord();
+            dt = clsApplicationTypesDataAccess.getApplicationTypesRecords();
             return dt;
         }
 

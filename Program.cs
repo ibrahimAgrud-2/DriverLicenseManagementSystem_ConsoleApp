@@ -190,6 +190,7 @@ namespace DVLDConsoleAPP
             }
         }
         //=======================Applications=======================
+
         static void printApplications()
         {
             DataTable dt = new DataTable();
@@ -201,57 +202,7 @@ namespace DVLDConsoleAPP
                 Console.WriteLine($"{row["applicationID"]},{row["applicantPersonID"]}, {row["applicationDate"]}, {row["applicationTypeID"]}, {row["applicationStatus"]}, {row["lastStatusDate"]}, {row["PaidFees"]}, {row["createdByUserID"]}");
             }
         }
-
-        static void printApplicationTypes()
-        {
-            DataTable dt = new DataTable();
-
-            dt = clsApplicationTypes.getApplicationTypeRecord();
-
-            foreach (DataRow row in dt.Rows)
-            {
-                Console.WriteLine($"{row["applicationTypeID"]},{row["applicationTypeTitle"]}, {row["applicationFees"]}");
-            }
-        }
-
-        static void addApplication(int applicantPersonID,DateTime applicationDate,int applicationTypeID,byte appStatus,DateTime lastStatusDate,int createdByUserID)
-        {
-            clsApplications App1 = new clsApplications();
-            if (!clsPeople.isPersonExistByID(applicantPersonID))
-            {
-                Console.WriteLine("Person with ID {0} could not found!", applicantPersonID);
-                return;
-            }
-            else if(!clsUser.isUserExist(createdByUserID))
-            {
-                Console.WriteLine("User with ID {0} could not found!", createdByUserID);
-                return;
-            }
-            else if(!clsApplicationTypes.isApplicationTypeExist(applicationTypeID))
-            {
-                 Console.WriteLine("AppType with ID {0} could not found!", applicationTypeID);
-                return;
-            }
-                App1.applicantPersonID = applicantPersonID;
-            App1.applicationDate = applicationDate;
-            App1.applicationTypeID = applicationTypeID;
-            App1.applicationStatus = (clsApplications.enApplicationStatus)appStatus;
-            App1.lastStatusDate = lastStatusDate;
-            App1.createdByUserID = createdByUserID;
-            App1.paidFee = clsApplicationTypes.findApplicationType(applicationTypeID).applicationFee;
-
-
-
-
-            if (App1.save())
-            {
-                Console.WriteLine("\n\nSaved with ID " + App1.applicationID);
-            }
-            else
-            {
-                Console.WriteLine("Something went wrong");
-            }
-        }
+     
 
         static void Main(string[] args)
         {
@@ -262,7 +213,15 @@ namespace DVLDConsoleAPP
             //Read only olan kısımlar var. Mesela application eklerken userID elle girilmesin bunu sistem o anki hangi kullanıcı aktifse onun ID'sini eklemeli. Bunu gibi readOnly olan durumlar var. mesela app eklerken ödene tutarı sistem direk appTypes'tan getirsin otomatik
 
             //ŞU AN - app eklerken ödenen tutarı sistem otomatik appType'tan getirmesi için uğraşıyorum. Şu an DB'de bunu yapmaya çalışıyorum. veya  _addNewApplication() fonsktinına bir kod yazıoyor
-          
+            //APP laststatus time ne zaman güncellenmeli. Acaba bu UI olduğunda daha mı kolay olur? mesela console ile bunu nasıl yapacağız. UI ile kullanıcı kutularda istrediği kısmı günceller sonra DB'e kayıt ederken eğer status değişmişse anca o zaman status'u değiştiriri.
+            //addApplicaitın derken tarihi elle mi giriyor? 
+
+            //Bir kısmı eklemeden project overview izle
+
+            //laststatus update olduğunda güncelleniypormu test et
+
+            printApplications();
+
 
         }
     }
@@ -271,7 +230,13 @@ namespace DVLDConsoleAPP
 
 //Gelişim Sorularu
 /*
- - mesela database'de firstName null değer kabul etmesin. veriyi database'e gönderirken null kontolu dataAccess layer'da yapmalımıyız yoksa sadece Form Üzreinde kontrollerde mi yapacağız. **Eğer dataAccess layer'da yapmazsak bu dll'i başka yerde kullandığımızda aynı kontrolleri o arayüzde de yapmamız gerekir yani bu kısım arayüzde bağımlı olur** Meselae bunu önüne şu şelilde geçebiliriz. sadece parametereli const'u public yaparız. BU sayede kullanıc obje oluştutmak için verileri girmek zorunda. Zaten save fonskyionu objeye bağlı olduğu için anca obje ile çağırılabili. Yani save yapacapımız zaman o objenin tüm verileri düzenli bir şekilde parametreli const tarafından alınmış olur.
+ - mesela database'de firstName null değer kabul etmesin. veriyi database'e
+gönderirken null kontolu dataAccess layer'da yapmalımıyız yoksa sadece Form Üzreinde kontrollerde mi yapacağız.
+**Eğer dataAccess layer'da yapmazsak bu dll'i başka yerde kullandığımızda aynı kontrolleri o arayüzde de yapmamız
+*gerekir yani bu kısım arayüzde bağımlı olur** Meselae bunu önüne şu şelilde geçebiliriz. sadece parametereli
+*const'u public yaparız. BU sayede kullanıc obje oluştutmak için verileri girmek zorunda. Zaten save fonskyionu 
+*objeye bağlı olduğu için anca obje ile çağırılabili. Yani save yapacapımız zaman o objenin tüm verileri düzenli
+*bir şekilde parametreli const tarafından alınmış olur.
 
 
 - People sınıfın için Constracter yapısında bir değişiklik var mı? ben birini private birini public yaptım hoca nasıl yapmış?
