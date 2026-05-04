@@ -261,6 +261,18 @@ namespace DVLDConsoleAPP
                 Console.WriteLine("Something went wrong");
             }
         }
+        //=======================Application Types======================
+        static void printApplicationTypes()
+        {
+            DataTable dt = new DataTable();
+
+            dt = clsApplicationTypes.getApplicationTypeRecords();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                Console.WriteLine($"{row["applicationTypeID"]},{row["applicationTypeTitle"]},{row["applicationFees"]}");
+            }
+        }
 
 
         static void Main(string[] args)
@@ -277,10 +289,7 @@ namespace DVLDConsoleAPP
 
             //Bir kısmı eklemeden project overview izle
 
-            //laststatus update olduğunda güncelleniypormu test et
-
-            updateApplication(141);
-
+        
 
         }
     }
