@@ -274,6 +274,20 @@ namespace DVLDConsoleAPP
             }
         }
 
+        //=======================LicenseCLasses======================
+        static void printLicenseClasses()
+        {
+            DataTable dt = new DataTable();
+
+            dt = clsLicenseCLass.getLicenseClassRecords();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                Console.WriteLine($"{row["LicenseClassID"]},{row["ClassName"]},{row["ClassDescription"]},{row["MinimumAge"]},{row["DefaultValidityLength"]},{row["ClassFees"]}");
+            }
+        }
+
+
 
         static void Main(string[] args)
         {
@@ -281,15 +295,13 @@ namespace DVLDConsoleAPP
 
 
 
-            //Read only olan kısımlar var. Mesela application eklerken userID elle girilmesin bunu sistem o anki hangi kullanıcı aktifse onun ID'sini eklemeli. Bunu gibi readOnly olan durumlar var. mesela app eklerken ödene tutarı sistem direk appTypes'tan getirsin otomatik
+            //Read only olan kısımlar var. Mesela application eklerken userID elle girilmesin. bunu sistem o anki hangi kullanıcı aktifse onun ID'sini eklemeli. Bunu gibi readOnly olan durumlar var. mesela app eklerken ödene tutarı sistem direk appTypes'tan getirsin otomatik
 
             //ŞU AN - app eklerken ödenen tutarı sistem otomatik appType'tan getirmesi için uğraşıyorum. Şu an DB'de bunu yapmaya çalışıyorum. veya  _addNewApplication() fonsktinına bir kod yazıoyor
             //APP laststatus time ne zaman güncellenmeli. Acaba bu UI olduğunda daha mı kolay olur? mesela console ile bunu nasıl yapacağız. UI ile kullanıcı kutularda istrediği kısmı günceller sonra DB'e kayıt ederken eğer status değişmişse anca o zaman status'u değiştiriri.
-            //addApplicaitın derken tarihi elle mi giriyor? 
 
-        
 
-        
+
 
         }
     }
