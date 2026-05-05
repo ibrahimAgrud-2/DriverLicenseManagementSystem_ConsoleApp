@@ -9,8 +9,8 @@ namespace DVLD_BusinessLayer
     {
         public int driverID { set; get; }
         public int personID { set; get; }
-        public int createdByUserID { set; get; }
-        public DateTime createdDate { set; get; }
+        private int createdByUserID { set; get; }
+        private DateTime createdDate { set; get; }
 
         public enum enMode { enAddNew = 1, enUpdate = 2 };
         public enMode mode;
@@ -59,6 +59,10 @@ namespace DVLD_BusinessLayer
 
         private bool _addNewDriver()
         {
+            //bu değişecek. Bu o anki user kimse onun ID'sini alacak. Yani elle girilme olmayacak.
+
+            this.driverID = 1;
+            this.createdDate = DateTime.Now;
             this.driverID = clsDriverDataAccess.addDriver(this.personID, this.createdByUserID,this.createdDate);
             return (this.driverID != -1);
 
@@ -72,7 +76,7 @@ namespace DVLD_BusinessLayer
 
         public static bool isDriverExist(int Driver)
         {
-            return clsDriverDataAccess.isDriverExist(Driver);
+            return clsDriverDataAccess.isDriverExistByDriverID(Driver);
         }
 
         public static bool deleteDriver(int DriverID)
@@ -98,6 +102,7 @@ namespace DVLD_BusinessLayer
                     return false;
             }
         }
+    
     }
 
 }

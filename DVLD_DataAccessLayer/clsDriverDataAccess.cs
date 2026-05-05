@@ -82,7 +82,7 @@ namespace DVLD_DataAccessLayer
             return false;
         }
 
-        public static bool isDriverExist(int driverID)
+        public static bool isDriverExistByDriverID(int driverID)
         {
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
 
@@ -115,6 +115,38 @@ namespace DVLD_DataAccessLayer
             return false;
         }
 
+        public static bool isDriverExistByPersonID(int personID)
+        {
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+
+            string query = "select found =1 from Drivers where personID=@personID";
+            SqlCommand cmd = new SqlCommand(query, connection);
+            cmd.Parameters.AddWithValue("@personID", personID);
+
+
+            try
+            {
+                connection.Open();
+
+
+                object result = cmd.ExecuteScalar();
+                if (result != null && int.TryParse(result.ToString(), out int value))
+                {
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+
+                return false; ;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return false;
+        }
 
 
         public static int addDriver(int personID,  int createdByUserID,  DateTime createdDate)
