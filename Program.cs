@@ -289,7 +289,6 @@ namespace DVLDConsoleAPP
 
         
 
-            //licenseClass Data Access find funciton'dan kodlamaya devam et. AddApp bitti
         
 
         }
