@@ -309,7 +309,11 @@ namespace DVLDConsoleAPP
                 Console.WriteLine("Person with ID {0} could not found!", personID);
                 return;
             }
-
+            else if (clsDriver.isDriverExistByPersonID(personID))
+            {
+                Console.WriteLine("Driver is already exist");
+                return;
+            }
 
 
             if (App1.save())

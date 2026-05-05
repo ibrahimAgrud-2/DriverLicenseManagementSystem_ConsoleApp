@@ -85,7 +85,7 @@ namespace DVLD_BusinessLayer
 
         public static bool deleteDriver(int DriverID)
         {
-            if (isDriverExist(DriverID))
+            if (isDriverExistByDriverID(DriverID))
             {
                 return clsDriverDataAccess.deleteDriver(DriverID);
             }
