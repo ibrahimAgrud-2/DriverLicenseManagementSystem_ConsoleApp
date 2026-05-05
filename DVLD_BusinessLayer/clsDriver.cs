@@ -74,9 +74,13 @@ namespace DVLD_BusinessLayer
         }
 
 
-        public static bool isDriverExist(int Driver)
+        public static bool isDriverExistByDriverID(int Driver)
         {
             return clsDriverDataAccess.isDriverExistByDriverID(Driver);
+        }
+        public static bool isDriverExistByPersonID(int personID)
+        {
+            return clsDriverDataAccess.isDriverExistByPersonID(personID);
         }
 
         public static bool deleteDriver(int DriverID)
