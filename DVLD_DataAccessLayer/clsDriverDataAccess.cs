@@ -44,7 +44,7 @@ namespace DVLD_DataAccessLayer
             return dt;
         }
        
-        public static bool finDriver(int driverID, ref int personID, ref int createdByUserID, ref DateTime createdDate)
+        public static bool findDriver(int driverID, ref int personID, ref int createdByUserID, ref DateTime createdDate)
         {
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
 
