@@ -287,8 +287,9 @@ namespace DVLDConsoleAPP
             //APP laststatus time ne zaman güncellenmeli. Acaba bu UI olduğunda daha mı kolay olur? mesela console ile bunu nasıl yapacağız. UI ile kullanıcı kutularda istrediği kısmı günceller sonra DB'e kayıt ederken eğer status değişmişse anca o zaman status'u değiştiriri.
             //addApplicaitın derken tarihi elle mi giriyor? 
 
-            //Bir kısmı eklemeden project overview izle
+        
 
+            //licenseClass Data Access find funciton'dan kodlamaya devam et. AddApp bitti
         
 
         }
