@@ -61,8 +61,9 @@ namespace DVLD_BusinessLayer
         {
             //bu değişecek. Bu o anki user kimse onun ID'sini alacak. Yani elle girilme olmayacak.
 
-            this.driverID = 1;
+           
             this.createdDate = DateTime.Now;
+            this.createdByUserID = 1;
             this.driverID = clsDriverDataAccess.addDriver(this.personID, this.createdByUserID,this.createdDate);
             return (this.driverID != -1);
 

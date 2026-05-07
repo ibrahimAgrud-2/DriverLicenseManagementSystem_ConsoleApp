@@ -107,7 +107,7 @@ namespace DVLDConsoleAPP
 
             foreach (DataRow row in dt.Rows)
             {
-                Console.WriteLine($"{row["userID"]},{row["PersonID"]}, {row["userName"]}, {row["password"]}, {row["isActive"]}");
+                Console.WriteLine($"{row["driverID"]},{row["PersonID"]}, {row["userName"]}, {row["password"]}, {row["isActive"]}");
             }
         }
         
@@ -159,7 +159,7 @@ namespace DVLDConsoleAPP
 
             if (!clsUser.isUserExist(userID))
             {
-                Console.WriteLine("userID Does not exist");
+                Console.WriteLine("driverID Does not exist");
                 return;
             }
             clsUser App1 = clsUser.findUser(userID);
@@ -303,22 +303,18 @@ namespace DVLDConsoleAPP
         static void addDriver(int personID)
         {
 
-            clsDriver App1 = new clsDriver();
+          
             if (!clsPeople.isPersonExistByID(personID))
             {
                 Console.WriteLine("Person with ID {0} could not found!", personID);
                 return;
             }
-            else if (clsDriver.isDriverExistByPersonID(personID))
-            {
-                Console.WriteLine("Driver is already exist");
-                return;
-            }
 
-
-            if (App1.save())
+            clsDriver driver1 = new clsDriver();
+            driver1.personID = personID;
+            if (driver1.save())
             {
-                Console.WriteLine("Saved successfully with ID {0}", App1.driverID);
+                Console.WriteLine("Saved successfully with ID {0}", driver1.driverID);
             }
             else
             {
@@ -326,51 +322,29 @@ namespace DVLDConsoleAPP
             }
         }
 
-        //static void deleteUser(int userID)
-        //{
-        //    if (!clsUser.isUserExist(userID))
-        //    {
-        //        Console.WriteLine("user does not exist");
-        //        return;
-        //    }
+        static void deleteDriver(int driverID)
+        {
+            if (!clsDriver.isDriverExistByDriverID(driverID))
+            {
+                Console.WriteLine("driver does not exist");
+                return;
+            }
 
-        //    if (clsUser.deleteUser(userID))
-        //    {
-        //        Console.WriteLine("Deleted successfully");
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("Something went wrong");
-        //    }
+            if (clsDriver.deleteDriver(driverID))
+            {
+                Console.WriteLine("Deleted successfully");
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong");
+            }
 
-        //}
+        }
 
-        //static void updateUser(int userID)
-        //{
-
-        //    if (!clsUser.isUserExist(userID))
-        //    {
-        //        Console.WriteLine("userID Does not exist");
-        //        return;
-        //    }
-        //    clsUser App1 = clsUser.findUser(userID);
-        //    Console.WriteLine("enter user name");
-        //    App1.userName = Console.ReadLine();
-
-
-        //    if (App1.save())
-        //    {
-        //        Console.WriteLine("Updated successfully");
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("Something went wrong");
-        //    }
-        //}
 
         static void Main(string[] args)
         {
-
+            //8.50
 
             //Gelişim Sorularu
             /*
@@ -385,18 +359,17 @@ namespace DVLDConsoleAPP
 
             - People sınıfın için Constracter yapısında bir değişiklik var mı? ben birini private birini public yaptım hoca nasıl yapmış?
             - mesela şu an driver eklerken peopleID'de kısmınsa sorun oluıyor. sistemde eğer bir kişi driver'sa o başka tekrara direver olarak eklenemez. Yani sistem bir driver eklerken 1) ilk olarak o Kişi var 2)o kişi zaten driver mı diye kontrol etmeliyiz. Bu kontrol hangi katmanda yapmamız en mantıkı olur? Ben şahsen bunu UI ile sınırlı olmasını istemiyorum. Bir yandan da ya zaten DB böyle bir şeyi eklemeye izin vermez hata olur ve ekleme başarısız olur der bu nedenle tıpkı user eklerken people var mı diye kontolu UI'da yapmıştık, bunuda UI'da yani burda yapalım diyorum.
-                     //Read only olan kısımlar var. Mesela application eklerken userID elle girilmesin. bunu sistem o anki hangi kullanıcı aktifse onun ID'sini eklemeli. Bunu gibi readOnly olan durumlar var. mesela app eklerken ödene tutarı sistem direk appTypes'tan getirsin otomatik
+                     //Read only olan kısımlar var. Mesela application eklerken driverID elle girilmesin. bunu sistem o anki hangi kullanıcı aktifse onun ID'sini eklemeli. Bunu gibi readOnly olan durumlar var. mesela app eklerken ödene tutarı sistem direk appTypes'tan getirsin otomatik
 
             //ŞU AN - app eklerken ödenen tutarı sistem otomatik appType'tan getirmesi için uğraşıyorum. Şu an DB'de bunu yapmaya çalışıyorum. veya  _addNewApplication() fonsktinına bir kod yazıoyor
             //APP laststatus time ne zaman güncellenmeli. Acaba bu UI olduğunda daha mı kolay olur? mesela console ile bunu nasıl yapacağız. UI ile kullanıcı kutularda istrediği kısmı günceller sonra DB'e kayıt ederken eğer status değişmişse anca o zaman status'u değiştiriri.
+
+            //Driver silecekken hata alıyorum çünkü bazı driver'lar refereans var. Yani 8 ID'li driver license yani driverID'nin FK olarak ekli olduğu tabloda kayıtlı olduğu için 8 ID'Li driver silinmiyor
              */
 
 
 
-
-
-
-            addDriver(1);
+       
         }
     }
 }
