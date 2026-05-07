@@ -345,6 +345,10 @@ namespace DVLDConsoleAPP
         static void Main(string[] args)
         {
             //8.50
+            //8.50
+            //8.50
+            //8.50
+            //8.50
 
             //Gelişim Sorularu
             /*
@@ -369,7 +373,7 @@ namespace DVLDConsoleAPP
 
 
 
-       
+
         }
     }
 }
