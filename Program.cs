@@ -344,7 +344,7 @@ namespace DVLDConsoleAPP
 
         static void Main(string[] args)
         {
-         
+
             //Gelişim Sorularu
             /*
              - mesela database'de firstName null değer kabul etmesin. veriyi database'e
@@ -366,7 +366,8 @@ namespace DVLDConsoleAPP
             //Driver silecekken hata alıyorum çünkü bazı driver'lar refereans var. Yani 8 ID'li driver license yani driverID'nin FK olarak ekli olduğu tabloda kayıtlı olduğu için 8 ID'Li driver silinmiyor
              */
 
-
+            //DB'Den veyi alırken  read["DriverID"] != DBNull.Value ? 1 : 0; şekilde kontrol et
+            //Şimdi licesnes tablosunda update yaparken bazı alanları değişrimemiz gerekebilir. Mesela userID değişmemesi gerekir çünkü sistem o an kim güncelleme yapmışsa onu eklere hata olamaz, ama notes değişebilir.
 
 
         }
