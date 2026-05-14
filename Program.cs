@@ -344,12 +344,7 @@ namespace DVLDConsoleAPP
 
         static void Main(string[] args)
         {
-            //8.50
-            //8.50
-            //8.50
-            //8.50
-            //8.50
-
+         
             //Gelişim Sorularu
             /*
              - mesela database'de firstName null değer kabul etmesin. veriyi database'e
