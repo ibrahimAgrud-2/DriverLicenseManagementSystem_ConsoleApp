@@ -74,7 +74,7 @@ namespace DVLD_BusinessLayer
         {
             DataTable dt = new DataTable();
 
-            dt = clsLicenses.getLicenseRecords();
+            dt = clsLicensesDataAccess.getLicenseRecords();
             return dt;
         }
 
@@ -84,7 +84,7 @@ namespace DVLD_BusinessLayer
         {
             int applicationID = -1, driverID = -1, licenseClass = -1, createdByUserID = -1;
             DateTime issueDate = DateTime.Now, expirationDate = DateTime.Now;
-            string notes = null;
+            string notes = "";
             double paidFees = 0;
             bool isActive = false;
             int issueReasonInt = 1;
@@ -120,7 +120,7 @@ namespace DVLD_BusinessLayer
         private bool _updateLicense()
         {
 
-            return clsLicensesDataAccess.updateLicenseInfo(this.licenseID,this.driverID,this.licenseClass,this.expirationDate,this.paidFees,this.isActive,Convert.ToInt32( this.issueReason));
+            return clsLicensesDataAccess.updateLicenseInfo(this.licenseID,this.driverID,this.licenseClass,this.expirationDate,this.notes    ,this.paidFees,this.isActive,Convert.ToInt32( this.issueReason));
         }
 
 

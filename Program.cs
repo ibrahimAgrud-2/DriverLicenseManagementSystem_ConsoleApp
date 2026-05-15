@@ -1,10 +1,12 @@
 ﻿using DVLD_BusinessLayer;
 using System;
+using System.ComponentModel;
 using System.Data;
 using System.Net;
 using System.Security.Cryptography;
 using System.Security.Policy;
 using System.Xml;
+using static DVLD_BusinessLayer.clsLicenses;
 
 
 namespace DVLDConsoleAPP
@@ -107,7 +109,7 @@ namespace DVLDConsoleAPP
 
             foreach (DataRow row in dt.Rows)
             {
-                Console.WriteLine($"{row["driverID"]},{row["PersonID"]}, {row["userName"]}, {row["password"]}, {row["isActive"]}");
+                Console.WriteLine($"{row["licenseID"]},{row["PersonID"]}, {row["userName"]}, {row["password"]}, {row["isActive"]}");
             }
         }
         
@@ -159,7 +161,7 @@ namespace DVLDConsoleAPP
 
             if (!clsUser.isUserExist(userID))
             {
-                Console.WriteLine("driverID Does not exist");
+                Console.WriteLine("licenseID Does not exist");
                 return;
             }
             clsUser App1 = clsUser.findUser(userID);
@@ -200,7 +202,7 @@ namespace DVLDConsoleAPP
 
             foreach (DataRow row in dt.Rows)
             {
-                Console.WriteLine($"{row["applicationID"]},{row["applicantPersonID"]}, {row["applicationDate"]}, {row["applicationTypeID"]}, {row["applicationStatus"]}, {row["lastStatusDate"]}, {row["PaidFees"]}, {row["createdByUserID"]}");
+                Console.WriteLine($"{row["licenseID"]},{row["applicantPersonID"]}, {row["applicationDate"]}, {row["applicationTypeID"]}, {row["applicationStatus"]}, {row["lastStatusDate"]}, {row["PaidFees"]}, {row["createdByUserID"]}");
             }
         }
 
@@ -340,6 +342,122 @@ namespace DVLDConsoleAPP
             }
 
         }
+        //=======================License======================
+
+        static void printLicenses()
+        {
+            DataTable dt = new DataTable();
+
+            dt = clsLicenses.getLicenseRecords(); // Driver kayıtlarını getiren metod
+
+            foreach (DataRow row in dt.Rows)
+            {
+                Console.WriteLine($"{row["LicenseID"]},{row["ApplicationID"]},{row["DriverID"]},{row["LicenseClass"]},{row["IssueDate"]},{row["ExpirationDate"]},{row["Notes"]},{row["PaidFees"]},{row["IsActive"]},{row["IssueReason"]},{row["CreatedByUserID"]}");
+            }
+        }
+        static void addLicense(int applicationID, int DriverID, int licenseClassID, DateTime expirationDate,string notes,bool isActive,int issueReason)
+        {
+
+
+            if (!clsApplications.isApplicationExist(applicationID))
+            {
+                Console.WriteLine("Application with ID {0} could not found!", applicationID);
+                return;
+            }
+            if (!clsDriver.isDriverExistByDriverID(DriverID))
+            {
+                Console.WriteLine("DriverID with ID {0} could not found!", DriverID);
+                return;
+            }
+            if (!clsLicenseCLass.isLicenseClassExist(licenseClassID))
+            {
+                Console.WriteLine("license Class ID with ID {0} could not found!", licenseClassID);
+                return;
+            }
+
+
+            clsLicenses l1 = new clsLicenses();
+            l1.applicationID = applicationID;
+            l1.driverID = DriverID;
+            l1.licenseClass = licenseClassID;
+            l1.expirationDate = expirationDate;
+            l1.notes = notes;
+            l1.isActive = isActive;
+            l1.issueReason = (clsLicenses.enIssueReason)issueReason;
+            if (l1.save())
+            {
+                Console.WriteLine("Saved successfully with ID {0}", l1.licenseID);
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong");
+            }
+        }
+
+        static void updateLicense(int licenseID)
+        {
+
+
+            if (!clsLicenses.isLicenseExist(licenseID))
+            {
+                Console.WriteLine("license with ID {0} could not found!", licenseID);
+                return;
+            }
+
+            clsLicenses l1 = clsLicenses.findLicense(licenseID);
+            if (l1==null)
+            {
+                Console.WriteLine("Yes");
+                return;
+            }
+
+            Console.WriteLine("Enter new App ID ");
+            l1.applicationID = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter driver ID");
+            l1.driverID = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter License Class ID ");
+            l1.licenseClass = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter Expiration Date");
+            l1.expirationDate = Convert.ToDateTime(Console.ReadLine());
+            Console.WriteLine("Enter Noets ");
+            l1.notes = Console.ReadLine().ToString();
+            Console.WriteLine("Is Active");
+            l1.isActive = Convert.ToBoolean(Console.ReadLine());
+            Console.WriteLine("Issue reason");
+            l1.issueReason = (clsLicenses.enIssueReason)Convert.ToInt32(Console.ReadLine());
+
+
+
+
+
+
+            if (l1.save())
+            {
+                Console.WriteLine("\nupdated ");
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong");
+            }
+        }
+        static void deleteLicense(int licenseID)
+        {
+            if (!clsLicenses.isLicenseExist(licenseID))
+            {
+                Console.WriteLine("License  does not exist");
+                return;
+            }
+
+            if (clsLicenses.deleteLicense(licenseID))
+            {
+                Console.WriteLine("Deleted successfully");
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong");
+            }
+
+        }
 
 
         static void Main(string[] args)
@@ -358,16 +476,19 @@ namespace DVLDConsoleAPP
 
             - People sınıfın için Constracter yapısında bir değişiklik var mı? ben birini private birini public yaptım hoca nasıl yapmış?
             - mesela şu an driver eklerken peopleID'de kısmınsa sorun oluıyor. sistemde eğer bir kişi driver'sa o başka tekrara direver olarak eklenemez. Yani sistem bir driver eklerken 1) ilk olarak o Kişi var 2)o kişi zaten driver mı diye kontrol etmeliyiz. Bu kontrol hangi katmanda yapmamız en mantıkı olur? Ben şahsen bunu UI ile sınırlı olmasını istemiyorum. Bir yandan da ya zaten DB böyle bir şeyi eklemeye izin vermez hata olur ve ekleme başarısız olur der bu nedenle tıpkı user eklerken people var mı diye kontolu UI'da yapmıştık, bunuda UI'da yani burda yapalım diyorum.
-                     //Read only olan kısımlar var. Mesela application eklerken driverID elle girilmesin. bunu sistem o anki hangi kullanıcı aktifse onun ID'sini eklemeli. Bunu gibi readOnly olan durumlar var. mesela app eklerken ödene tutarı sistem direk appTypes'tan getirsin otomatik
+                     //Read only olan kısımlar var. Mesela application eklerken licenseID elle girilmesin. bunu sistem o anki hangi kullanıcı aktifse onun ID'sini eklemeli. Bunu gibi readOnly olan durumlar var. mesela app eklerken ödene tutarı sistem direk appTypes'tan getirsin otomatik
 
             //ŞU AN - app eklerken ödenen tutarı sistem otomatik appType'tan getirmesi için uğraşıyorum. Şu an DB'de bunu yapmaya çalışıyorum. veya  _addNewApplication() fonsktinına bir kod yazıoyor
             //APP laststatus time ne zaman güncellenmeli. Acaba bu UI olduğunda daha mı kolay olur? mesela console ile bunu nasıl yapacağız. UI ile kullanıcı kutularda istrediği kısmı günceller sonra DB'e kayıt ederken eğer status değişmişse anca o zaman status'u değiştiriri.
 
-            //Driver silecekken hata alıyorum çünkü bazı driver'lar refereans var. Yani 8 ID'li driver license yani driverID'nin FK olarak ekli olduğu tabloda kayıtlı olduğu için 8 ID'Li driver silinmiyor
+            //Driver silecekken hata alıyorum çünkü bazı driver'lar refereans var. Yani 8 ID'li driver license yani licenseID'nin FK olarak ekli olduğu tabloda kayıtlı olduğu için 8 ID'Li driver silinmiyor
              */
 
             //DB'Den veyi alırken  read["DriverID"] != DBNull.Value ? 1 : 0; şekilde kontrol et
             //Şimdi licesnes tablosunda update yaparken bazı alanları değişrimemiz gerekebilir. Mesela userID değişmemesi gerekir çünkü sistem o an kim güncelleme yapmışsa onu eklere hata olamaz, ama notes değişebilir.
+
+
+            updateLicense(28);
 
 
         }

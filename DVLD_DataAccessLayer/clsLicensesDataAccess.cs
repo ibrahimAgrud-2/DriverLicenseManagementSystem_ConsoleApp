@@ -48,7 +48,7 @@ namespace DVLD_DataAccessLayer
         {
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
 
-            string query = "select * from Licenses where LicensesID=@licenseID";
+            string query = "select * from Licenses where LicenseID=@licenseID";
 
             SqlCommand cmd = new SqlCommand(query, connection);
 
@@ -190,12 +190,13 @@ namespace DVLD_DataAccessLayer
 
         //Şimdi licesnes tablosunda update yaparken bazı alanları değişrimemiz gerekebilir. Mesela userID değişmemesi gerekir çünkü sistem o an kim güncelleme yapmışsa onu eklere hata olamaz, ama notes değişebilir.
         public static bool updateLicenseInfo(int licenseID, int driverID, int licenseClass,
-    DateTime expirationDate, double paidFees, bool isActive, int issueReason)
+    DateTime expirationDate, string notes,double paidFees, bool isActive, int issueReason)
         {
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
 
             string query = @"UPDATE Licenses 
                      SET DriverID = @driverID,
+                        Notes=@notes,
                          LicenseClass = @licenseClass,
                          ExpirationDate = @expirationDate,
                          PaidFees = @paidFees,
@@ -211,8 +212,9 @@ namespace DVLD_DataAccessLayer
             cmd.Parameters.AddWithValue("@driverID", driverID);
             cmd.Parameters.AddWithValue("@licenseClass", licenseClass);
             cmd.Parameters.AddWithValue("@expirationDate", expirationDate);
-            cmd.Parameters.AddWithValue("@paidFees", paidFees);
             cmd.Parameters.AddWithValue("@isActive", isActive);
+            cmd.Parameters.AddWithValue("@paidFees", paidFees);
+            cmd.Parameters.AddWithValue("@notes", notes);
             cmd.Parameters.AddWithValue("@issueReason", issueReason);
 
 
