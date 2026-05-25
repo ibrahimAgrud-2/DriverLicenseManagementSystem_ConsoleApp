@@ -459,6 +459,8 @@ namespace DVLDConsoleAPP
 
         }
 
+        //=======================License======================
+
 
         static void Main(string[] args)
         {
@@ -488,7 +490,6 @@ namespace DVLDConsoleAPP
             //Şimdi licesnes tablosunda update yaparken bazı alanları değişrimemiz gerekebilir. Mesela userID değişmemesi gerekir çünkü sistem o an kim güncelleme yapmışsa onu eklere hata olamaz, ama notes değişebilir.
 
 
-            updateLicense(28);
 
 
         }
