@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 
 namespace DVLD_DataAccessLayer
 {
-    internal class clsDetainedLicensesDataAccess
+    public class clsDetainedLicensesDataAccess
     {
         public static DataTable getDetainedLicenseRecords()
         {
@@ -42,7 +42,7 @@ namespace DVLD_DataAccessLayer
             return dt;
         }
 
-
+ 
         public static bool findDetainedLicense(int detainID, ref int licensedID, ref DateTime detainDate, ref double fineFees, ref int createdByUserID, ref bool isReleased, ref DateTime releaseDate, ref int releasedByUserID, ref int releaseApplicationID)
         {
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);

@@ -8,7 +8,6 @@ using System.Security.Policy;
 using System.Xml;
 using static DVLD_BusinessLayer.clsLicenses;
 
-
 namespace DVLDConsoleAPP
 {
     internal class Program
