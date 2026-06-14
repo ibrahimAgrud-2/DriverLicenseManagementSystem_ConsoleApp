@@ -46,8 +46,6 @@ namespace DVLD_BusinessLayer
             return dt;
         }
 
-
-
         public static clsUser findUser(int userID)
         {
 

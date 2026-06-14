@@ -43,7 +43,7 @@ namespace DVLD_DataAccessLayer
         }
 
  
-        public static bool findDetainedLicense(int detainID, ref int licensedID, ref DateTime detainDate, ref double fineFees, ref int createdByUserID, ref bool isReleased, ref DateTime releaseDate, ref int releasedByUserID, ref int releaseApplicationID)
+        public static bool findDetainedLicense(int detainID, ref int licenseID, ref DateTime detainDate, ref double fineFees, ref int createdByUserID, ref bool isReleased, ref DateTime releaseDate, ref int releasedByUserID, ref int releaseApplicationID)
         {
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
 
@@ -60,7 +60,7 @@ namespace DVLD_DataAccessLayer
 
                 if (read.Read())
                 {
-                    licensedID = read["LicensedID"] != DBNull.Value ? Convert.ToInt32(read["LicensedID"]) : 0;
+                    licenseID = read["licenseID"] != DBNull.Value ? Convert.ToInt32(read["licenseID"]) : 0;
                     detainDate = read["DetainDate"] != DBNull.Value ? Convert.ToDateTime(read["DetainDate"]) : DateTime.MinValue;
                     fineFees = read["FineFees"] != DBNull.Value ? Convert.ToDouble(read["FineFees"]) : 0;
                     createdByUserID = read["CreatedByUserID"] != DBNull.Value ? Convert.ToInt32(read["CreatedByUserID"]) : 0;
@@ -83,7 +83,6 @@ namespace DVLD_DataAccessLayer
 
             return false;
         }
-
 
         public static bool isDetainedLicenseExist(int detainID)
         {
@@ -121,26 +120,26 @@ namespace DVLD_DataAccessLayer
         }
 
 
-        public static int addDetainedLicense(int detainID,  DateTime detainDate,  double fineFees,  int createdByUserID,  bool isReleased,  DateTime releaseDate,  int releasedByUserID,  int releaseApplicationID)
+        public static int addDetainedLicense(int licenseID,  DateTime detainDate,  double fineFees,  int createdByUserID,  bool isReleased,  DateTime releaseDate,  int releasedByUserID,  int releaseApplicationID)
         {
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
 
-            string query = @"INSERT INTO DetainedLicenses (detainID, detainDate, fineFees, createdByUserID, 
+            string query = @"INSERT INTO DetainedLicenses (licenseID, detainDate, fineFees, createdByUserID, 
                     isReleased, releaseDate, releasedByUserID, releaseApplicationID) 
-                    VALUES (@detainID, @detainDate, @fineFees, @createdByUserID, 
+                    VALUES (@licenseID, @detainDate, @fineFees, @createdByUserID, 
                     @isReleased, @releaseDate, @releasedByUserID, @releaseApplicationID);
                     SELECT SCOPE_IDENTITY();";
 
             SqlCommand cmd = new SqlCommand(query, connection);
 
-            cmd.Parameters.AddWithValue("@detainID", detainID);
+            cmd.Parameters.AddWithValue("@licenseID", licenseID);
             cmd.Parameters.AddWithValue("@detainDate", detainDate);
             cmd.Parameters.AddWithValue("@fineFees", fineFees);
             cmd.Parameters.AddWithValue("@createdByUserID", createdByUserID);
             cmd.Parameters.AddWithValue("@isReleased", isReleased);
             cmd.Parameters.AddWithValue("@releaseDate", releaseDate);
             cmd.Parameters.AddWithValue("@releasedByUserID", releasedByUserID); 
-            cmd.Parameters.AddWithValue("@releaseApplicationID", releaseDate);
+            cmd.Parameters.AddWithValue("@releaseApplicationID", releaseApplicationID);
 
 
 
@@ -171,27 +170,25 @@ namespace DVLD_DataAccessLayer
 
 
         //Şimdi licesnes tablosunda update yaparken bazı alanları değişrimemiz gerekebilir. Mesela userID değişmemesi gerekir çünkü sistem o an kim güncelleme yapmışsa onu eklere hata olamaz, ama notes değişebilir.
-        public static bool updateDetainedLicenseInfo(int detainID, DateTime detainDate, double fineFees, int createdByUserID, bool isReleased, DateTime releaseDate, int releasedByUserID, int releaseApplicationID)
+        public static bool updateDetainedLicense(int detainID,int licenseID, DateTime detainDate, double fineFees, int createdByUserID, bool isReleased, DateTime releaseDate, int releasedByUserID, int releaseApplicationID)
         {
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
 
             string query = @"UPDATE DetainedLicenses 
-                     SET detainID = @detainID,
+                     SET licenseID = @licenseID,
                         detainDate=@detainDate,
                          fineFees = @fineFees,
                          createdByUserID = @createdByUserID,
                          isReleased = @isReleased,
                          releaseDate = @releaseDate,
-                            releasedByUserID=@releasedByUserID
-                             releaseApplicationID = @releaseApplicationID,
-                   
-
-
+                            releasedByUserID=@releasedByUserID,
+                             releaseApplicationID = @releaseApplicationID
                      WHERE DetainID = @DetainID";
 
             SqlCommand cmd = new SqlCommand(query, connection);
 
             cmd.Parameters.AddWithValue("@detainID", detainID);
+            cmd.Parameters.AddWithValue("@licenseID", licenseID);
             cmd.Parameters.AddWithValue("@detainDate", detainDate);
             cmd.Parameters.AddWithValue("@fineFees", fineFees);
             cmd.Parameters.AddWithValue("@createdByUserID", createdByUserID);
@@ -217,11 +214,9 @@ namespace DVLD_DataAccessLayer
             }
         }
 
-
+        //createdByUseID, dates(%80),releasedByUserID
         public static bool deleteDetainedLicense(int detainedLicenseID)
         {
-
-
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
             string query = "delete DetainedLicenses where detainedLicenseID=@detainedLicenseID";
             SqlCommand cmd = new SqlCommand(query, connection);
@@ -252,6 +247,8 @@ namespace DVLD_DataAccessLayer
 
             return false;
         }
+
+
 
     }
 }

@@ -108,8 +108,7 @@ namespace DVLD_BusinessLayer
 
             //şu anlık 1 ama login screen olduğunda bu değişiek.
             this.createdByUserID = 1;
-
-            this.paidFees=clsLicenseCLass.findLicenseClass(this.licenseClass).classFees;
+            this.paidFees = 10;
             this.issueDate = DateTime.Now;
 
             this.licenseID = clsLicensesDataAccess.addLicense(this.applicationID,this.driverID,this.licenseClass,this.issueDate,this.expirationDate,this.notes,this.paidFees,this.isActive,Convert.ToInt32(this.issueReason),this.createdByUserID);

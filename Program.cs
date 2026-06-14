@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Security.Policy;
 using System.Xml;
 using static DVLD_BusinessLayer.clsLicenses;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DVLDConsoleAPP
 {
@@ -281,7 +282,7 @@ namespace DVLDConsoleAPP
         {
             DataTable dt = new DataTable();
 
-            dt = clsLicenseCLass.getLicenseClassRecords();
+            dt = clsLicenses.getLicenseRecords();
 
             foreach (DataRow row in dt.Rows)
             {
@@ -368,7 +369,7 @@ namespace DVLDConsoleAPP
                 Console.WriteLine("DriverID with ID {0} could not found!", DriverID);
                 return;
             }
-            if (!clsLicenseCLass.isLicenseClassExist(licenseClassID))
+            if (!clsLicenses.isLicenseExist(licenseClassID))
             {
                 Console.WriteLine("license Class ID with ID {0} could not found!", licenseClassID);
                 return;
@@ -458,8 +459,60 @@ namespace DVLDConsoleAPP
 
         }
 
-        //=======================License======================
+        //=======================DetainedLicense======================
 
+        static void addDetainedLicense(int licenseID,double fineFee,int releasedAppID)
+        {
+           
+            if (!clsLicenses.isLicenseExist(licenseID))
+            {
+                Console.WriteLine("licenseID with ID {0} could not found!", licenseID);
+                return;
+            }
+         
+
+
+            clsDetainedLicense dl1 = new clsDetainedLicense();
+            dl1.licenseID = licenseID;
+            dl1.fineFees = fineFee;
+            dl1.releaseApplicationID  = releasedAppID;
+   
+            if (dl1.save())
+            {
+                Console.WriteLine("Saved successfully with ID {0}", dl1.licenseID);
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong");
+            }
+
+        }
+
+
+        /*
+         int detainID,int licenseID, DateTime detainDate, double fineFees, int createdByUserID, bool isReleased, DateTime releaseDate, int releasedByUserID, int releaseApplicationID
+         
+         */
+        static void updateDetainedLicense(int detainID)
+        {
+
+
+            clsDetainedLicense dl1 = clsDetainedLicense.findDetainedLicense(detainID);
+            dl1.licenseID = 27;
+            dl1.isReleased = false;
+            dl1.releaseApplicationID = 130;
+
+           
+
+            if (dl1.save())
+            {
+                Console.WriteLine("\nupdated ");
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong");
+            }
+        }
 
         static void Main(string[] args)
         {
@@ -479,17 +532,15 @@ namespace DVLDConsoleAPP
             - mesela şu an driver eklerken peopleID'de kısmınsa sorun oluıyor. sistemde eğer bir kişi driver'sa o başka tekrara direver olarak eklenemez. Yani sistem bir driver eklerken 1) ilk olarak o Kişi var 2)o kişi zaten driver mı diye kontrol etmeliyiz. Bu kontrol hangi katmanda yapmamız en mantıkı olur? Ben şahsen bunu UI ile sınırlı olmasını istemiyorum. Bir yandan da ya zaten DB böyle bir şeyi eklemeye izin vermez hata olur ve ekleme başarısız olur der bu nedenle tıpkı user eklerken people var mı diye kontolu UI'da yapmıştık, bunuda UI'da yani burda yapalım diyorum.
                      //Read only olan kısımlar var. Mesela application eklerken licenseID elle girilmesin. bunu sistem o anki hangi kullanıcı aktifse onun ID'sini eklemeli. Bunu gibi readOnly olan durumlar var. mesela app eklerken ödene tutarı sistem direk appTypes'tan getirsin otomatik
 
-            //ŞU AN - app eklerken ödenen tutarı sistem otomatik appType'tan getirmesi için uğraşıyorum. Şu an DB'de bunu yapmaya çalışıyorum. veya  _addNewApplication() fonsktinına bir kod yazıoyor
+     
             //APP laststatus time ne zaman güncellenmeli. Acaba bu UI olduğunda daha mı kolay olur? mesela console ile bunu nasıl yapacağız. UI ile kullanıcı kutularda istrediği kısmı günceller sonra DB'e kayıt ederken eğer status değişmişse anca o zaman status'u değiştiriri.
 
             //Driver silecekken hata alıyorum çünkü bazı driver'lar refereans var. Yani 8 ID'li driver license yani licenseID'nin FK olarak ekli olduğu tabloda kayıtlı olduğu için 8 ID'Li driver silinmiyor
              */
-
-            //DB'Den veyi alırken  read["DriverID"] != DBNull.Value ? 1 : 0; şekilde kontrol et
-            //Şimdi licesnes tablosunda update yaparken bazı alanları değişrimemiz gerekebilir. Mesela userID değişmemesi gerekir çünkü sistem o an kim güncelleme yapmışsa onu eklere hata olamaz, ama notes değişebilir.
+            //Sİstemde kullanıcını girmemesi gereken kısımlar var mesela createdByUserID, bunu hoca girilmesine/değiştirilmesine izin vermişmi.
 
 
-
+         updateDetainedLicense(15);
 
         }
     }
