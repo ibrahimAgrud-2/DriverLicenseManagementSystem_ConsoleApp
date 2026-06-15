@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 
 namespace DVLD_DataAccessLayer
 {
-    public class clsLocalDrivingLicenseApplications
+    public class clsLocalDrivingLicenseAppDataAccess
     {
         public static DataTable getAllLocalDrivingLicenseApps()
         {
