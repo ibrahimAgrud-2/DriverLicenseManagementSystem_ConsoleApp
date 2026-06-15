@@ -488,11 +488,6 @@ namespace DVLDConsoleAPP
 
         }
 
-
-        /*
-         int detainID,int licenseID, DateTime detainDate, double fineFees, int createdByUserID, bool isReleased, DateTime releaseDate, int releasedByUserID, int releaseApplicationID
-         
-         */
         static void updateDetainedLicense(int detainID)
         {
 
@@ -513,8 +508,10 @@ namespace DVLDConsoleAPP
                 Console.WriteLine("Something went wrong");
             }
         }
+        //=======================DetainedLicense======================
 
-        static void Main(string[] args)
+      
+         static void Main(string[] args)
         {
 
             //Gelişim Sorularu
@@ -540,7 +537,17 @@ namespace DVLDConsoleAPP
             //Sİstemde kullanıcını girmemesi gereken kısımlar var mesela createdByUserID, bunu hoca girilmesine/değiştirilmesine izin vermişmi.
 
 
-         updateDetainedLicense(15);
+
+            //SIK COMMİT (Güzel görünsün hem adımlar detaylu olsun)
+
+            DataTable dt = new DataTable();
+
+            dt = clsLicenseClass.getAllClassLicenseRecords(); 
+
+            foreach (DataRow row in dt.Rows)
+            {
+                Console.WriteLine($"{row["LicenseClassID"]}");
+            }
 
         }
     }
