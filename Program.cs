@@ -517,8 +517,10 @@ namespace DVLDConsoleAPP
             //Gelişim Sorularu
             /*
              - mesela database'de firstName null değer kabul etmesin. veriyi database'e
-            gönderirken null kontolu dataAccess layer'da yapmalımıyız yoksa sadece Form Üzreinde kontrollerde mi yapacağız.
-            **Eğer dataAccess layer'da yapmazsak bu dll'i başka yerde kullandığımızda aynı kontrolleri o arayüzde de yapmamız
+            gönderirken null kontolu hangi katmanda yapmalıyız? Aynı şey başkta tablodaki verini olup olmadığını kontrl ederken de geçerli. Mesela,detained license eklerken eklenen licenseID gerçekten tabloda var mı? Şu an en mantıklı gelen BL'de çünkü eğer PL'de yazarsam; ilgil kontrol kodunu her platform için (web, mobil vs) ayrı yazmam  gerekir.
+          
+
+             **Eğer dataAccess layer'da yapmazsak bu dll'i başka yerde kullandığımızda aynı kontrolleri o arayüzde de yapmamız
             *gerekir yani bu kısım arayüzde bağımlı olur** Meselae bunu önüne şu şelilde geçebiliriz. sadece parametereli
             *const'u public yaparız. BU sayede kullanıc obje oluştutmak için verileri girmek zorunda. Zaten save fonskyionu 
             *objeye bağlı olduğu için anca obje ile çağırılabili. Yani save yapacapımız zaman o objenin tüm verileri düzenli
