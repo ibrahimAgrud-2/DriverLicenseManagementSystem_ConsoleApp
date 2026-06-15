@@ -7,7 +7,7 @@ namespace DVLD_BusinessLayer
 {
     public class clsLicenseClass
     {
-        int licenseClassID { set; get; }
+       public int licenseClassID { set; get; }
         string className { set; get; }
         string classDescription { set; get; }
         int minimumAge { set; get; }
@@ -38,6 +38,25 @@ namespace DVLD_BusinessLayer
         public static DataTable getAllClassLicenseRecords()
         {
             return clsLicenseClassesDataAccess.getLicenseClassesRecords();
+        }
+
+        public static clsLicenseClass findLicenseClass(int licenseClassID)
+        {
+            string className="", classDescription="";
+            int minimumAge=1, defaultValidityLength=1;
+            double classFee=0.0;
+
+            if (clsLicenseClassesDataAccess.findLicenseClass(licenseClassID,ref className, ref classDescription, ref minimumAge, ref defaultValidityLength, ref classFee))
+            {
+                return new clsLicenseClass(licenseClassID,  className,  classDescription,  minimumAge,  defaultValidityLength,  classFee);
+
+            }
+            return null;
+        }
+
+        public static bool isCLicenseClassExist(int licenseClassID)
+        {
+            return clsLicenseClassesDataAccess.isLicenseClassExit(licenseClassID);
         }
 
 

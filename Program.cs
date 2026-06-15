@@ -549,6 +549,9 @@ namespace DVLDConsoleAPP
                 Console.WriteLine($"{row["LicenseClassID"]}");
             }
 
+
+            Console.WriteLine(clsLicenseClass.isCLicenseClassExist(1));
+
         }
     }
 }

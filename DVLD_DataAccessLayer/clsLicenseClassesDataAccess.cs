@@ -43,7 +43,7 @@ namespace DVLD_DataAccessLayer
 
             return dt;
         }
-        public static bool findLicenseClass(int licenseClassID, ref string className,ref string classDescription,ref int minimumAge,ref int defaultValidityLength, double classFee)
+        public static bool findLicenseClass(int licenseClassID, ref string className,ref string classDescription,ref int minimumAge,ref int defaultValidityLength,ref double classFee)
         {
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
 
@@ -61,12 +61,12 @@ namespace DVLD_DataAccessLayer
 
                 if (read.Read())
                 {
-                    licenseClassID = read["licenseClassID"] != DBNull.Value ? Convert.ToInt32(read["licenseID"]) : 0;
+                    licenseClassID = read["licenseClassID"] != DBNull.Value ? Convert.ToInt32(read["licenseClassID"]) : 0;
                     className = read["className"].ToString();
                     classDescription = read["classDescription"].ToString();
                     minimumAge = read["minimumAge"] != DBNull.Value ? Convert.ToInt32(read["minimumAge"]) : 0;
                     defaultValidityLength = read["defaultValidityLength"] != DBNull.Value ? Convert.ToInt32(read["defaultValidityLength"]) : 0;
-                    classFee = read["classFee"] != DBNull.Value ? Convert.ToDouble(read["classFee"]) : 0.0
+                    classFee = read["ClassFees"] != DBNull.Value ? Convert.ToDouble(read["ClassFees"]) : 0.0
                     ;
 
 
@@ -88,11 +88,11 @@ namespace DVLD_DataAccessLayer
             return false;
         }
 
-        public static bool isLicenseClass(int licenseClassID)
+        public static bool isLicenseClassExit(int licenseClassID)
         {
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
 
-            string query = "select found =1 from LicenseClassed where licenseClassID=@licenseClassID";
+            string query = "select found =1 from LicenseClasses where licenseClassID=@licenseClassID";
             SqlCommand cmd = new SqlCommand(query, connection);
             cmd.Parameters.AddWithValue("@licenseClassID", licenseClassID);
 
@@ -121,7 +121,7 @@ namespace DVLD_DataAccessLayer
             return false;
         }
 
-       
+        
 
     }
 }
