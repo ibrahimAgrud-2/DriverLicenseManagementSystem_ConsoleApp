@@ -126,7 +126,7 @@ namespace DVLD_DataAccessLayer
         }
 
 
-        public static bool LocalDrivingLicenseInfo(int id, ref int applicationID, ref int licenseClassID)
+        public static bool updateLocalDrivingLicenseInfo(int id,  int applicationID,  int licenseClassID)
         {
 
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
@@ -162,8 +162,7 @@ namespace DVLD_DataAccessLayer
             return false;
         }
 
-
-        public static bool deleteDriver(int id)
+        public static bool deleteLocalDrivingLicenseApp(int id)
         {
 
 

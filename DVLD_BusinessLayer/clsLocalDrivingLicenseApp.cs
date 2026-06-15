@@ -41,53 +41,46 @@ namespace DVLD_BusinessLayer
 
 
 
-        public static cls findLocalDrivingLicenseApp(int id)
+        public static clsLocalDrivingLicenseApp findLocalDrivingLicenseApp(int id)
         {
               int applicationID=0,
               licenseClassID=0;
 
-            if (clsLocalDrivingLicenseApp.findLocalDrivingLicenseApp(id, ref applicationID, ref licenseClassID))
+            if (clsLocalDrivingLicenseAppDataAccess.findLocalDrivingLicenseApp(id, ref applicationID, ref licenseClassID))
             {
-                return new clsDriver(driverID, personID, createdByUserID, createdDate);
+                return new clsLocalDrivingLicenseApp(id, applicationID, licenseClassID);
             }
             return null;
         }
 
 
-        private bool _addNewDriver()
+        private bool _addNewLocalDriverLicenseApp()
         {
-            //bu değişecek. Bu o anki user kimse onun ID'sini alacak. Yani elle girilme olmayacak.
 
 
-            this.createdDate = DateTime.Now;
-            this.createdByUserID = 1;
-            this.driverID = clsDriverDataAccess.addDriver(this.personID, this.createdByUserID, this.createdDate);
-            return (this.driverID != -1);
+            this.licenseClassID = 1;
+            this.applicationID = 1;
+            this.id = clsLocalDrivingLicenseAppDataAccess.addLocalDrivingLicense( this.licenseClassID, this.applicationID);
+            return (this.id != -1);
 
         }
-        private bool _updateDriverInfo()
+        private bool _updateDLocalDriverLicenseAppInfo()
         {
 
-            return clsDriverDataAccess.updateDriverInfo(this.driverID, this.personID, this.createdByUserID, this.createdDate);
+            return clsLocalDrivingLicenseAppDataAccess.updateLocalDrivingLicenseInfo(this.id, this.applicationID,this.licenseClassID);
         }
 
 
-        public static bool isDriverExistByDriverID(int Driver)
+  
+        public static bool isLocalDriverLicenseExist(int id)
         {
-            return clsDriverDataAccess.isDriverExistByDriverID(Driver);
-        }
-        public static bool isDriverExistByPersonID(int personID)
-        {
-            return clsDriverDataAccess.isDriverExistByPersonID(personID);
+            return clsLocalDrivingLicenseApp.isLocalDriverLicenseExist(id);
         }
 
         public static bool deleteDriver(int DriverID)
         {
-            if (isDriverExistByDriverID(DriverID))
-            {
-                return clsDriverDataAccess.deleteDriver(DriverID);
-            }
-            return false;
+       
+            return clsLocalDrivingLicenseAppDataAccess.deleteLocalDrivingLicenseApp(DriverID);
 
         }
 
@@ -96,10 +89,10 @@ namespace DVLD_BusinessLayer
             switch (this.mode)
             {
                 case enMode.enAddNew:
-                    return _addNewDriver();
+                    return _addNewLocalDriverLicenseApp();
 
                 case enMode.enUpdate:
-                    return _updateDriverInfo();
+                    return _updateDLocalDriverLicenseAppInfo();
                 default:
                     return false;
             }
