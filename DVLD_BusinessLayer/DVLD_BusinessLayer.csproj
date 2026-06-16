@@ -52,6 +52,7 @@
     <Compile Include="clsLocalDrivingLicenseApp.cs" />
     <Compile Include="clsPeople.cs" />
     <Compile Include="clsTestAppointments.cs" />
+    <Compile Include="clsTests.cs" />
     <Compile Include="clsTestTypes.cs" />
     <Compile Include="clsUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

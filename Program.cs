@@ -542,8 +542,16 @@ namespace DVLDConsoleAPP
 
             //SIK COMMİT (Güzel görünsün hem adımlar detaylu olsun)
 
+            clsTests t1 = new clsTests();
 
-            Console.WriteLine(clsTestAppointments.findTestAppointment(108));
+
+            t1.notes = "Bad";
+            t1.testAppointmentID = 108;
+            t1.testResult = 0;
+
+
+
+            Console.WriteLine(t1.save());
 
         }
     }   
