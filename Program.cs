@@ -543,10 +543,7 @@ namespace DVLDConsoleAPP
             //SIK COMMİT (Güzel görünsün hem adımlar detaylu olsun)
 
 
-            Console.WriteLine(clsInternationalLicense.deleteInternationalLicense(16));
 
-            //Console.WriteLine();
-           
 
         }
     }   
