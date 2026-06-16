@@ -165,9 +165,10 @@ namespace DVLD_DataAccessLayer
 
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
 
-            string query = "update LocalDrivingLicenseApplications set applicationID=@applicationID,licenseClassID=@licenseClassID";
+            string query = "update LocalDrivingLicenseApplications set applicationID=@applicationID,licenseClassID=@licenseClassID where LocalDrivingLicenseApplicationID=@id";
 
             SqlCommand cmd = new SqlCommand(query, connection);
+            cmd.Parameters.AddWithValue("@id", id);
             cmd.Parameters.AddWithValue("@applicationID", applicationID);
             cmd.Parameters.AddWithValue("@licenseClassID", licenseClassID);
 

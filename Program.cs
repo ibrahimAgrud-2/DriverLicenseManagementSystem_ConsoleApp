@@ -543,9 +543,10 @@ namespace DVLDConsoleAPP
             //SIK COMMİT (Güzel görünsün hem adımlar detaylu olsun)
 
 
-            clsLocalDrivingLicenseApp ldla = new clsLocalDrivingLicenseApp();
+            clsLocalDrivingLicenseApp ldla = clsLocalDrivingLicenseApp.findLocalDrivingLicenseApp(56);
+            
             ldla.applicationID = 110;
-            ldla.licenseClassID = 1;
+
 
             ldla.save();
            
