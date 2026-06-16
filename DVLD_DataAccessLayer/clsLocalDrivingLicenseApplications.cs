@@ -43,11 +43,11 @@ namespace DVLD_DataAccessLayer
 
             return dt;
         }
-        
+
 
         public static bool findLocalDrivingLicenseApp(int id,ref int applicationID,ref int licenseClassID)
         {
-            string query = "select found =1 from LocalDrivingLicenseApplications where LocalDrivingLicenseApplicationID=@id";
+            string query = "select * from LocalDrivingLicenseApplications where LocalDrivingLicenseApplicationID=@id";
 
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
 
@@ -65,7 +65,7 @@ namespace DVLD_DataAccessLayer
 
                 if (read.Read())
                 {
-                    applicationID = Convert.ToInt32(read["applicationID"]);
+                    applicationID = Convert.ToInt32(read["ApplicationID"]);
                     licenseClassID = Convert.ToInt32(read["licenseClassID"]);
                     return true;
                 }
@@ -85,13 +85,47 @@ namespace DVLD_DataAccessLayer
             return false;
         }
 
+        public static bool isLocalDrivingLicenseAppExist(int id)
+        {
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+
+
+            string query = "select found =1 from LocalDrivingLicenseApplications where LocalDrivingLicenseApplicationID=@id";
+            SqlCommand cmd = new SqlCommand(query, connection);
+            cmd.Parameters.AddWithValue("@id", id);
+
+
+            try
+            {
+                connection.Open();
+
+
+                object result = cmd.ExecuteScalar();
+                if (result != null && int.TryParse(result.ToString(), out int value))
+                {
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+
+                return false; ;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return false;
+        }
+
 
         public static int addLocalDrivingLicense(int applicationID,  int licenseClassID)
         {
 
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
 
-            string query = "insert into LocalDrivingLicenseApplications values(@applicationID,@licenseClassID) Select Scope_Identity();";
+            string query = "insert into LocalDrivingLicenseApplications (ApplicationID,licenseClassID) values (@applicationID,@licenseClassID) Select Scope_Identity();";
 
             SqlCommand cmd = new SqlCommand(query, connection);
 

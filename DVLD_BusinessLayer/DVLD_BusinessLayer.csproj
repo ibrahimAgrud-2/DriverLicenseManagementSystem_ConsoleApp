@@ -48,6 +48,7 @@
     <Compile Include="clsDriver.cs" />
     <Compile Include="clsLicenseClass.cs" />
     <Compile Include="clsLicenses.cs" />
+    <Compile Include="clsLocalDrivingLicenseApp.cs" />
     <Compile Include="clsPeople.cs" />
     <Compile Include="clsUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

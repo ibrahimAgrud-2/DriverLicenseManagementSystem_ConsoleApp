@@ -10,7 +10,7 @@ namespace DVLD_BusinessLayer
 
         public int id { set; get; }
         public int applicationID { set; get; }
-        private int licenseClassID { set; get; }
+        public int licenseClassID { set; get; }
      
         public enum enMode { enAddNew = 1, enUpdate = 2 };
         public enMode mode;
@@ -58,9 +58,8 @@ namespace DVLD_BusinessLayer
         {
 
 
-            this.licenseClassID = 1;
-            this.applicationID = 1;
-            this.id = clsLocalDrivingLicenseAppDataAccess.addLocalDrivingLicense( this.licenseClassID, this.applicationID);
+
+            this.id = clsLocalDrivingLicenseAppDataAccess.addLocalDrivingLicense( this.applicationID, this.licenseClassID);
             return (this.id != -1);
 
         }
@@ -74,7 +73,7 @@ namespace DVLD_BusinessLayer
   
         public static bool isLocalDriverLicenseExist(int id)
         {
-            return clsLocalDrivingLicenseApp.isLocalDriverLicenseExist(id);
+            return clsLocalDrivingLicenseAppDataAccess.isLocalDrivingLicenseAppExist(id);
         }
 
         public static bool deleteDriver(int DriverID)

@@ -542,20 +542,16 @@ namespace DVLDConsoleAPP
 
             //SIK COMMİT (Güzel görünsün hem adımlar detaylu olsun)
 
-            DataTable dt = new DataTable();
 
-            dt = clsLicenseClass.getAllClassLicenseRecords(); 
+            clsLocalDrivingLicenseApp ldla = new clsLocalDrivingLicenseApp();
+            ldla.applicationID = 110;
+            ldla.licenseClassID = 1;
 
-            foreach (DataRow row in dt.Rows)
-            {
-                Console.WriteLine($"{row["LicenseClassID"]}");
-            }
-
-
-            Console.WriteLine(clsLicenseClass.isCLicenseClassExist(1));
+            ldla.save();
+           
 
         }
-    }
+    }   
 }
 
 
