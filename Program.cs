@@ -543,7 +543,7 @@ namespace DVLDConsoleAPP
             //SIK COMMİT (Güzel görünsün hem adımlar detaylu olsun)
 
 
-
+            Console.WriteLine(clsTestAppointments.findTestAppointment(108));
 
         }
     }   
