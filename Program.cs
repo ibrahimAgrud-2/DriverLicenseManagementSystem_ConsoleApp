@@ -544,11 +544,8 @@ namespace DVLDConsoleAPP
 
 
             clsLocalDrivingLicenseApp ldla = clsLocalDrivingLicenseApp.findLocalDrivingLicenseApp(56);
-            
-            ldla.applicationID = 110;
 
-
-            ldla.save();
+            clsLocalDrivingLicenseApp.deleteLocalDrivingLicenseApp(56);
            
 
         }

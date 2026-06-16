@@ -76,7 +76,7 @@ namespace DVLD_BusinessLayer
             return clsLocalDrivingLicenseAppDataAccess.isLocalDrivingLicenseAppExist(id);
         }
 
-        public static bool deleteDriver(int DriverID)
+        public static bool deleteLocalDrivingLicenseApp(int DriverID)
         {
        
             return clsLocalDrivingLicenseAppDataAccess.deleteLocalDrivingLicenseApp(DriverID);
