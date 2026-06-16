@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 
 namespace DVLD_DataAccessLayer
 {
-    internal class clsInternationalLicense
+    public class clsInternationalLicenseDataAccess
     {
 
 
@@ -129,7 +129,7 @@ namespace DVLD_DataAccessLayer
 
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
 
-            string query = "insert into InternationalLicenses values(@applicationID,@driverID,@issueDate,@issuedUsingLocalLicenseID,@expirationDate,@isActive,@createdByUserID) Select Scope_Identity();";
+            string query = "insert into InternationalLicenses values(@applicationID,@driverID,@issuedUsingLocalLicenseID,@issueDate,@expirationDate,@isActive,@createdByUserID) Select Scope_Identity();";
 
             SqlCommand cmd = new SqlCommand(query, connection);
 

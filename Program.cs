@@ -543,9 +543,9 @@ namespace DVLDConsoleAPP
             //SIK COMMİT (Güzel görünsün hem adımlar detaylu olsun)
 
 
-            clsLocalDrivingLicenseApp ldla = clsLocalDrivingLicenseApp.findLocalDrivingLicenseApp(56);
+            Console.WriteLine(clsInternationalLicense.deleteInternationalLicense(16));
 
-            clsLocalDrivingLicenseApp.deleteLocalDrivingLicenseApp(56);
+            //Console.WriteLine();
            
 
         }
