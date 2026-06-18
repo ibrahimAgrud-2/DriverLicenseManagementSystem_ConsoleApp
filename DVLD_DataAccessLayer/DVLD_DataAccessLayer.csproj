@@ -41,21 +41,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="clsApplicationsDataAccess.cs" />
-    <Compile Include="clsApplicationTypesDataAccess.cs" />
-    <Compile Include="clsCountriesDataAccess.cs" />
-    <Compile Include="clsDataAccessSettings.cs" />
-    <Compile Include="clsDetainedLicensesDataAccess.cs" />
-    <Compile Include="clsDriverDataAccessDataAccess.cs" />
-    <Compile Include="clsInternationalLicenseDataAccess.cs" />
-    <Compile Include="clsLicenseClassesDataAccess.cs" />
-    <Compile Include="clsLicensesDataAccess.cs" />
-    <Compile Include="clsLocalDrivingLicenseApplications.cs" />
-    <Compile Include="clsPeopleDataAccess.cs" />
-    <Compile Include="clsTestAppointmentsDataAccess.cs" />
-    <Compile Include="clsTestDataAccess.cs" />
-    <Compile Include="clsTestTypesDataAccess.cs" />
-    <Compile Include="clsUserDataAccess.cs" />
+    <Compile Include="ApplicationsDataAccess.cs" />
+    <Compile Include="ApplicationTypesDataAccess.cs" />
+    <Compile Include="CountriesDataAccess.cs" />
+    <Compile Include="DataAccessSettings.cs" />
+    <Compile Include="DetainedLicensesDataAccess.cs" />
+    <Compile Include="DriverDataAccessDataAccess.cs" />
+    <Compile Include="InternationalLicenseDataAccess.cs" />
+    <Compile Include="LicenseClassesDataAccess.cs" />
+    <Compile Include="LicensesDataAccess.cs" />
+    <Compile Include="LocalDrivingLicenseApplications.cs" />
+    <Compile Include="PeopleDataAccess.cs" />
+    <Compile Include="TestAppointmentsDataAccess.cs" />
+    <Compile Include="TestDataAccess.cs" />
+    <Compile Include="TestTypesDataAccess.cs" />
+    <Compile Include="UserDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

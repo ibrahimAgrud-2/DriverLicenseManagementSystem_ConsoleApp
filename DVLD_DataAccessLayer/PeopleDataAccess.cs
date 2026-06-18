@@ -6,14 +6,14 @@ using System.Data.SqlClient;
 
 namespace DVLD_DataAccessLayer
 {
-    public class clsPeopleDataAccess
+    public class PeopleDataAccess
     {
 
         public static DataTable getPeople()
         {
             DataTable dt = new DataTable();
 
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
             string sqlQuery = "select * from people";
 
             SqlCommand cmd = new SqlCommand(sqlQuery, connection);
@@ -49,7 +49,7 @@ namespace DVLD_DataAccessLayer
            int gender, ref string address, ref string email, ref string phone, ref
            int countryID, ref string imagePath)
         {
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
 
             string query = "select * from People where PersonID=@personID";
 
@@ -100,7 +100,7 @@ namespace DVLD_DataAccessLayer
        int gender, ref string address, ref string email, ref string phone, ref
        int countryID, ref string imagePath)
         {
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
 
             string query = "select * from People where NationalNo=@nationalNo";
 
@@ -150,7 +150,7 @@ namespace DVLD_DataAccessLayer
 
         public static bool isPersonExistByID(int personID)
         {
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
 
             //bu sorgunun soncu: eğer kayıt varsa bir sütun oluşur adı found ve sütun tek satırlı olur (çünkü her ID bir adet olduğu için) satırda 1 yazar. Bu demek oluyor ki bu ID var.
              
@@ -187,7 +187,7 @@ namespace DVLD_DataAccessLayer
   
         public static bool isPersonExistByNationalNo(string NationalNo)
         {
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
 
             //bu sorgunun soncu: eğer kayıt varsa bir sütun oluşur adı found ve sütun tek satırlı olur (çünkü her ID bir adet olduğu için) satırda 1 yazar. Bu demek oluyor ki bu ID var.
 
@@ -226,7 +226,7 @@ namespace DVLD_DataAccessLayer
                    int countryID, string imagePath)
         {
           
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
 
             string query = "IF not exists (select personID from people where NationalNo=@nationalNo) begin insert into people values (@nationalNo,@firstName,@secondName,@thirdName,@lastName,@dateOfBirth,@gender,@address,@email,@phone,@nationalityCountryID,@imagePath) Select Scope_Identity() end;";
 
@@ -291,7 +291,7 @@ namespace DVLD_DataAccessLayer
           int countryID, string imagePath)
         {
 
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
 
             string query = "update people set nationalNo=@nationalNo,firstName=@firstName,secondName=@secondName,thirdName= @thirdName,lastName=@lastName,dateOfBirth=@dateOfBirth,gender=@gender,address=@address,email=@email,phone = @phone,nationalityCountryID=@nationalityCountryID,imagePath=@imagePath where personID =@personID";
 
@@ -347,7 +347,7 @@ namespace DVLD_DataAccessLayer
         {
             
             
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
             string query = "delete people where PersonID=@personID";
             SqlCommand cmd = new SqlCommand(query, connection);
             cmd.Parameters.AddWithValue("@personID", personID);

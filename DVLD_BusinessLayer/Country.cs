@@ -5,14 +5,14 @@ using DVLD_DataAccessLayer;
 
 namespace DVLD_BusinessLayer
 {
-    public class clsCountry
+    public class Country
     {
         public int countryID { set; get; }
         public string countryName { set; get; }
 
 
 
-        private clsCountry(int countryID,string countryName)
+        private Country(int countryID,string countryName)
         {
             this.countryID = countryID;
             this.countryName = countryName;
@@ -21,20 +21,20 @@ namespace DVLD_BusinessLayer
 
        public static DataTable getCountryRecord()
         {
-            DataTable dt = clsCountriesDataAccess.getCountryRecords();
+            DataTable dt = CountriesDataAccess.getCountryRecords();
             return dt;
         }
 
-        public static clsCountry findCountry(int countryID)
+        public static Country findCountry(int countryID)
         {
             string countryName = "";
 
       
 
 
-            if (clsCountriesDataAccess.findCountry(countryID, ref countryName))
+            if (CountriesDataAccess.findCountry(countryID, ref countryName))
             {
-                return new clsCountry(countryID, countryName);
+                return new Country(countryID, countryName);
 
             }
             return null;
@@ -42,7 +42,7 @@ namespace DVLD_BusinessLayer
 
         public static bool isCountryExist(int countryID)
         {
-            return clsCountriesDataAccess.isCountryExist(countryID);
+            return CountriesDataAccess.isCountryExist(countryID);
         }
     }
 }

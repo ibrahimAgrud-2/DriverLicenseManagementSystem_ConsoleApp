@@ -5,7 +5,7 @@ using System.Data;
 
 namespace DVLD_BusinessLayer
 {
-    public class clsLocalDrivingLicenseApp
+    public class LocalDrivingLicenseApp
     {
 
         public int id { set; get; }
@@ -15,7 +15,7 @@ namespace DVLD_BusinessLayer
         public enum enMode { enAddNew = 1, enUpdate = 2 };
         public enMode mode;
 
-        public clsLocalDrivingLicenseApp()
+        public LocalDrivingLicenseApp()
         {
             this.id = -1;
             this.applicationID = -1;
@@ -23,7 +23,7 @@ namespace DVLD_BusinessLayer
             this.mode = enMode.enAddNew;
         }
 
-        private clsLocalDrivingLicenseApp(int id, int applicationID, int licenseClassID)
+        private LocalDrivingLicenseApp(int id, int applicationID, int licenseClassID)
         {
             this.id = id;
             this.applicationID = applicationID;
@@ -35,20 +35,20 @@ namespace DVLD_BusinessLayer
         {
             DataTable dt = new DataTable();
 
-            dt = clsLocalDrivingLicenseApp.getLocalDrivingLicenseAppRecords();
+            dt = LocalDrivingLicenseApp.getLocalDrivingLicenseAppRecords();
             return dt;
         }
 
 
 
-        public static clsLocalDrivingLicenseApp findLocalDrivingLicenseApp(int id)
+        public static LocalDrivingLicenseApp findLocalDrivingLicenseApp(int id)
         {
               int applicationID=0,
               licenseClassID=0;
 
             if (clsLocalDrivingLicenseAppDataAccess.findLocalDrivingLicenseApp(id, ref applicationID, ref licenseClassID))
             {
-                return new clsLocalDrivingLicenseApp(id, applicationID, licenseClassID);
+                return new LocalDrivingLicenseApp(id, applicationID, licenseClassID);
             }
             return null;
         }

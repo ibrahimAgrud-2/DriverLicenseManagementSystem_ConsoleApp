@@ -6,7 +6,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace DVLD_BusinessLayer
 {
-    public class clsInternationalLicense
+    public class InternationalLicense
     {
 
         public int InternationalLicenseID { get; set; }
@@ -20,7 +20,7 @@ namespace DVLD_BusinessLayer
         public enum enMode { enAddNew = 1, enUpdate = 2 };
         public enMode mode;
 
-        public clsInternationalLicense()
+        public InternationalLicense()
         {
             this.InternationalLicenseID = -1;
             this.ApplicationID = -1;
@@ -33,7 +33,7 @@ namespace DVLD_BusinessLayer
             this.mode = enMode.enAddNew;
         }
 
-        private clsInternationalLicense(int InternationalLicenseID, int applicationID, int driverID, int issuedUsingLocalLicenseID, DateTime issueDate, DateTime expirationDate, bool isActive, int createdByUserID)
+        private InternationalLicense(int InternationalLicenseID, int applicationID, int driverID, int issuedUsingLocalLicenseID, DateTime issueDate, DateTime expirationDate, bool isActive, int createdByUserID)
         {
             this.InternationalLicenseID = InternationalLicenseID;
             this.ApplicationID = applicationID;
@@ -50,13 +50,13 @@ namespace DVLD_BusinessLayer
         {
             DataTable dt = new DataTable();
 
-            dt = clsInternationalLicenseDataAccess.getInternationalLicenseRecords();
+            dt = InternationalLicenseDataAccess.getInternationalLicenseRecords();
             return dt;
         }
 
 
 
-        public static clsInternationalLicense findInternationalLicenses(int InternationalLicenseID)
+        public static InternationalLicense findInternationalLicenses(int InternationalLicenseID)
         {
            int issuedUsingLocalLicenseID = -1,  createdByUserID = -1, ApplicationID=-1, DriverID=-1;
 
@@ -65,9 +65,9 @@ namespace DVLD_BusinessLayer
             bool isActive = true;
 
 
-            if (clsInternationalLicenseDataAccess.findInternationalLicenses(InternationalLicenseID,ref ApplicationID,ref DriverID, ref issuedUsingLocalLicenseID, ref issueDate, ref expirationDate, ref isActive, ref createdByUserID))
+            if (InternationalLicenseDataAccess.findInternationalLicenses(InternationalLicenseID,ref ApplicationID,ref DriverID, ref issuedUsingLocalLicenseID, ref issueDate, ref expirationDate, ref isActive, ref createdByUserID))
             {
-                return new clsInternationalLicense(InternationalLicenseID,  ApplicationID,  DriverID,  issuedUsingLocalLicenseID,  issueDate,  expirationDate,  isActive,  createdByUserID);
+                return new InternationalLicense(InternationalLicenseID,  ApplicationID,  DriverID,  issuedUsingLocalLicenseID,  issueDate,  expirationDate,  isActive,  createdByUserID);
             }
             return null;
         }
@@ -83,20 +83,20 @@ namespace DVLD_BusinessLayer
            
 
 
-            this.InternationalLicenseID = clsInternationalLicenseDataAccess.addInternationalLicense(this.ApplicationID,this.DriverID,this.IssuedUsingLocalLicenseID,this.IssueDate,this.ExpirationDate,this.IsActive,this.CreatedByUserID);
+            this.InternationalLicenseID = InternationalLicenseDataAccess.addInternationalLicense(this.ApplicationID,this.DriverID,this.IssuedUsingLocalLicenseID,this.IssueDate,this.ExpirationDate,this.IsActive,this.CreatedByUserID);
             return (this.InternationalLicenseID != -1);
 
         }
         private bool _updateInternationalLicenseInfo()
         {
 
-            return clsInternationalLicenseDataAccess.updateInternationalLicenseInfo(this.InternationalLicenseID,this.ApplicationID, this.DriverID, this.IssuedUsingLocalLicenseID, this.IssueDate, this.ExpirationDate, this.IsActive, this.CreatedByUserID);
+            return InternationalLicenseDataAccess.updateInternationalLicenseInfo(this.InternationalLicenseID,this.ApplicationID, this.DriverID, this.IssuedUsingLocalLicenseID, this.IssueDate, this.ExpirationDate, this.IsActive, this.CreatedByUserID);
         }
 
 
         public static bool isDriverExistInternationalLicense(int id)
         {
-            return clsInternationalLicenseDataAccess.isInternationalLicenseExist(id);
+            return InternationalLicenseDataAccess.isInternationalLicenseExist(id);
         }
    
 
@@ -104,7 +104,7 @@ namespace DVLD_BusinessLayer
         {
             if (isDriverExistInternationalLicense(id))
             {
-                return clsInternationalLicenseDataAccess.deleteInternationalLicense(id);
+                return InternationalLicenseDataAccess.deleteInternationalLicense(id);
             }
             return false;
 

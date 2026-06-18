@@ -1,19 +1,18 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 
-
 namespace DVLD_DataAccessLayer
 {
-    public class clsLicenseClassesDataAccess
+    public class CountriesDataAccess
     {
-        public static DataTable getLicenseClassesRecords()
+
+        public static DataTable getCountryRecords()
         {
             DataTable dt = new DataTable();
 
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
-            string sqlQuery = "select * from LicenseClasses";
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
+            string sqlQuery = "select * from Countries";
 
             SqlCommand cmd = new SqlCommand(sqlQuery, connection);
 
@@ -43,16 +42,15 @@ namespace DVLD_DataAccessLayer
 
             return dt;
         }
-        public static bool findLicenseClass(int licenseClassID, ref string className,ref string classDescription,ref int minimumAge,ref int defaultValidityLength,ref double classFee)
+        public static bool findCountry(int countryID,ref string countryName)
         {
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
 
-            string query = "select * from LicenseClasses where LicenseClassID=@LicenseClassID";
+            string query = "select * from countries where countryID=@countryID";
 
             SqlCommand cmd = new SqlCommand(query, connection);
 
-            cmd.Parameters.AddWithValue("@licenseClassID", licenseClassID);
-
+            cmd.Parameters.AddWithValue("@countryID", countryID);
 
             try
             {
@@ -61,15 +59,8 @@ namespace DVLD_DataAccessLayer
 
                 if (read.Read())
                 {
-                    licenseClassID = read["licenseClassID"] != DBNull.Value ? Convert.ToInt32(read["licenseClassID"]) : 0;
-                    className = read["className"].ToString();
-                    classDescription = read["classDescription"].ToString();
-                    minimumAge = read["minimumAge"] != DBNull.Value ? Convert.ToInt32(read["minimumAge"]) : 0;
-                    defaultValidityLength = read["defaultValidityLength"] != DBNull.Value ? Convert.ToInt32(read["defaultValidityLength"]) : 0;
-                    classFee = read["ClassFees"] != DBNull.Value ? Convert.ToDouble(read["ClassFees"]) : 0.0
-                    ;
-
-
+                    countryID = Convert.ToInt32(read["countryID"]);
+                    countryName =read["countryName"].ToString();
                     return true;
                 }
 
@@ -88,13 +79,13 @@ namespace DVLD_DataAccessLayer
             return false;
         }
 
-        public static bool isLicenseClassExit(int licenseClassID)
+        public static bool isCountryExist(int countryID)
         {
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
 
-            string query = "select found =1 from LicenseClasses where licenseClassID=@licenseClassID";
+            string query = "select found =1 from countries where countryID=@countryID";
             SqlCommand cmd = new SqlCommand(query, connection);
-            cmd.Parameters.AddWithValue("@licenseClassID", licenseClassID);
+            cmd.Parameters.AddWithValue("@countryID", countryID);
 
 
             try
@@ -120,8 +111,6 @@ namespace DVLD_DataAccessLayer
 
             return false;
         }
-
-        
 
     }
 }

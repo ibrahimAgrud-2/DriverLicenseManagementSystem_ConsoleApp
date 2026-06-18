@@ -4,13 +4,13 @@ using System.Data.SqlClient;
 
 namespace DVLD_DataAccessLayer
 {
-    public class clsDetainedLicensesDataAccess
+    public class DetainedLicensesDataAccess
     {
         public static DataTable getDetainedLicenseRecords()
         {
             DataTable dt = new DataTable();
 
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
             string sqlQuery = "select * from DetainedLicenses";
 
             SqlCommand cmd = new SqlCommand(sqlQuery, connection);
@@ -45,7 +45,7 @@ namespace DVLD_DataAccessLayer
  
         public static bool findDetainedLicense(int detainID, ref int licenseID, ref DateTime detainDate, ref double fineFees, ref int createdByUserID, ref bool isReleased, ref DateTime releaseDate, ref int releasedByUserID, ref int releaseApplicationID)
         {
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
 
             string query = "select * from DetainedLicenses where DetainID=@detainID";
 
@@ -86,7 +86,7 @@ namespace DVLD_DataAccessLayer
 
         public static bool isDetainedLicenseExist(int detainID)
         {
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
 
             //bu sorgunun soncu: eğer kayıt varsa bir sütun oluşur adı found ve sütun tek satırlı olur (çünkü her ID bir adet olduğu için) satırda 1 yazar. Bu demek oluyor ki bu ID var.
 
@@ -122,7 +122,7 @@ namespace DVLD_DataAccessLayer
 
         public static int addDetainedLicense(int licenseID,  DateTime detainDate,  double fineFees,  int createdByUserID,  bool isReleased,  DateTime releaseDate,  int releasedByUserID,  int releaseApplicationID)
         {
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
 
             string query = @"INSERT INTO DetainedLicenses (licenseID, detainDate, fineFees, createdByUserID, 
                     isReleased, releaseDate, releasedByUserID, releaseApplicationID) 
@@ -172,7 +172,7 @@ namespace DVLD_DataAccessLayer
         //Şimdi licesnes tablosunda update yaparken bazı alanları değişrimemiz gerekebilir. Mesela userID değişmemesi gerekir çünkü sistem o an kim güncelleme yapmışsa onu eklere hata olamaz, ama notes değişebilir.
         public static bool updateDetainedLicense(int detainID,int licenseID, DateTime detainDate, double fineFees, int createdByUserID, bool isReleased, DateTime releaseDate, int releasedByUserID, int releaseApplicationID)
         {
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
 
             string query = @"UPDATE DetainedLicenses 
                      SET licenseID = @licenseID,
@@ -217,7 +217,7 @@ namespace DVLD_DataAccessLayer
         //createdByUseID, dates(%80),releasedByUserID
         public static bool deleteDetainedLicense(int detainedLicenseID)
         {
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
             string query = "delete DetainedLicenses where detainedLicenseID=@detainedLicenseID";
             SqlCommand cmd = new SqlCommand(query, connection);
             cmd.Parameters.AddWithValue("@detainedLicenseID", detainedLicenseID);

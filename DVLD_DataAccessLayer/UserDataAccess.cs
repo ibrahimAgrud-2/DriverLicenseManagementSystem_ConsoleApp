@@ -5,15 +5,14 @@ using System.Data.SqlClient;
 
 namespace DVLD_DataAccessLayer
 {
-    public class clsLocalDrivingLicenseAppDataAccess
+    public class UserDataAccess
     {
-        public static DataTable getAllLocalDrivingLicenseApps()
+        public static DataTable getUserRecords()
         {
-
             DataTable dt = new DataTable();
 
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
-            string sqlQuery = "select * from LocalDrivingLicenseApplications";
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
+            string sqlQuery = "select * from users";
 
             SqlCommand cmd = new SqlCommand(sqlQuery, connection);
 
@@ -43,20 +42,16 @@ namespace DVLD_DataAccessLayer
 
             return dt;
         }
-
-
-        public static bool findLocalDrivingLicenseApp(int id,ref int applicationID,ref int licenseClassID)
+        public static bool findUserByID(int userID, ref int personID, ref string userName, ref string password, ref
+           bool isActive)
         {
-            string query = "select * from LocalDrivingLicenseApplications where LocalDrivingLicenseApplicationID=@id";
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
 
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            string query = "select * from users where userID=@userID";
 
             SqlCommand cmd = new SqlCommand(query, connection);
 
-            cmd.Parameters.AddWithValue("@id", id);
-
-
-
+            cmd.Parameters.AddWithValue("@userID", userID);
 
             try
             {
@@ -65,8 +60,11 @@ namespace DVLD_DataAccessLayer
 
                 if (read.Read())
                 {
-                    applicationID = Convert.ToInt32(read["ApplicationID"]);
-                    licenseClassID = Convert.ToInt32(read["licenseClassID"]);
+                    personID = Convert.ToInt32(read["PersonID"]);
+                    userID = Convert.ToInt32(read["userID"]);
+                    userName = read["userName"].ToString();
+                    password = read["password"].ToString();
+                    isActive = Convert.ToBoolean(read["isActive"]);
                     return true;
                 }
 
@@ -85,21 +83,20 @@ namespace DVLD_DataAccessLayer
             return false;
         }
 
-        public static bool isLocalDrivingLicenseAppExist(int id)
+        public static bool isUserExist(int userID)
         {
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
 
-
-            string query = "select found =1 from LocalDrivingLicenseApplications where LocalDrivingLicenseApplicationID=@id";
+            string query = "select found =1 from users where userID=@userID";
             SqlCommand cmd = new SqlCommand(query, connection);
-            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Parameters.AddWithValue("@userID", userID);
 
 
             try
             {
                 connection.Open();
 
-
+           
                 object result = cmd.ExecuteScalar();
                 if (result != null && int.TryParse(result.ToString(), out int value))
                 {
@@ -120,22 +117,27 @@ namespace DVLD_DataAccessLayer
         }
 
 
-        public static int addLocalDrivingLicense(int applicationID,  int licenseClassID)
+     
+        public static int addUser(int personID,  string userName,  string password, 
+           bool isActive)
         {
 
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
 
-            string query = "insert into LocalDrivingLicenseApplications (ApplicationID,licenseClassID) values (@applicationID,@licenseClassID) Select Scope_Identity();";
+            string query = "insert into users values(@personID,@userName,@password,@isActive) Select Scope_Identity();";
 
             SqlCommand cmd = new SqlCommand(query, connection);
 
-            cmd.Parameters.AddWithValue("@applicationID", applicationID);
-            cmd.Parameters.AddWithValue("@licenseClassID", licenseClassID);
+            cmd.Parameters.AddWithValue("@personID", personID);
+            cmd.Parameters.AddWithValue("@userName", userName);
+            cmd.Parameters.AddWithValue("@password", password);
+            cmd.Parameters.AddWithValue("@isActive", isActive);
 
             try
             {
                 connection.Open();
 
+                //Sql içinde sorgu burada çalışır.
                 object result = cmd.ExecuteScalar();
 
                 if (result != null && int.TryParse(result.ToString(), out int inserted))
@@ -160,24 +162,27 @@ namespace DVLD_DataAccessLayer
         }
 
 
-        public static bool updateLocalDrivingLicenseInfo(int id,  int applicationID,  int licenseClassID)
-        {
+        public static bool updateUserInfo(int userID,int personID, string userName, string password,
+           bool isActive)
+        { 
 
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
 
-            string query = "update LocalDrivingLicenseApplications set applicationID=@applicationID,licenseClassID=@licenseClassID where LocalDrivingLicenseApplicationID=@id";
+            string query = "update users set personID=@personID,userName=@userName,password=@password,isActive= @isActive where userID =@userID";
 
             SqlCommand cmd = new SqlCommand(query, connection);
-            cmd.Parameters.AddWithValue("@id", id);
-            cmd.Parameters.AddWithValue("@applicationID", applicationID);
-            cmd.Parameters.AddWithValue("@licenseClassID", licenseClassID);
+            cmd.Parameters.AddWithValue("@userID", userID);
+            cmd.Parameters.AddWithValue("@personID", personID);
+            cmd.Parameters.AddWithValue("@userName", userName);
+            cmd.Parameters.AddWithValue("@password", password);
+            cmd.Parameters.AddWithValue("@isActive", isActive);
 
 
 
             try
             {
                 connection.Open();
-
+                //affectedRowsNumber==1 çünkü her seferinde sadece 1 satır günnceleyebiliriz onun dışındaki tüm durumlar beklenmedik durum.
                 int affectedRowsNumber = cmd.ExecuteNonQuery();
                 if (affectedRowsNumber == 1)
                 {
@@ -197,20 +202,22 @@ namespace DVLD_DataAccessLayer
             return false;
         }
 
-        public static bool deleteLocalDrivingLicenseApp(int id)
+
+        public static bool deleteUser(int userID)
         {
 
 
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
-            string query = "delete LocalDrivingLicenseApplications where LocalDrivingLicenseApplicationID=@id";
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
+            string query = "delete users where userID=@userID";
             SqlCommand cmd = new SqlCommand(query, connection);
-            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Parameters.AddWithValue("@userID", userID);
 
 
             try
             {
                 connection.Open();
 
+                //Sorgu sonucu bir sayı geldiyse (ID tek olduğu için sadece bir adet sayı gelir eğer ID varsa) bu demektir ki o ID sistemde var. sayı dışında bir şey gelirse bu demek oluyor ki o kişi sistemde yok.
 
                 int affectedRows = cmd.ExecuteNonQuery();
                 if (affectedRows == 1)

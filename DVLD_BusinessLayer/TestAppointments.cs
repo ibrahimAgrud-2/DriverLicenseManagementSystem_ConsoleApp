@@ -4,7 +4,7 @@ using System.Data;
 
 namespace DVLD_BusinessLayer
 {
-    public class clsTestAppointments
+    public class TestAppointments
     {
         public int testAppointmentID { get; set; }
         public int testTypeID { get; set; }
@@ -15,7 +15,7 @@ namespace DVLD_BusinessLayer
         public bool isLocked { get; set; }
         public int retakeTestApplicationID { get; set; }
 
-        public clsTestAppointments()
+        public TestAppointments()
         {
             this.testAppointmentID = -1;
             this.testTypeID = -1;
@@ -27,7 +27,7 @@ namespace DVLD_BusinessLayer
             this.retakeTestApplicationID = 0;
         }
 
-        private clsTestAppointments(int testAppointmentID, int testTypeID, int localDrivingLicenseApplicationID,
+        private TestAppointments(int testAppointmentID, int testTypeID, int localDrivingLicenseApplicationID,
             DateTime appointmentDate, double paidFees, int createdByUserID, bool isLocked, int retakeTestApplicationID)
         {
             this.testAppointmentID = testAppointmentID;
@@ -43,11 +43,11 @@ namespace DVLD_BusinessLayer
         public static DataTable getTestAppointmentsRecords()
         {
             DataTable dt = new DataTable();
-            dt = clsTestAppointmentsDataAccess.getTestAppointmentsRecords();
+            dt = TestAppointmentsDataAccess.getTestAppointmentsRecords();
             return dt;
         }
 
-        public static clsTestAppointments findTestAppointment(int testAppointmentID)
+        public static TestAppointments findTestAppointment(int testAppointmentID)
         {
             int testTypeID = -1;
             int localDrivingLicenseApplicationID = -1;
@@ -57,11 +57,11 @@ namespace DVLD_BusinessLayer
             bool isLocked = false;
             int retakeTestApplicationID = 0;
 
-            if (clsTestAppointmentsDataAccess.findTestAppointment(testAppointmentID, ref testTypeID,
+            if (TestAppointmentsDataAccess.findTestAppointment(testAppointmentID, ref testTypeID,
                 ref localDrivingLicenseApplicationID, ref appointmentDate, ref paidFees,
                 ref createdByUserID, ref isLocked, ref retakeTestApplicationID))
             {
-                return new clsTestAppointments(testAppointmentID, testTypeID, localDrivingLicenseApplicationID,
+                return new TestAppointments(testAppointmentID, testTypeID, localDrivingLicenseApplicationID,
                     appointmentDate, paidFees, createdByUserID, isLocked, retakeTestApplicationID);
             }
             return null;
@@ -69,7 +69,7 @@ namespace DVLD_BusinessLayer
 
         public static bool isTestAppointmentExist(int testAppointmentID)
         {
-            return clsTestAppointmentsDataAccess.isTestAppointmentExist(testAppointmentID);
+            return TestAppointmentsDataAccess.isTestAppointmentExist(testAppointmentID);
         }
 
         public bool save()
@@ -86,7 +86,7 @@ namespace DVLD_BusinessLayer
 
         private bool addNewTestAppointment()
         {
-            this.testAppointmentID = clsTestAppointmentsDataAccess.addTestAppointment(
+            this.testAppointmentID = TestAppointmentsDataAccess.addTestAppointment(
                 this.testTypeID,
                 this.localDrivingLicenseApplicationID,
                 this.appointmentDate,
@@ -101,7 +101,7 @@ namespace DVLD_BusinessLayer
 
         private bool updateTestAppointment()
         {
-            return clsTestAppointmentsDataAccess.updateTestAppointment(
+            return TestAppointmentsDataAccess.updateTestAppointment(
                 this.testAppointmentID,
                 this.testTypeID,
                 this.appointmentDate,
@@ -113,7 +113,7 @@ namespace DVLD_BusinessLayer
 
         public static bool deleteTestAppointment(int testAppointmentID)
         {
-            return clsTestAppointmentsDataAccess.deleteTestAppointment(testAppointmentID);
+            return TestAppointmentsDataAccess.deleteTestAppointment(testAppointmentID);
         }
     }
 }

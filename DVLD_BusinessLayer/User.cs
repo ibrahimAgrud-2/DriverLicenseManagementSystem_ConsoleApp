@@ -6,7 +6,7 @@ using System.Data;
 
 namespace DVLD_BusinessLayer
 {
-    public class clsUser
+    public class User
     {
         public int userID { set; get; }
         public int personID { set; get; }
@@ -18,7 +18,7 @@ namespace DVLD_BusinessLayer
         public enMode mode;
 
 
-        public clsUser()
+        public User()
         {
             this.userName = "";
             this.personID = -1;
@@ -28,7 +28,7 @@ namespace DVLD_BusinessLayer
             this.mode = enMode.enAddNew;
         }
 
-        private clsUser(int userID, int personID, string userName, string password, bool isActive)
+        private User(int userID, int personID, string userName, string password, bool isActive)
         {
 
             this.personID = personID;
@@ -42,11 +42,11 @@ namespace DVLD_BusinessLayer
         {
             DataTable dt = new DataTable();
 
-            dt = clsUserDataAccess.getUserRecords();
+            dt = UserDataAccess.getUserRecords();
             return dt;
         }
 
-        public static clsUser findUser(int userID)
+        public static User findUser(int userID)
         {
 
             string userName = "", password = "";
@@ -54,9 +54,9 @@ namespace DVLD_BusinessLayer
             bool isActive=false;
 
 
-            if (clsUserDataAccess.findUserByID(userID, ref personID, ref userName, ref password, ref isActive))
+            if (UserDataAccess.findUserByID(userID, ref personID, ref userName, ref password, ref isActive))
             {
-                return new clsUser(userID,  personID,  userName,  password,  isActive);
+                return new User(userID,  personID,  userName,  password,  isActive);
 
             }
             return null;
@@ -65,27 +65,27 @@ namespace DVLD_BusinessLayer
 
         private bool _addNewUser()
         {
-            this.userID = clsUserDataAccess.addUser(this.personID, this.userName, this.password, this.isActive);
+            this.userID = UserDataAccess.addUser(this.personID, this.userName, this.password, this.isActive);
             return (this.userID != -1);
 
         }
         private bool _updateUserInfo()
         {
 
-            return clsUserDataAccess.updateUserInfo(this.userID, this.personID, this.userName, this.password, this.isActive);
+            return UserDataAccess.updateUserInfo(this.userID, this.personID, this.userName, this.password, this.isActive);
         }
 
 
         public static bool isUserExist(int userID)
         {
-            return clsUserDataAccess.isUserExist(userID);
+            return UserDataAccess.isUserExist(userID);
         }
        
         public static bool deleteUser(int userID)
         {
             if (isUserExist(userID))
             {
-                return clsUserDataAccess.deleteUser(userID);
+                return UserDataAccess.deleteUser(userID);
             }
             return false;
 

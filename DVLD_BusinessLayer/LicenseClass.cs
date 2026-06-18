@@ -5,7 +5,7 @@ using System.Data;
 
 namespace DVLD_BusinessLayer
 {
-    public class clsLicenseClass
+    public class LicenseClass
     {
        public int licenseClassID { set; get; }
         string className { set; get; }
@@ -14,7 +14,7 @@ namespace DVLD_BusinessLayer
         int defaultValidityLength { set; get; }
         double classFee { set; get; }
 
-       public clsLicenseClass()
+       public LicenseClass()
         {
             this.licenseClassID = -1;
             this.className = "";
@@ -25,7 +25,7 @@ namespace DVLD_BusinessLayer
         }
 
 
-        public clsLicenseClass(int licenseClassID,  string className,  string classDescription,  int minimumAge,  int defaultValidityLength, double classFee)
+        public LicenseClass(int licenseClassID,  string className,  string classDescription,  int minimumAge,  int defaultValidityLength, double classFee)
         {
             this.licenseClassID = licenseClassID;
             this.className = className;
@@ -37,18 +37,18 @@ namespace DVLD_BusinessLayer
 
         public static DataTable getAllClassLicenseRecords()
         {
-            return clsLicenseClassesDataAccess.getLicenseClassesRecords();
+            return LicenseClassesDataAccess.getLicenseClassesRecords();
         }
 
-        public static clsLicenseClass findLicenseClass(int licenseClassID)
+        public static LicenseClass findLicenseClass(int licenseClassID)
         {
             string className="", classDescription="";
             int minimumAge=1, defaultValidityLength=1;
             double classFee=0.0;
 
-            if (clsLicenseClassesDataAccess.findLicenseClass(licenseClassID,ref className, ref classDescription, ref minimumAge, ref defaultValidityLength, ref classFee))
+            if (LicenseClassesDataAccess.findLicenseClass(licenseClassID,ref className, ref classDescription, ref minimumAge, ref defaultValidityLength, ref classFee))
             {
-                return new clsLicenseClass(licenseClassID,  className,  classDescription,  minimumAge,  defaultValidityLength,  classFee);
+                return new LicenseClass(licenseClassID,  className,  classDescription,  minimumAge,  defaultValidityLength,  classFee);
 
             }
             return null;
@@ -56,7 +56,7 @@ namespace DVLD_BusinessLayer
 
         public static bool isCLicenseClassExist(int licenseClassID)
         {
-            return clsLicenseClassesDataAccess.isLicenseClassExit(licenseClassID);
+            return LicenseClassesDataAccess.isLicenseClassExit(licenseClassID);
         }
 
 

@@ -4,7 +4,7 @@ using System.Data;
 
 namespace DVLD_BusinessLayer
 {
-    public class clsLicenses
+    public class Licenses
     {
         public int licenseID { set; get; }
         public int applicationID { set; get; }
@@ -34,7 +34,7 @@ namespace DVLD_BusinessLayer
 
 
 
-        public clsLicenses()
+        public Licenses()
         {
             this.licenseID = -1;
             this.applicationID = -1;
@@ -51,7 +51,7 @@ namespace DVLD_BusinessLayer
             this.mode = enMode.enAddNew;
         }
 
-        private clsLicenses(int licenseID, int applicationID, int driverID, int licenseClass,
+        private Licenses(int licenseID, int applicationID, int driverID, int licenseClass,
             DateTime issueDate, DateTime expirationDate, string notes, double paidFees,
             bool isActive, enIssueReason issueReason, int createdByUserID)
         {
@@ -74,13 +74,13 @@ namespace DVLD_BusinessLayer
         {
             DataTable dt = new DataTable();
 
-            dt = clsLicensesDataAccess.getLicenseRecords();
+            dt = LicensesDataAccess.getLicenseRecords();
             return dt;
         }
 
 
 
-        public static clsLicenses findLicense(int licenseID)
+        public static Licenses findLicense(int licenseID)
         {
             int applicationID = -1, driverID = -1, licenseClass = -1, createdByUserID = -1;
             DateTime issueDate = DateTime.Now, expirationDate = DateTime.Now;
@@ -89,10 +89,10 @@ namespace DVLD_BusinessLayer
             bool isActive = false;
             int issueReasonInt = 1;
 
-            if (clsLicensesDataAccess.findLicense(licenseID, ref applicationID, ref driverID, ref licenseClass,
+            if (LicensesDataAccess.findLicense(licenseID, ref applicationID, ref driverID, ref licenseClass,
                 ref issueDate, ref expirationDate, ref notes, ref paidFees, ref isActive, ref issueReasonInt, ref createdByUserID))
             {
-                return new clsLicenses(licenseID, applicationID, driverID, licenseClass,
+                return new Licenses(licenseID, applicationID, driverID, licenseClass,
                     issueDate, expirationDate, notes, paidFees, isActive, (enIssueReason)issueReasonInt, createdByUserID);
             }
 
@@ -111,7 +111,7 @@ namespace DVLD_BusinessLayer
             this.paidFees = 10;
             this.issueDate = DateTime.Now;
 
-            this.licenseID = clsLicensesDataAccess.addLicense(this.applicationID,this.driverID,this.licenseClass,this.issueDate,this.expirationDate,this.notes,this.paidFees,this.isActive,Convert.ToInt32(this.issueReason),this.createdByUserID);
+            this.licenseID = LicensesDataAccess.addLicense(this.applicationID,this.driverID,this.licenseClass,this.issueDate,this.expirationDate,this.notes,this.paidFees,this.isActive,Convert.ToInt32(this.issueReason),this.createdByUserID);
             return (this.applicationID != -1);
 
         }
@@ -119,20 +119,20 @@ namespace DVLD_BusinessLayer
         private bool _updateLicense()
         {
 
-            return clsLicensesDataAccess.updateLicenseInfo(this.licenseID,this.driverID,this.licenseClass,this.expirationDate,this.notes    ,this.paidFees,this.isActive,Convert.ToInt32( this.issueReason));
+            return LicensesDataAccess.updateLicenseInfo(this.licenseID,this.driverID,this.licenseClass,this.expirationDate,this.notes    ,this.paidFees,this.isActive,Convert.ToInt32( this.issueReason));
         }
 
 
         public static bool isLicenseExist(int licenseID )
         {
-            return clsLicensesDataAccess.isLicenseExist(licenseID);
+            return LicensesDataAccess.isLicenseExist(licenseID);
         }
 
         public static bool deleteLicense(int licenseID)
         {
             if (isLicenseExist(licenseID))
             {
-                return clsLicensesDataAccess.deleteLicense(licenseID);
+                return LicensesDataAccess.deleteLicense(licenseID);
             }
             return false;
 

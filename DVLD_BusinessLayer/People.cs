@@ -6,7 +6,7 @@ using System.Data;
 
 namespace DVLD_BusinessLayer
 {
-    public class clsPeople
+    public class People
     {
   
         public int personID { set; get; }
@@ -30,12 +30,12 @@ namespace DVLD_BusinessLayer
         //static olmalı çünkü obje oluşturulmadan erişebilmeliyiz.
         public static DataTable getAllPersonRecords()
         {
-            return clsPeopleDataAccess.getPeople();
+            return PeopleDataAccess.getPeople();
         }
 
         //1.Yöntem const'u public yaparız ve ID paramtersi eklemeyiz. Bu saydede kullanıcı dışardan obje oluşturacağı zaman illa uygun verileri girmek zorunda kalır. mode add olur çünkü dışardan oluşturulan o obje DB'de yok ilk defa oluşturuluyor, zaten ID auto number.
         //2.Bir yöntem bunu private yaparız ve ID parametresi de ekleriz. Bu sayede DB'den aldığımız satırları program içinde direk bu const ile temsil etmiş oluruz. 2.Yöntem'den gidelim.
-        private clsPeople(int personID,string nationalNo, string firstName, string secondName,
+        private People(int personID,string nationalNo, string firstName, string secondName,
            string thirdName, string lastName, DateTime dateOfBirth,
            int gender, string address, string email, string phone,
            int countryID, string imagePath)
@@ -61,7 +61,7 @@ namespace DVLD_BusinessLayer
 
         private bool _addNewRecord()
         {
-            this.personID = clsPeopleDataAccess.addPerson(this.nationalNo, this.firstName, this.secondName, this.thirdName, this.lastName, this.dateOfBirth, this.gender, this.address, this.email, this.phone, this.countryID, this.imagePath);
+            this.personID = PeopleDataAccess.addPerson(this.nationalNo, this.firstName, this.secondName, this.thirdName, this.lastName, this.dateOfBirth, this.gender, this.address, this.email, this.phone, this.countryID, this.imagePath);
 
             return (this.personID != -1);
         }
@@ -71,7 +71,7 @@ namespace DVLD_BusinessLayer
 
         
         //Mode add çünkü sıfırdan obje bu const ile oluşturuluyor.
-        public  clsPeople()
+        public  People()
         {
 
             this.nationalNo = "";
@@ -91,7 +91,7 @@ namespace DVLD_BusinessLayer
         }
 
         //Find ile bulunan obje parametreli const ile oluşturulduğu için modu update olsun çünkü artık obje var ve add'lik bir durum kalmamış. Artık yaparsak update yaparız
-        public static clsPeople findPersonByID(int personID)
+        public static People findPersonByID(int personID)
         {
             
             string nationalNo="", firstName = "", secondName = "",thirdName = "",lastName = "", address = "", email = "", phone = "", imagePath = "";
@@ -99,15 +99,15 @@ namespace DVLD_BusinessLayer
             int gender=-1,countryID=-1;
             
            
-            if (clsPeopleDataAccess.findPersonByID(personID, ref nationalNo, ref firstName, ref secondName, ref thirdName, ref lastName, ref dateOfBirth, ref gender, ref address, ref email, ref phone, ref countryID, ref imagePath))
+            if (PeopleDataAccess.findPersonByID(personID, ref nationalNo, ref firstName, ref secondName, ref thirdName, ref lastName, ref dateOfBirth, ref gender, ref address, ref email, ref phone, ref countryID, ref imagePath))
             {
-                return new clsPeople(personID, nationalNo, firstName, secondName, thirdName, lastName, dateOfBirth, gender, address, email, phone, countryID, imagePath);
+                return new People(personID, nationalNo, firstName, secondName, thirdName, lastName, dateOfBirth, gender, address, email, phone, countryID, imagePath);
               
             }
             return null;
         }
 
-        public static clsPeople findPersonByNationalNo(string nationalNo)
+        public static People findPersonByNationalNo(string nationalNo)
         {
 
             string firstName = "", secondName = "", thirdName = "", lastName = "", address = "", email = "", phone = "", imagePath = "";
@@ -117,9 +117,9 @@ namespace DVLD_BusinessLayer
 
     
 
-            if (clsPeopleDataAccess.findPersonByNationalNo(ref personID, nationalNo, ref firstName, ref secondName, ref thirdName, ref lastName, ref dateOfBirth, ref gender, ref address, ref email, ref phone, ref countryID, ref imagePath))
+            if (PeopleDataAccess.findPersonByNationalNo(ref personID, nationalNo, ref firstName, ref secondName, ref thirdName, ref lastName, ref dateOfBirth, ref gender, ref address, ref email, ref phone, ref countryID, ref imagePath))
             {
-                return new clsPeople(personID, nationalNo, firstName, secondName, thirdName, lastName, dateOfBirth, gender, address, email, phone, countryID, imagePath);
+                return new People(personID, nationalNo, firstName, secondName, thirdName, lastName, dateOfBirth, gender, address, email, phone, countryID, imagePath);
             }
             return null;
         }
@@ -129,18 +129,18 @@ namespace DVLD_BusinessLayer
         private bool _updateInfo()
         {
           
-            return clsPeopleDataAccess.updatePersonInfo(this.personID, this.nationalNo, this.firstName, this.secondName, this.thirdName, this.lastName, this.dateOfBirth, this.gender, this.address, this.email, this.phone, this.countryID, this.imagePath);
+            return PeopleDataAccess.updatePersonInfo(this.personID, this.nationalNo, this.firstName, this.secondName, this.thirdName, this.lastName, this.dateOfBirth, this.gender, this.address, this.email, this.phone, this.countryID, this.imagePath);
         }
 
         //ID vermelisin çünkü bu fonk obje olmadan çağıralacak.
         public static bool isPersonExistByID(int personID)
         {
-            return clsPeopleDataAccess.isPersonExistByID(personID);
+            return PeopleDataAccess.isPersonExistByID(personID);
         }
         //TC sistemde var mı yoku kontrol edeceğiz bu sayede aynı TC ile sisteme kayıt olunmasın. Şu anlık DB'de bunu nasıl kontrol ederiz bilemiyorum. Veya bu yöntem daha hızlı olduğu için bunu tercih ederim.
         public static bool isPersonExistByNationalNo(string NationalNo)
         {
-            return clsPeopleDataAccess.isPersonExistByNationalNo(NationalNo);
+            return PeopleDataAccess.isPersonExistByNationalNo(NationalNo);
         }
         //bir objeyi silmek için onu ayrıyeten DB'den programam yüklemem gerek yok bu yüzden static yapıp sadece ID alarak silmek istedim. static olmayadabilirdi. Bu durumda fonk public olur ve obje.delete diyeceğimiz için ID'İ parametre olarak bu fonksyion'a vermemiz gerekmezdi, this kullanarak ID alırdık (çünkü program o anki obje üzerin olurdu)
 
@@ -149,7 +149,7 @@ namespace DVLD_BusinessLayer
         {
             if (isPersonExistByID(personID))
             { 
-                return clsPeopleDataAccess.deletePerson(personID);
+                return PeopleDataAccess.deletePerson(personID);
             }
             return false;
           

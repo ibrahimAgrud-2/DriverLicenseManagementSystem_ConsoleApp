@@ -6,7 +6,7 @@ using System.Data;
 
 namespace DVLD_BusinessLayer
 {
-    public class clsApplications
+    public class Applications
     {
         public int applicationID { set; get; }
         public int applicantPersonID { set; get; }
@@ -28,7 +28,7 @@ namespace DVLD_BusinessLayer
         public enMode mode;
 
 
-        public clsApplications()
+        public Applications()
         {
             this.applicationID = -1;
             this.applicantPersonID = -1;
@@ -41,7 +41,7 @@ namespace DVLD_BusinessLayer
             this.mode=enMode.enAddNew;
         }
 
-        private clsApplications(int applicationID, int applicantPersonID, DateTime ApplicationDate, int applicationTypeID,
+        private Applications(int applicationID, int applicantPersonID, DateTime ApplicationDate, int applicationTypeID,
            enApplicationStatus applicationStatus, DateTime LastStatusDate, double paidFee, int createdByUserID)
         {
 
@@ -60,13 +60,13 @@ namespace DVLD_BusinessLayer
         {
             DataTable dt = new DataTable();
 
-            dt = clsApplicationsDataAccess.getApplicationsRecord();
+            dt = ApplicationsDataAccess.getApplicationsRecord();
             return dt;
         }
 
 
 
-        public static clsApplications findApplication(int applicationID)
+        public static Applications findApplication(int applicationID)
         {
 
             int applicantPersonID = -1, createdByUserID=-1, applicationTypeID=-1;
@@ -76,10 +76,10 @@ namespace DVLD_BusinessLayer
 
 
 
-            if (clsApplicationsDataAccess.findApplication( applicationID, ref  applicantPersonID, ref  applicationDate, ref  applicationTypeID, ref
+            if (ApplicationsDataAccess.findApplication( applicationID, ref  applicantPersonID, ref  applicationDate, ref  applicationTypeID, ref
             applicationStatus, ref lastStatusDate, ref  paidFee, ref  createdByUserID))
             {
-                return new clsApplications(applicationID,  applicantPersonID,  applicationDate,  applicationTypeID, 
+                return new Applications(applicationID,  applicantPersonID,  applicationDate,  applicationTypeID, 
             (enApplicationStatus)applicationStatus,  lastStatusDate,  paidFee,  createdByUserID);
 
             }
@@ -91,7 +91,7 @@ namespace DVLD_BusinessLayer
         {
 
             //Başvuru ücretini elle girmemek için bu kodu ekledirk.
-            clsApplicationTypes type1 = clsApplicationTypes.findApplicationType(this.applicationTypeID);
+            ApplicationTypes type1 = ApplicationTypes.findApplicationType(this.applicationTypeID);
             if (type1 == null)
             {
                 return false;
@@ -101,7 +101,7 @@ namespace DVLD_BusinessLayer
             //Normalde bu bilgi o anki giriş yapan kullanıcı bilgilerinde çekilir ama şu anda giriş ekranı daha yok. 
             //Giriş ekranı olduğunda kullanıcı aktif kullanıcı bilgilerinden çekilir.
             this.createdByUserID = 1;
-            this.applicationID = clsApplicationsDataAccess.addApplication(this.applicantPersonID, this.applicationTypeID, 
+            this.applicationID = ApplicationsDataAccess.addApplication(this.applicantPersonID, this.applicationTypeID, 
                 Convert.ToByte(this.applicationStatus), this.lastStatusDate, this.paidFee, this.createdByUserID);
             return (this.applicationID != -1);
 
@@ -111,20 +111,20 @@ namespace DVLD_BusinessLayer
         private bool _updateApplication()
         {
             this.lastStatusDate = DateTime.Now;
-            return clsApplicationsDataAccess.updateApplicationInfo(this.applicationID,this.applicantPersonID, this.applicationDate, this.applicationTypeID, Convert.ToByte(this.applicationStatus), this.lastStatusDate, this.paidFee, this.createdByUserID);
+            return ApplicationsDataAccess.updateApplicationInfo(this.applicationID,this.applicantPersonID, this.applicationDate, this.applicationTypeID, Convert.ToByte(this.applicationStatus), this.lastStatusDate, this.paidFee, this.createdByUserID);
         }
 
 
         public static bool isApplicationExist(int applicationID)
         {
-            return clsApplicationsDataAccess.isApplicationExistByID(applicationID);
+            return ApplicationsDataAccess.isApplicationExistByID(applicationID);
         }
 
         public static bool deleteApplication(int applicationID)
         {
             if (isApplicationExist(applicationID))
             {
-                return clsApplicationsDataAccess.deleteApplication(applicationID);
+                return ApplicationsDataAccess.deleteApplication(applicationID);
             }
             return false;
 

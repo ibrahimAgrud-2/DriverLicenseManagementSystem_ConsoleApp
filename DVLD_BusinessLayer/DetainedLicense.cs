@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace DVLD_BusinessLayer
 {
-    public class clsDetainedLicense
+    public class DetainedLicense
     {
          int detainID { set; get; }
        public int licenseID { set; get; }
@@ -26,7 +26,7 @@ namespace DVLD_BusinessLayer
         enMode mode;
 
 
-      public  clsDetainedLicense()
+      public  DetainedLicense()
         {
             this.licenseID = -1;
             this.licenseID = -1;
@@ -39,7 +39,7 @@ namespace DVLD_BusinessLayer
             this.releaseApplicationID = -1;
             this.mode = enMode.enAddNew;
         }
-       private clsDetainedLicense(int detainID, int licensedID,  DateTime detainDate,  double fineFees,  int createdByUserID,  bool isReleased,  DateTime releaseDate,  int releasedByUserID,  int releaseApplicationID)
+       private DetainedLicense(int detainID, int licensedID,  DateTime detainDate,  double fineFees,  int createdByUserID,  bool isReleased,  DateTime releaseDate,  int releasedByUserID,  int releaseApplicationID)
         {
             this.detainID = detainID;
             this.licenseID = licensedID;
@@ -55,19 +55,19 @@ namespace DVLD_BusinessLayer
 
         static DataTable getDetainedLicenseRecords()
         {
-            return clsDetainedLicensesDataAccess.getDetainedLicenseRecords();
+            return DetainedLicensesDataAccess.getDetainedLicenseRecords();
         }
           
-       public static clsDetainedLicense findDetainedLicense(int detainID)
+       public static DetainedLicense findDetainedLicense(int detainID)
         {
           int licenseID = -1, releaseApplicationID=-1, releasedByUserID=-1, createdByUserID=-1;
               DateTime detainDate = DateTime.Now, releaseDate = DateTime.Now;
             double fineFees = 0.0;
             bool isReleased = false;
 
-            if (clsDetainedLicensesDataAccess.findDetainedLicense(detainID, ref licenseID,ref detainDate, ref fineFees, ref createdByUserID, ref isReleased, ref releaseDate, ref releasedByUserID, ref releaseApplicationID))
+            if (DetainedLicensesDataAccess.findDetainedLicense(detainID, ref licenseID,ref detainDate, ref fineFees, ref createdByUserID, ref isReleased, ref releaseDate, ref releasedByUserID, ref releaseApplicationID))
             {
-                return new clsDetainedLicense(detainID, licenseID, detainDate, fineFees, createdByUserID, isReleased, releaseDate, releasedByUserID, releaseApplicationID);
+                return new DetainedLicense(detainID, licenseID, detainDate, fineFees, createdByUserID, isReleased, releaseDate, releasedByUserID, releaseApplicationID);
             }
             return null;
 
@@ -86,7 +86,7 @@ namespace DVLD_BusinessLayer
 
        
 
-            this.detainID = clsDetainedLicensesDataAccess.addDetainedLicense(this.licenseID, this._detainDate, this.fineFees, this._createdByUserID, this.isReleased, this.releaseDate, this._releasedByUserID, this.releaseApplicationID);
+            this.detainID = DetainedLicensesDataAccess.addDetainedLicense(this.licenseID, this._detainDate, this.fineFees, this._createdByUserID, this.isReleased, this.releaseDate, this._releasedByUserID, this.releaseApplicationID);
 
 
             return (this.detainID != -1);
@@ -102,11 +102,11 @@ namespace DVLD_BusinessLayer
             this.releaseDate = DateTime.Now;
             
 
-            return clsDetainedLicensesDataAccess.updateDetainedLicense(this.detainID,this.licenseID, this._detainDate, this.fineFees, this._createdByUserID, this.isReleased, this.releaseDate, this._releasedByUserID, this.releaseApplicationID);
+            return DetainedLicensesDataAccess.updateDetainedLicense(this.detainID,this.licenseID, this._detainDate, this.fineFees, this._createdByUserID, this.isReleased, this.releaseDate, this._releasedByUserID, this.releaseApplicationID);
         }
          public  static bool isDetainedLicenseExist(int detainID)
         {
-            return clsDetainedLicensesDataAccess.isDetainedLicenseExist(detainID);
+            return DetainedLicensesDataAccess.isDetainedLicenseExist(detainID);
         }
 
         public bool save()

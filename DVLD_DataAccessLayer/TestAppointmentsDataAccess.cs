@@ -4,13 +4,13 @@ using System.Data.SqlClient;
 
 namespace DVLD_DataAccessLayer
 {
-    public class clsTestAppointmentsDataAccess
+    public class TestAppointmentsDataAccess
     {
         public static DataTable getTestAppointmentsRecords()
         {
             DataTable dt = new DataTable();
 
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
             string sqlQuery = "select * from TestAppointments";
 
             SqlCommand cmd = new SqlCommand(sqlQuery, connection);
@@ -43,7 +43,7 @@ namespace DVLD_DataAccessLayer
             ref DateTime appointmentDate, ref double paidFees, ref int createdByUserID,
             ref bool isLocked, ref int retakeTestApplicationID)
         {
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
 
             string query = "select * from TestAppointments where TestAppointmentID = @testAppointmentID";
 
@@ -82,7 +82,7 @@ namespace DVLD_DataAccessLayer
 
         public static bool isTestAppointmentExist(int testAppointmentID)
         {
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
 
             string query = "select found = 1 from TestAppointments where TestAppointmentID = @testAppointmentID";
             SqlCommand cmd = new SqlCommand(query, connection);
@@ -114,7 +114,7 @@ namespace DVLD_DataAccessLayer
             DateTime appointmentDate, double paidFees, int createdByUserID,
             bool isLocked, int retakeTestApplicationID)
         {
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
 
             string query = @"INSERT INTO TestAppointments (TestTypeID, LocalDrivingLicenseApplicationID, AppointmentDate, 
                     PaidFees, CreatedByUserID, IsLocked, RetakeTestApplicationID) 
@@ -163,7 +163,7 @@ namespace DVLD_DataAccessLayer
         public static bool updateTestAppointment(int testAppointmentID, int testTypeID,
             DateTime appointmentDate, double paidFees, bool isLocked, int retakeTestApplicationID)
         {
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
 
             string query = @"UPDATE TestAppointments 
                      SET TestTypeID = @testTypeID,
@@ -204,7 +204,7 @@ namespace DVLD_DataAccessLayer
 
         public static bool deleteTestAppointment(int testAppointmentID)
         {
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
             string query = "delete TestAppointments where TestAppointmentID = @testAppointmentID";
             SqlCommand cmd = new SqlCommand(query, connection);
             cmd.Parameters.AddWithValue("@testAppointmentID", testAppointmentID);

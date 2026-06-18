@@ -5,7 +5,7 @@ using System.Data;
 
 namespace DVLD_BusinessLayer
 {
-    public class clsDriver
+    public class Driver
     {
         public int driverID { set; get; }
         public int personID { set; get; }
@@ -15,7 +15,7 @@ namespace DVLD_BusinessLayer
         public enum enMode { enAddNew = 1, enUpdate = 2 };
         public enMode mode;
 
-        public clsDriver()
+        public Driver()
         {
             this.driverID = -1;
             this.personID = -1;
@@ -24,7 +24,7 @@ namespace DVLD_BusinessLayer
             this.mode = enMode.enAddNew;
         }
 
-        private clsDriver(int driverID, int personID, int createdByUserID, DateTime createdDate)
+        private Driver(int driverID, int personID, int createdByUserID, DateTime createdDate)
         {
             this.driverID = driverID;
             this.personID = personID;
@@ -43,7 +43,7 @@ namespace DVLD_BusinessLayer
 
 
 
-        public static clsDriver findDriver(int driverID)
+        public static Driver findDriver(int driverID)
         {
             int personID = -1;
             int createdByUserID = -1;
@@ -51,7 +51,7 @@ namespace DVLD_BusinessLayer
 
             if (clsDriverDataAccess.findDriver(driverID, ref personID, ref createdByUserID, ref createdDate))
             {
-                return new clsDriver(driverID, personID, createdByUserID, createdDate);
+                return new Driver(driverID, personID, createdByUserID, createdDate);
             }
             return null;
         }

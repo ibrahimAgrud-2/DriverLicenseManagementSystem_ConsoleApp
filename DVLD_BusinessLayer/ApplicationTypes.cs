@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DVLD_BusinessLayer
 {
-    public class clsApplicationTypes
+    public class ApplicationTypes
     {
         public int applicationTypeID { set; get; }
         public string applicantTypeTitle { set; get; }
@@ -17,7 +17,7 @@ namespace DVLD_BusinessLayer
 
 
 
-        public clsApplicationTypes()
+        public ApplicationTypes()
         {
             this.applicationTypeID = -1;
             this.applicantTypeTitle = "";
@@ -25,7 +25,7 @@ namespace DVLD_BusinessLayer
 
         }
 
-        private clsApplicationTypes(int applicationTypeID, string applicantTypeTitle, double paidFees)
+        private ApplicationTypes(int applicationTypeID, string applicantTypeTitle, double paidFees)
         {
 
             this.applicationTypeID = applicationTypeID;
@@ -38,13 +38,13 @@ namespace DVLD_BusinessLayer
         {
             DataTable dt = new DataTable();
 
-            dt = clsApplicationTypesDataAccess.getApplicationTypesRecords();
+            dt = ApplicationTypesDataAccess.getApplicationTypesRecords();
             return dt;
         }
 
 
 
-        public static clsApplicationTypes findApplicationType(int applicationID)
+        public static ApplicationTypes findApplicationType(int applicationID)
         {
 
             int applicationTypeID = -1;
@@ -52,10 +52,10 @@ namespace DVLD_BusinessLayer
             double paidFees = 0.0;
 
 
-            if (clsApplicationTypesDataAccess.findApplicationType(applicationID,ref applicantTypeTitle, ref paidFees))
+            if (ApplicationTypesDataAccess.findApplicationType(applicationID,ref applicantTypeTitle, ref paidFees))
              
                 {
-                return new clsApplicationTypes(applicationTypeID, applicantTypeTitle, paidFees);
+                return new ApplicationTypes(applicationTypeID, applicantTypeTitle, paidFees);
             }
             return null;
         }
@@ -64,7 +64,7 @@ namespace DVLD_BusinessLayer
 
         public static bool isApplicationTypeExist(int applicationTypeID)
         {
-            return clsApplicationTypesDataAccess.isApplicationTypeExistByID(applicationTypeID);
+            return ApplicationTypesDataAccess.isApplicationTypeExistByID(applicationTypeID);
         }
 
      

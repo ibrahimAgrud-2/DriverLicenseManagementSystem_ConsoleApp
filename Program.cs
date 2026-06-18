@@ -6,7 +6,7 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Security.Policy;
 using System.Xml;
-using static DVLD_BusinessLayer.clsLicenses;
+using static DVLD_BusinessLayer.Licenses;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace DVLDConsoleAPP
@@ -17,7 +17,7 @@ namespace DVLDConsoleAPP
         {
             DataTable dt = new DataTable();
 
-            dt = clsPeople.getAllPersonRecords();
+            dt = People.getAllPersonRecords();
 
             foreach (DataRow row in dt.Rows)
             { 
@@ -29,8 +29,8 @@ namespace DVLDConsoleAPP
         static void addPerson(string nationalNo,string firstName,string secondName,string thirdName,string lastName,DateTime dateOfBirth,int gender,string address,string phone,string email,int countryID,string imagePath)
         {
 
-            clsPeople p1 = new clsPeople();
-            if (clsPeople.isPersonExistByNationalNo(nationalNo))
+            People p1 = new People();
+            if (People.isPersonExistByNationalNo(nationalNo))
             {
                 Console.WriteLine("person with "+ nationalNo + " national number is already exist.");
                 return;
@@ -61,12 +61,12 @@ namespace DVLDConsoleAPP
         static void updatePersonInfo(int personID)
         {
             
-            if (!clsPeople.isPersonExistByID(personID))
+            if (!People.isPersonExistByID(personID))
             {
                 Console.WriteLine("Person Does not exist");
                 return;
             }
-            clsPeople p1 = clsPeople.findPersonByID(personID);
+            People p1 = People.findPersonByID(personID);
             Console.WriteLine("enter birthdate");
             p1.dateOfBirth =Convert.ToDateTime(Console.ReadLine());
 
@@ -82,13 +82,13 @@ namespace DVLDConsoleAPP
       
         static void deletePerson(int personID)
         {
-            if (!clsPeople.isPersonExistByID(personID))
+            if (!People.isPersonExistByID(personID))
             {
                 Console.WriteLine("person does not exist");
                 return;
             }
 
-            if (clsPeople.delete(personID))
+            if (People.delete(personID))
             {
                 Console.WriteLine("Deleted successfully");
             }
@@ -105,7 +105,7 @@ namespace DVLDConsoleAPP
         {
             DataTable dt = new DataTable();
 
-            dt = clsUser.getUserRecords();
+            dt = User.getUserRecords();
 
             foreach (DataRow row in dt.Rows)
             {
@@ -116,8 +116,8 @@ namespace DVLDConsoleAPP
         static void addUser(int personID,string userName,string password,bool isActive)
         {
 
-            clsUser App1 = new clsUser();
-            if (!clsPeople.isPersonExistByID(personID))
+            User App1 = new User();
+            if (!People.isPersonExistByID(personID))
             {
                 Console.WriteLine("Person with ID {0} could not found!", personID);
                 return;
@@ -139,13 +139,13 @@ namespace DVLDConsoleAPP
       
         static void deleteUser(int userID)
         {
-            if (!clsUser.isUserExist(userID))
+            if (!User.isUserExist(userID))
             {
                 Console.WriteLine("user does not exist");
                 return;
             }
 
-            if (clsUser.deleteUser(userID))
+            if (User.deleteUser(userID))
             {
                 Console.WriteLine("Deleted successfully");
             }
@@ -159,12 +159,12 @@ namespace DVLDConsoleAPP
         static void updateUser(int userID)
         {
 
-            if (!clsUser.isUserExist(userID))
+            if (!User.isUserExist(userID))
             {
                 Console.WriteLine("licenseID Does not exist");
                 return;
             }
-            clsUser App1 = clsUser.findUser(userID);
+            User App1 = User.findUser(userID);
             Console.WriteLine("enter user name");
             App1.userName = Console.ReadLine();
 
@@ -185,7 +185,7 @@ namespace DVLDConsoleAPP
         {
             DataTable dt = new DataTable();
 
-            dt = clsCountry.getCountryRecord();
+            dt = Country.getCountryRecord();
 
             foreach (DataRow row in dt.Rows)
             {
@@ -198,7 +198,7 @@ namespace DVLDConsoleAPP
         {
             DataTable dt = new DataTable();
 
-            dt = clsApplications.getApplicationsRecord();
+            dt = Applications.getApplicationsRecord();
 
             foreach (DataRow row in dt.Rows)
             {
@@ -209,20 +209,20 @@ namespace DVLDConsoleAPP
         static void addApplication(int applicantPersonID, int applicationTypeID, byte appStatus)
         {
            
-            if (!clsPeople.isPersonExistByID(applicantPersonID))
+            if (!People.isPersonExistByID(applicantPersonID))
             {
                 Console.WriteLine("Person with ID {0} could not found!", applicantPersonID);
                 return;
             }
-            else if (!clsApplicationTypes.isApplicationTypeExist(applicationTypeID))
+            else if (!ApplicationTypes.isApplicationTypeExist(applicationTypeID))
             {
                 Console.WriteLine("AppType with ID {0} could not found!", applicationTypeID);
                 return;
             }
-            clsApplications App1 = new clsApplications();
+            Applications App1 = new Applications();
             App1.applicantPersonID = applicantPersonID;
             App1.applicationTypeID = applicationTypeID;
-            App1.applicationStatus = (clsApplications.enApplicationStatus)appStatus;
+            App1.applicationStatus = (Applications.enApplicationStatus)appStatus;
 
             if (App1.save())
             {
@@ -238,19 +238,19 @@ namespace DVLDConsoleAPP
         {
 
           
-           if (!clsApplications.isApplicationExist(applicationID))
+           if (!Applications.isApplicationExist(applicationID))
             {
                 Console.WriteLine("App with ID {0} could not found!", applicationID);
                 return;
             }
 
-            clsApplications App1 = clsApplications.findApplication(applicationID);
+            Applications App1 = Applications.findApplication(applicationID);
             Console.WriteLine("Enter new person ID ");
             App1.applicantPersonID = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Enter App Type");
             App1.applicationTypeID = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Enter App status");
-            App1.applicationStatus = (clsApplications.enApplicationStatus)(Convert.ToByte(Console.ReadLine()));
+            App1.applicationStatus = (Applications.enApplicationStatus)(Convert.ToByte(Console.ReadLine()));
 
 
 
@@ -269,7 +269,7 @@ namespace DVLDConsoleAPP
         {
             DataTable dt = new DataTable();
 
-            dt = clsApplicationTypes.getApplicationTypeRecords();
+            dt = ApplicationTypes.getApplicationTypeRecords();
 
             foreach (DataRow row in dt.Rows)
             {
@@ -282,7 +282,7 @@ namespace DVLDConsoleAPP
         {
             DataTable dt = new DataTable();
 
-            dt = clsLicenses.getLicenseRecords();
+            dt = Licenses.getLicenseRecords();
 
             foreach (DataRow row in dt.Rows)
             {
@@ -295,7 +295,7 @@ namespace DVLDConsoleAPP
         {
             DataTable dt = new DataTable();
 
-            dt = clsDriver.getDriverRecords(); // Driver kayıtlarını getiren metod
+            dt = Driver.getDriverRecords(); // Driver kayıtlarını getiren metod
 
             foreach (DataRow row in dt.Rows)
             {
@@ -306,13 +306,13 @@ namespace DVLDConsoleAPP
         {
 
           
-            if (!clsPeople.isPersonExistByID(personID))
+            if (!People.isPersonExistByID(personID))
             {
                 Console.WriteLine("Person with ID {0} could not found!", personID);
                 return;
             }
 
-            clsDriver driver1 = new clsDriver();
+            Driver driver1 = new Driver();
             driver1.personID = personID;
             if (driver1.save())
             {
@@ -326,13 +326,13 @@ namespace DVLDConsoleAPP
 
         static void deleteDriver(int driverID)
         {
-            if (!clsDriver.isDriverExistByDriverID(driverID))
+            if (!Driver.isDriverExistByDriverID(driverID))
             {
                 Console.WriteLine("driver does not exist");
                 return;
             }
 
-            if (clsDriver.deleteDriver(driverID))
+            if (Driver.deleteDriver(driverID))
             {
                 Console.WriteLine("Deleted successfully");
             }
@@ -348,7 +348,7 @@ namespace DVLDConsoleAPP
         {
             DataTable dt = new DataTable();
 
-            dt = clsLicenses.getLicenseRecords(); // Driver kayıtlarını getiren metod
+            dt = Licenses.getLicenseRecords(); // Driver kayıtlarını getiren metod
 
             foreach (DataRow row in dt.Rows)
             {
@@ -359,31 +359,31 @@ namespace DVLDConsoleAPP
         {
 
 
-            if (!clsApplications.isApplicationExist(applicationID))
+            if (!Applications.isApplicationExist(applicationID))
             {
                 Console.WriteLine("Application with ID {0} could not found!", applicationID);
                 return;
             }
-            if (!clsDriver.isDriverExistByDriverID(DriverID))
+            if (!Driver.isDriverExistByDriverID(DriverID))
             {
                 Console.WriteLine("DriverID with ID {0} could not found!", DriverID);
                 return;
             }
-            if (!clsLicenses.isLicenseExist(licenseClassID))
+            if (!Licenses.isLicenseExist(licenseClassID))
             {
                 Console.WriteLine("license Class ID with ID {0} could not found!", licenseClassID);
                 return;
             }
 
 
-            clsLicenses l1 = new clsLicenses();
+            Licenses l1 = new Licenses();
             l1.applicationID = applicationID;
             l1.driverID = DriverID;
             l1.licenseClass = licenseClassID;
             l1.expirationDate = expirationDate;
             l1.notes = notes;
             l1.isActive = isActive;
-            l1.issueReason = (clsLicenses.enIssueReason)issueReason;
+            l1.issueReason = (Licenses.enIssueReason)issueReason;
             if (l1.save())
             {
                 Console.WriteLine("Saved successfully with ID {0}", l1.licenseID);
@@ -398,13 +398,13 @@ namespace DVLDConsoleAPP
         {
 
 
-            if (!clsLicenses.isLicenseExist(licenseID))
+            if (!Licenses.isLicenseExist(licenseID))
             {
                 Console.WriteLine("license with ID {0} could not found!", licenseID);
                 return;
             }
 
-            clsLicenses l1 = clsLicenses.findLicense(licenseID);
+            Licenses l1 = Licenses.findLicense(licenseID);
             if (l1==null)
             {
                 Console.WriteLine("Yes");
@@ -424,7 +424,7 @@ namespace DVLDConsoleAPP
             Console.WriteLine("Is Active");
             l1.isActive = Convert.ToBoolean(Console.ReadLine());
             Console.WriteLine("Issue reason");
-            l1.issueReason = (clsLicenses.enIssueReason)Convert.ToInt32(Console.ReadLine());
+            l1.issueReason = (Licenses.enIssueReason)Convert.ToInt32(Console.ReadLine());
 
 
 
@@ -442,13 +442,13 @@ namespace DVLDConsoleAPP
         }
         static void deleteLicense(int licenseID)
         {
-            if (!clsLicenses.isLicenseExist(licenseID))
+            if (!Licenses.isLicenseExist(licenseID))
             {
                 Console.WriteLine("License  does not exist");
                 return;
             }
 
-            if (clsLicenses.deleteLicense(licenseID))
+            if (Licenses.deleteLicense(licenseID))
             {
                 Console.WriteLine("Deleted successfully");
             }
@@ -464,7 +464,7 @@ namespace DVLDConsoleAPP
         static void addDetainedLicense(int licenseID,double fineFee,int releasedAppID)
         {
            
-            if (!clsLicenses.isLicenseExist(licenseID))
+            if (!Licenses.isLicenseExist(licenseID))
             {
                 Console.WriteLine("licenseID with ID {0} could not found!", licenseID);
                 return;
@@ -472,7 +472,7 @@ namespace DVLDConsoleAPP
          
 
 
-            clsDetainedLicense dl1 = new clsDetainedLicense();
+            DetainedLicense dl1 = new DetainedLicense();
             dl1.licenseID = licenseID;
             dl1.fineFees = fineFee;
             dl1.releaseApplicationID  = releasedAppID;
@@ -492,7 +492,7 @@ namespace DVLDConsoleAPP
         {
 
 
-            clsDetainedLicense dl1 = clsDetainedLicense.findDetainedLicense(detainID);
+            DetainedLicense dl1 = DetainedLicense.findDetainedLicense(detainID);
             dl1.licenseID = 27;
             dl1.isReleased = false;
             dl1.releaseApplicationID = 130;
@@ -540,9 +540,12 @@ namespace DVLDConsoleAPP
 
 
 
-            //SIK COMMİT (Güzel görünsün hem adımlar detaylu olsun)
+            //SIK COMMİT (Güzel görünsün hem adımlar detaylu olsun)ü
 
-            clsTests t1 = new clsTests();
+
+            //Acaba ilişki tablosundan sadece ID tutmak yerine o sınıfı da tutmalımıyız. Hoca böyle yapmış mıdır? SInıfın içinde property olarak diğer sınıf olacak ve veri eklerken her bri record için ilişkiye göre diğer kısımlarda eklenecek bu sayede erişimm kolaylaşı
+
+            Tests t1 = new Tests();
 
 
             t1.notes = "Bad";

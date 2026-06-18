@@ -10,7 +10,7 @@ namespace DVLD_DataAccessLayer
         {
             DataTable dt = new DataTable();
 
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
             string sqlQuery = "select * from Tests";
 
             SqlCommand cmd = new SqlCommand(sqlQuery, connection);
@@ -42,7 +42,7 @@ namespace DVLD_DataAccessLayer
         public static bool findTest(int testID, ref int testAppointmentID, ref int testResult,
             ref string notes, ref int createdByUserID)
         {
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
 
             string query = "select * from Tests where TestID = @testID";
 
@@ -78,7 +78,7 @@ namespace DVLD_DataAccessLayer
 
         public static bool isTestExist(int testID)
         {
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
 
             string query = "select found = 1 from Tests where TestID = @testID";
             SqlCommand cmd = new SqlCommand(query, connection);
@@ -108,7 +108,7 @@ namespace DVLD_DataAccessLayer
 
         public static int addTest(int testAppointmentID, int testResult, string notes, int createdByUserID)
         {
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
 
             string query = @"INSERT INTO Tests (TestAppointmentID, TestResult, Notes, CreatedByUserID) 
                      VALUES (@testAppointmentID, @testResult, @notes, @createdByUserID);
@@ -151,7 +151,7 @@ namespace DVLD_DataAccessLayer
 
         public static bool updateTest(int testID, int testAppointmentID, int testResult, string notes)
         {
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
 
             string query = @"UPDATE Tests 
                      SET TestAppointmentID = @testAppointmentID,
@@ -188,7 +188,7 @@ namespace DVLD_DataAccessLayer
 
         public static bool deleteTest(int testID)
         {
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
             string query = "delete Tests where TestID = @testID";
             SqlCommand cmd = new SqlCommand(query, connection);
             cmd.Parameters.AddWithValue("@testID", testID);

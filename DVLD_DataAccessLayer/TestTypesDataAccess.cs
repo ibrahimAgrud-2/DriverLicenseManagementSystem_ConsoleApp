@@ -3,13 +3,13 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 
-public class clsTestTypesDataAccess
+public class TestTypesDataAccess
 {
     public static DataTable getTestTypesRecords()
     {
         DataTable dt = new DataTable();
 
-        SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+        SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
         string sqlQuery = "select * from TestTypes";
 
         SqlCommand cmd = new SqlCommand(sqlQuery, connection);
@@ -40,7 +40,7 @@ public class clsTestTypesDataAccess
 
     public static bool findTestType(int testTypeID, ref string testTypeTitle, ref string testTypeDescription, ref double testTypeFees)
     {
-        SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+        SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
 
         string query = "select * from TestTypes where TestTypeID = @testTypeID";
 
@@ -76,7 +76,7 @@ public class clsTestTypesDataAccess
 
     public static bool isTestTypeExistByID(int testTypeID)
     {
-        SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+        SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
 
         string query = "select found = 1 from TestTypes where TestTypeID = @testTypeID";
         SqlCommand cmd = new SqlCommand(query, connection);

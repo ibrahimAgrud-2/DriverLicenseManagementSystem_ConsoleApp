@@ -5,14 +5,15 @@ using System.Data.SqlClient;
 
 namespace DVLD_DataAccessLayer
 {
-    public class clsUserDataAccess
+    public class clsDriverDataAccess
     {
-        public static DataTable getUserRecords()
+
+        public static DataTable getDriverRecords()
         {
             DataTable dt = new DataTable();
 
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
-            string sqlQuery = "select * from users";
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
+            string sqlQuery = "select * from Drivers";
 
             SqlCommand cmd = new SqlCommand(sqlQuery, connection);
 
@@ -42,16 +43,16 @@ namespace DVLD_DataAccessLayer
 
             return dt;
         }
-        public static bool findUserByID(int userID, ref int personID, ref string userName, ref string password, ref
-           bool isActive)
+       
+        public static bool findDriver(int driverID, ref int personID, ref int createdByUserID, ref DateTime createdDate)
         {
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
 
-            string query = "select * from users where userID=@userID";
+            string query = "select * from users where DriverID=@DriverID";
 
             SqlCommand cmd = new SqlCommand(query, connection);
 
-            cmd.Parameters.AddWithValue("@userID", userID);
+            cmd.Parameters.AddWithValue("@DriverID", driverID);
 
             try
             {
@@ -61,10 +62,8 @@ namespace DVLD_DataAccessLayer
                 if (read.Read())
                 {
                     personID = Convert.ToInt32(read["PersonID"]);
-                    userID = Convert.ToInt32(read["userID"]);
-                    userName = read["userName"].ToString();
-                    password = read["password"].ToString();
-                    isActive = Convert.ToBoolean(read["isActive"]);
+                    createdDate = Convert.ToDateTime(read["createdDate"]);
+                    createdByUserID = Convert.ToInt32(read["createdByUserID"]);
                     return true;
                 }
 
@@ -83,20 +82,53 @@ namespace DVLD_DataAccessLayer
             return false;
         }
 
-        public static bool isUserExist(int userID)
+        public static bool isDriverExistByDriverID(int driverID)
         {
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
 
-            string query = "select found =1 from users where userID=@userID";
+            string query = "select found =1 from Drivers where driverID=@driverID";
             SqlCommand cmd = new SqlCommand(query, connection);
-            cmd.Parameters.AddWithValue("@userID", userID);
+            cmd.Parameters.AddWithValue("@driverID", driverID);
 
 
             try
             {
                 connection.Open();
 
-           
+
+                object result = cmd.ExecuteScalar();
+                if (result != null && int.TryParse(result.ToString(), out int value))
+                {
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+
+                return false; ;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return false;
+        }
+
+        public static bool isDriverExistByPersonID(int personID)
+        {
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
+
+            string query = "select found =1 from Drivers where personID=@personID";
+            SqlCommand cmd = new SqlCommand(query, connection);
+            cmd.Parameters.AddWithValue("@personID", personID);
+
+
+            try
+            {
+                connection.Open();
+
+
                 object result = cmd.ExecuteScalar();
                 if (result != null && int.TryParse(result.ToString(), out int value))
                 {
@@ -117,27 +149,23 @@ namespace DVLD_DataAccessLayer
         }
 
 
-     
-        public static int addUser(int personID,  string userName,  string password, 
-           bool isActive)
+        public static int addDriver(int personID,  int createdByUserID,  DateTime createdDate)
         {
 
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
 
-            string query = "insert into users values(@personID,@userName,@password,@isActive) Select Scope_Identity();";
+            string query = "insert into drivers values(@personID,@createdByUserID,@createdDate) Select Scope_Identity();";
 
             SqlCommand cmd = new SqlCommand(query, connection);
 
             cmd.Parameters.AddWithValue("@personID", personID);
-            cmd.Parameters.AddWithValue("@userName", userName);
-            cmd.Parameters.AddWithValue("@password", password);
-            cmd.Parameters.AddWithValue("@isActive", isActive);
+            cmd.Parameters.AddWithValue("@createdByUserID", createdByUserID);
+            cmd.Parameters.AddWithValue("@createdDate", createdDate);
 
             try
             {
                 connection.Open();
 
-                //Sql içinde sorgu burada çalışır.
                 object result = cmd.ExecuteScalar();
 
                 if (result != null && int.TryParse(result.ToString(), out int inserted))
@@ -162,20 +190,18 @@ namespace DVLD_DataAccessLayer
         }
 
 
-        public static bool updateUserInfo(int userID,int personID, string userName, string password,
-           bool isActive)
-        { 
+        public static bool updateDriverInfo(int driverID, int personID, int createdByUserID, DateTime createdDate)
+        {
 
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
 
-            string query = "update users set personID=@personID,userName=@userName,password=@password,isActive= @isActive where userID =@userID";
+            string query = "update drivers set personID=@personID,createdByUserID=@createdByUserID,createdDate= @createdDate where driverID =@driverID";
 
             SqlCommand cmd = new SqlCommand(query, connection);
-            cmd.Parameters.AddWithValue("@userID", userID);
+            cmd.Parameters.AddWithValue("@driverID", driverID);
             cmd.Parameters.AddWithValue("@personID", personID);
-            cmd.Parameters.AddWithValue("@userName", userName);
-            cmd.Parameters.AddWithValue("@password", password);
-            cmd.Parameters.AddWithValue("@isActive", isActive);
+            cmd.Parameters.AddWithValue("@createdByUserID", createdByUserID);
+            cmd.Parameters.AddWithValue("@createdDate", createdDate);
 
 
 
@@ -203,21 +229,20 @@ namespace DVLD_DataAccessLayer
         }
 
 
-        public static bool deleteUser(int userID)
+        public static bool deleteDriver(int driverID)
         {
 
 
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
-            string query = "delete users where userID=@userID";
+            SqlConnection connection = new SqlConnection(DataAccessSettings.connectionString);
+            string query = "delete drivers where driverID=@driverID";
             SqlCommand cmd = new SqlCommand(query, connection);
-            cmd.Parameters.AddWithValue("@userID", userID);
+            cmd.Parameters.AddWithValue("@driverID", driverID);
 
 
             try
             {
                 connection.Open();
 
-                //Sorgu sonucu bir sayı geldiyse (ID tek olduğu için sadece bir adet sayı gelir eğer ID varsa) bu demektir ki o ID sistemde var. sayı dışında bir şey gelirse bu demek oluyor ki o kişi sistemde yok.
 
                 int affectedRows = cmd.ExecuteNonQuery();
                 if (affectedRows == 1)

@@ -29,7 +29,7 @@ public class clsTestType
         string description = string.Empty;
         double fees = 0.0;
 
-        if (clsTestTypesDataAccess.findTestType(testTypeID, ref title, ref description, ref fees))
+        if (TestTypesDataAccess.findTestType(testTypeID, ref title, ref description, ref fees))
         {
             return new clsTestType(testTypeID, title, description, fees);
         }
@@ -39,11 +39,11 @@ public class clsTestType
 
     public static bool isTestTypeExist(int testTypeID)
     {
-        return clsTestTypesDataAccess.isTestTypeExistByID(testTypeID);
+        return TestTypesDataAccess.isTestTypeExistByID(testTypeID);
     }
 
     public static DataTable getAllRecords()
     {
-        return clsTestTypesDataAccess.getTestTypesRecords();
+        return TestTypesDataAccess.getTestTypesRecords();
     }
 }
