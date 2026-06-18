@@ -4,7 +4,7 @@ using System.Data;
 
 namespace DVLD_BusinessLayer
 {
-    public class clsTests
+    public class Tests
     {
         public int testID { get; set; }
         public int testAppointmentID { get; set; }
@@ -12,7 +12,7 @@ namespace DVLD_BusinessLayer
         public string notes { get; set; }
         public int createdByUserID { get; private set; }
 
-        public clsTests()
+        public Tests()
         {
             this.testID = -1;
             this.testAppointmentID = -1;
@@ -21,7 +21,7 @@ namespace DVLD_BusinessLayer
             this.createdByUserID = -1;
         }
 
-        private clsTests(int testID, int testAppointmentID, int testResult, string notes, int createdByUserID)
+        private Tests(int testID, int testAppointmentID, int testResult, string notes, int createdByUserID)
         {
             this.testID = testID;
             this.testAppointmentID = testAppointmentID;
@@ -37,7 +37,7 @@ namespace DVLD_BusinessLayer
             return dt;
         }
 
-        public static clsTests findTest(int testID)
+        public static Tests findTest(int testID)
         {
             int testAppointmentID = -1;
             int testResult = 0;
@@ -46,7 +46,7 @@ namespace DVLD_BusinessLayer
 
             if (clsTestDataAccess.findTest(testID, ref testAppointmentID, ref testResult, ref notes, ref createdByUserID))
             {
-                return new clsTests(testID, testAppointmentID, testResult, notes, createdByUserID);
+                return new Tests(testID, testAppointmentID, testResult, notes, createdByUserID);
             }
             return null;
         }

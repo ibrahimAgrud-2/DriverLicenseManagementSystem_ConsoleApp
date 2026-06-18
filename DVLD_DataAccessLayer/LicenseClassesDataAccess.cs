@@ -16,6 +16,8 @@ namespace DVLD_DataAccessLayer
             string sqlQuery = "select * from LicenseClasses";
 
             SqlCommand cmd = new SqlCommand(sqlQuery, connection);
+            //cls
+
 
             try
             {
