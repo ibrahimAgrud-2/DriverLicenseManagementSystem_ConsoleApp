@@ -77,22 +77,37 @@ namespace DVLD_DataAccessLayer
                      phone = read["phone"].ToString();
                      countryID = Convert.ToInt32(read["nationalityCountryID"]);
                      imagePath = read["imagePath"].ToString();
+
+                    if (read["ImagePath"] != DBNull.Value)
+                    {
+                        imagePath = (string)read["ImagePath"];
+                    }
+                    else
+                    {
+                        imagePath = "";
+                    }
+
                     return true;
                 }
+                else
+                {
+                   
+                    return false;
+                }
+          
 
             }
             catch (Exception)
             {
-
+                
                 return false;
             }
             finally
             {
                 connection.Close();
-
             }
-
-            return false;
+            
+            
         }
 
         public static bool findPersonByNationalNo(ref int personID, string nationalNo, ref string firstName, ref string secondName, ref
@@ -243,18 +258,13 @@ namespace DVLD_DataAccessLayer
             cmd.Parameters.AddWithValue("@phone", phone);
              cmd.Parameters.AddWithValue("@nationalityCountryID", countryID);
             cmd.Parameters.AddWithValue("@nationalNo", nationalNo);
+           
 
-
-
-            if (imagePath==string.Empty)
-            {
-                cmd.Parameters.AddWithValue("@imagePath", System.DBNull.Value);   
-            }
-            else
-            {
+            if (imagePath != "" && imagePath != null)
                 cmd.Parameters.AddWithValue("@imagePath", imagePath);
+            else
+                cmd.Parameters.AddWithValue("@imagePath", System.DBNull.Value);
 
-            }
 
             try
             {
